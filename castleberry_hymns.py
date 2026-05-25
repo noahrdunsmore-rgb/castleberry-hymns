@@ -214,8 +214,19 @@ def main():
     hymn_occurrences = load_existing_hymns()
 
     all_videos  = get_channel_videos()
-    new_videos  = [v for v in all_videos if v["id"] not in processed]
-    skipped     = len(all_videos) - len(new_videos)
+
+    # Only process worship services — skip Wednesday Bible class / devotion videos
+    WORSHIP_KEYWORDS = ("sunday", "worship", "5th sunday", "fifth sunday")
+    worship_videos = [
+        v for v in all_videos
+        if any(kw in v["title"].lower() for kw in WORSHIP_KEYWORDS)
+    ]
+    skipped_non_worship = len(all_videos) - len(worship_videos)
+    print(f"  Filtered to {len(worship_videos)} worship services"
+          f" (skipped {skipped_non_worship} non-worship videos).")
+
+    new_videos  = [v for v in worship_videos if v["id"] not in processed]
+    skipped     = len(worship_videos) - len(new_videos)
     print(f"  {len(new_videos)} new video(s) to process  ({skipped} already done).")
 
     if not new_videos:
