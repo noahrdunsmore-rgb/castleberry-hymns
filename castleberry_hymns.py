@@ -12,7 +12,7 @@ import time
 import requests
 from datetime import datetime, timedelta, timezone
 from pathlib import Path
-from youtube_transcript_api import YouTubeTranscriptApi, NoTranscriptFound, TranscriptsDisabled
+from youtube_transcript_api import YouTubeTranscriptApi, NoTranscriptFound, TranscriptsDisabled, IpBlocked
 import anthropic
 
 # ── Config ───────────────────────────────────────────────────────────────────
@@ -95,7 +95,17 @@ def get_channel_videos() -> list:
     return videos
 
 
+class YouTubeBlocked(Exception):
+    """Raised when YouTube is actively blocking requests — video should NOT be marked processed."""
+    pass
+
+
 def get_transcript(video_id: str, retries: int = 3) -> str | None:
+    """
+    Returns transcript text, None if genuinely unavailable, or raises
+    YouTubeBlocked if the IP is being rate-limited (so the caller can skip
+    marking the video as processed and retry it next run).
+    """
     ytt = YouTubeTranscriptApi()
     for attempt in range(1, retries + 1):
         try:
@@ -105,19 +115,27 @@ def get_transcript(video_id: str, retries: int = 3) -> str | None:
             except Exception:
                 t = tlist.find_generated_transcript(["en"])
             return " ".join(s.text for s in t.fetch())
+        except IpBlocked:
+            if attempt < retries:
+                wait = 30 * attempt
+                print(f"    IP blocked — waiting {wait}s before retry {attempt}/{retries - 1}...")
+                time.sleep(wait)
+            else:
+                print(f"    IP still blocked after {retries} attempts — will retry this video next run.")
+                raise YouTubeBlocked()
         except (NoTranscriptFound, TranscriptsDisabled) as e:
-            print(f"    No transcript available: {e}")
+            print(f"    No transcript available (captions disabled): {e}")
             return None
         except Exception as e:
             msg = str(e).lower()
             if "blocking" in msg or "ipblocked" in msg or "requestblocked" in msg:
                 if attempt < retries:
-                    wait = 15 * attempt
-                    print(f"    YouTube rate-limited — waiting {wait}s (retry {attempt}/{retries - 1})...")
+                    wait = 30 * attempt
+                    print(f"    Rate limited — waiting {wait}s (retry {attempt}/{retries - 1})...")
                     time.sleep(wait)
                 else:
-                    print(f"    YouTube still blocking after {retries} attempts — skipping.")
-                    return None
+                    print(f"    Still blocked — will retry next run.")
+                    raise YouTubeBlocked()
             else:
                 print(f"    Transcript error: {e}")
                 return None
@@ -237,7 +255,13 @@ def main():
         vid_id, title, date = video["id"], video["title"], video["date"]
         print(f"\n[{i}/{len(new_videos)}] {date} — {title}")
 
-        transcript = get_transcript(vid_id)
+        try:
+            transcript = get_transcript(vid_id)
+        except YouTubeBlocked:
+            print("  IP blocked — skipping WITHOUT marking processed (will retry next run).")
+            time.sleep(60)   # back off a full minute before trying the next video
+            continue          # do not add to processed
+
         if transcript:
             print(f"  Transcript: {len(transcript):,} chars — asking Claude...")
             findings = identify_hymns_and_leaders(client, transcript, title, date)
@@ -251,12 +275,12 @@ def main():
             else:
                 print("  No hymns identified.")
         else:
-            print("  Skipping (no transcript).")
+            print("  Skipping (captions unavailable).")
 
         processed.add(vid_id)
         save_hymns(hymn_occurrences)        # save after every video — never lose progress
         save_processed_videos(processed)
-        time.sleep(3)                        # respect YouTube rate limits
+        time.sleep(5)                        # 5s gap — gentler on YouTube
 
     print(f"\n✓ Done! {len(hymn_occurrences)} unique hymns across all tracked services.")
     print(f"  Saved → {OUTPUT_FILE}")
