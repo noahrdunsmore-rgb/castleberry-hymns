@@ -6,21 +6,22 @@
   <title>Castleberry Church of Christ — Hymn Tracker</title>
   <style>
     :root {
-      --navy:      #1a2744;
-      --navy-light:#243259;
-      --gold:      #c9a84c;
-      --gold-pale: #f5e9c8;
-      --bg:        #f7f5f0;
-      --white:     #ffffff;
-      --text:      #2c2c2c;
-      --muted:     #6b6b6b;
-      --border:    #ddd5c0;
+      --red:        #C31832;
+      --red-dark:   #9B1226;
+      --red-pale:   #FDEEF1;
+      --dark:       #1C1C1C;
+      --dark2:      #2E2E2E;
+      --bg:         #F8F8F8;
+      --white:      #FFFFFF;
+      --text:       #1C1C1C;
+      --muted:      #6B6B6B;
+      --border:     #E0E0E0;
     }
 
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     body {
-      font-family: Georgia, 'Times New Roman', serif;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif;
       background: var(--bg);
       color: var(--text);
       min-height: 100vh;
@@ -28,231 +29,279 @@
 
     /* ── Header ── */
     header {
-      background: var(--navy);
-      color: #fff;
-      text-align: center;
-      padding: 2.2rem 1rem 1.8rem;
+      background: var(--dark);
+      padding: 0;
+      border-bottom: 4px solid var(--red);
     }
-    .header-cross {
-      font-size: 1.4rem;
-      color: var(--gold);
-      letter-spacing: 0.3em;
-      margin-bottom: 0.5rem;
+    .header-inner {
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 1.1rem 1.2rem;
+      display: flex;
+      align-items: center;
+      gap: 1.2rem;
     }
-    header h1 {
-      font-size: 1.75rem;
-      color: var(--gold);
-      letter-spacing: 0.02em;
+    .header-logo {
+      height: 52px;
+      width: auto;
+      flex-shrink: 0;
     }
-    header p {
-      font-size: 0.88rem;
-      color: rgba(255,255,255,0.65);
-      margin-top: 0.4rem;
-      font-style: italic;
+    .header-text h1 {
+      font-size: 1.35rem;
+      font-weight: 700;
+      color: var(--white);
+      letter-spacing: 0.01em;
+      line-height: 1.2;
+    }
+    .header-text p {
+      font-size: 0.8rem;
+      color: rgba(255,255,255,0.55);
+      margin-top: 0.2rem;
     }
 
     /* ── Stats bar ── */
     .stats-bar {
-      background: var(--gold);
+      background: var(--red);
       display: flex;
       justify-content: center;
-      gap: 0;
     }
     .stat {
       flex: 1;
-      max-width: 160px;
+      max-width: 180px;
       text-align: center;
-      padding: 0.9rem 0.5rem;
-      border-right: 1px solid rgba(255,255,255,0.35);
+      padding: 0.75rem 0.5rem;
+      border-right: 1px solid rgba(255,255,255,0.25);
     }
     .stat:last-child { border-right: none; }
     .stat-number {
-      font-size: 1.7rem;
-      font-weight: bold;
-      color: var(--navy);
+      font-size: 1.65rem;
+      font-weight: 700;
+      color: var(--white);
       line-height: 1;
     }
     .stat-label {
-      font-size: 0.65rem;
+      font-size: 0.63rem;
       text-transform: uppercase;
-      letter-spacing: 0.07em;
-      color: var(--navy-light);
-      margin-top: 0.25rem;
+      letter-spacing: 0.08em;
+      color: rgba(255,255,255,0.75);
+      margin-top: 0.2rem;
     }
 
     /* ── Controls ── */
     .controls {
-      max-width: 780px;
-      margin: 1.5rem auto 0;
-      padding: 0 1rem;
+      max-width: 860px;
+      margin: 1.4rem auto 0;
+      padding: 0 1.2rem;
       display: flex;
-      gap: 0.75rem;
+      gap: 0.6rem;
       flex-wrap: wrap;
       align-items: center;
     }
     .search-wrap {
       flex: 1;
-      min-width: 200px;
+      min-width: 180px;
       position: relative;
     }
     .search-icon {
       position: absolute;
-      left: 0.85rem;
+      left: 0.8rem;
       top: 50%;
       transform: translateY(-50%);
       color: var(--muted);
-      font-size: 0.95rem;
       pointer-events: none;
+      font-size: 0.9rem;
     }
     input[type="text"] {
       width: 100%;
-      padding: 0.6rem 1rem 0.6rem 2.4rem;
-      border: 2px solid var(--border);
-      border-radius: 8px;
-      font-size: 1rem;
-      font-family: Georgia, serif;
+      padding: 0.55rem 0.9rem 0.55rem 2.2rem;
+      border: 1.5px solid var(--border);
+      border-radius: 7px;
+      font-size: 0.95rem;
       background: var(--white);
       color: var(--text);
       transition: border-color 0.15s;
     }
-    input[type="text"]:focus {
-      outline: none;
-      border-color: var(--navy);
-    }
+    input[type="text"]:focus { outline: none; border-color: var(--red); }
     select {
-      padding: 0.6rem 0.9rem;
-      border: 2px solid var(--border);
-      border-radius: 8px;
-      font-size: 0.88rem;
-      font-family: Georgia, serif;
+      padding: 0.55rem 0.85rem;
+      border: 1.5px solid var(--border);
+      border-radius: 7px;
+      font-size: 0.85rem;
       background: var(--white);
       color: var(--text);
       cursor: pointer;
       transition: border-color 0.15s;
     }
-    select:focus { outline: none; border-color: var(--navy); }
+    select:focus { outline: none; border-color: var(--red); }
 
-    /* ── Results count ── */
+    /* Leader search */
+    .leader-wrap {
+      min-width: 160px;
+      position: relative;
+    }
+    .leader-wrap .search-icon { color: var(--muted); }
+
+    /* ── Results meta ── */
     .results-meta {
-      max-width: 780px;
-      margin: 0.9rem auto 0.5rem;
-      padding: 0 1rem;
-      font-size: 0.82rem;
+      max-width: 860px;
+      margin: 0.75rem auto 0.4rem;
+      padding: 0 1.2rem;
+      font-size: 0.8rem;
       color: var(--muted);
-      font-style: italic;
     }
 
     /* ── Hymn list ── */
     .hymn-list {
-      max-width: 780px;
+      max-width: 860px;
       margin: 0 auto;
-      padding: 0 1rem 3rem;
+      padding: 0 1.2rem 3rem;
     }
 
     .hymn-card {
       background: var(--white);
-      border: 1px solid var(--border);
+      border: 1.5px solid var(--border);
       border-radius: 10px;
-      margin-bottom: 0.6rem;
+      margin-bottom: 0.55rem;
       overflow: hidden;
-      transition: box-shadow 0.2s;
+      transition: box-shadow 0.18s, border-color 0.18s;
     }
-    .hymn-card:hover { box-shadow: 0 2px 12px rgba(0,0,0,0.09); }
+    .hymn-card:hover {
+      box-shadow: 0 2px 14px rgba(0,0,0,0.08);
+      border-color: #ccc;
+    }
 
     .hymn-header {
       display: flex;
       align-items: center;
-      gap: 0.9rem;
-      padding: 0.9rem 1.1rem;
+      gap: 0.8rem;
+      padding: 0.85rem 1.1rem;
       cursor: pointer;
       user-select: none;
     }
 
     .hymn-name {
       flex: 1;
-      font-size: 1.02rem;
+      font-size: 0.97rem;
+      font-weight: 500;
     }
     .hymn-name mark {
-      background: var(--gold-pale);
+      background: #FFEDC0;
       color: inherit;
       border-radius: 3px;
       padding: 0 2px;
     }
 
     .badge {
-      background: var(--navy);
-      color: #fff;
       border-radius: 20px;
       padding: 0.18rem 0.65rem;
-      font-size: 0.75rem;
-      font-family: sans-serif;
+      font-size: 0.73rem;
+      font-weight: 600;
       white-space: nowrap;
       flex-shrink: 0;
     }
-    .badge.gold {
-      background: var(--gold);
-      color: var(--navy);
-      font-weight: bold;
+    .badge-count {
+      background: var(--dark2);
+      color: var(--white);
+    }
+    .badge-count.hot {
+      background: var(--red);
+      color: var(--white);
     }
 
     .chevron {
       color: var(--muted);
-      font-size: 0.7rem;
+      font-size: 0.65rem;
       transition: transform 0.2s;
       flex-shrink: 0;
     }
     .hymn-card.open .chevron { transform: rotate(180deg); }
 
-    .hymn-dates {
+    /* ── Occurrences table ── */
+    .occurrences {
       display: none;
-      flex-wrap: wrap;
-      gap: 0.4rem;
-      padding: 0 1.1rem 0.9rem;
+      border-top: 1.5px solid var(--border);
+      padding: 0.6rem 1.1rem 0.9rem;
     }
-    .hymn-card.open .hymn-dates { display: flex; }
+    .hymn-card.open .occurrences { display: block; }
 
-    .date-chip {
-      background: var(--gold-pale);
-      color: var(--navy);
+    .occ-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.82rem;
+    }
+    .occ-table th {
+      text-align: left;
+      color: var(--muted);
+      font-weight: 600;
+      font-size: 0.72rem;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      padding: 0.3rem 0.5rem 0.4rem;
+      border-bottom: 1px solid var(--border);
+    }
+    .occ-table td {
+      padding: 0.35rem 0.5rem;
+      border-bottom: 1px solid #F0F0F0;
+      vertical-align: middle;
+    }
+    .occ-table tr:last-child td { border-bottom: none; }
+
+    .leader-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.3rem;
+      background: var(--red-pale);
+      color: var(--red-dark);
       border-radius: 20px;
-      padding: 0.22rem 0.75rem;
-      font-size: 0.78rem;
-      font-family: sans-serif;
+      padding: 0.18rem 0.6rem;
+      font-size: 0.75rem;
+      font-weight: 500;
+    }
+    .leader-chip.unknown {
+      background: #F0F0F0;
+      color: var(--muted);
+      font-style: italic;
+      font-weight: 400;
     }
 
-    /* ── Empty / loading states ── */
+    /* ── Empty / loading ── */
     .state-msg {
       text-align: center;
       padding: 3rem 1rem;
       color: var(--muted);
-      font-style: italic;
     }
 
     /* ── Footer ── */
     footer {
       text-align: center;
-      padding: 1.2rem;
+      padding: 1.1rem;
       color: var(--muted);
-      font-size: 0.78rem;
+      font-size: 0.76rem;
       border-top: 1px solid var(--border);
     }
 
     /* ── Responsive ── */
-    @media (max-width: 500px) {
-      header h1     { font-size: 1.35rem; }
-      .stat-number  { font-size: 1.4rem; }
-      .controls     { gap: 0.5rem; }
+    @media (max-width: 560px) {
+      .header-logo   { height: 38px; }
+      .header-text h1 { font-size: 1.05rem; }
+      .stat-number   { font-size: 1.35rem; }
     }
   </style>
 </head>
 <body>
 
+<!-- ── Header ── -->
 <header>
-  <div class="header-cross">✦ ✦ ✦</div>
-  <h1>Castleberry Church of Christ</h1>
-  <p>A cappella hymn tracker &mdash; every song sung in worship</p>
+  <div class="header-inner">
+    <img src="logo.png" alt="Castleberry Church of Christ" class="header-logo">
+    <div class="header-text">
+      <h1>Hymn Tracker</h1>
+      <p>Every song sung in a cappella worship — searchable by title, date, and song leader</p>
+    </div>
+  </div>
 </header>
 
+<!-- ── Stats ── -->
 <div class="stats-bar">
   <div class="stat">
     <div class="stat-number" id="stat-hymns">—</div>
@@ -263,15 +312,24 @@
     <div class="stat-label">Services Tracked</div>
   </div>
   <div class="stat">
+    <div class="stat-number" id="stat-leaders">—</div>
+    <div class="stat-label">Song Leaders</div>
+  </div>
+  <div class="stat">
     <div class="stat-number" id="stat-since">—</div>
     <div class="stat-label">Tracking Since</div>
   </div>
 </div>
 
+<!-- ── Controls ── -->
 <div class="controls">
   <div class="search-wrap">
     <span class="search-icon">🔍</span>
     <input type="text" id="search" placeholder="Search hymn title…" oninput="render()">
+  </div>
+  <div class="search-wrap leader-wrap">
+    <span class="search-icon">🎤</span>
+    <input type="text" id="leader-search" placeholder="Filter by song leader…" oninput="render()">
   </div>
   <select id="sort" onchange="render()">
     <option value="most-sung">Most Sung</option>
@@ -295,7 +353,6 @@
 <script>
   let allHymns = [];
 
-  /* ── Load data ── */
   async function loadData() {
     try {
       const res = await fetch('castleberry_songs.json?v=' + Date.now());
@@ -310,29 +367,31 @@
     }
   }
 
-  /* ── Year filter options ── */
   function initYearFilter() {
     const years = new Set();
-    allHymns.forEach(h => h.dates.forEach(d => years.add(d.slice(0, 4))));
+    allHymns.forEach(h => h.occurrences.forEach(o => years.add(o.date.slice(0, 4))));
     const sel = document.getElementById('year-filter');
     [...years].sort().reverse().forEach(y => {
       const opt = document.createElement('option');
-      opt.value = y;
-      opt.textContent = y;
+      opt.value = y; opt.textContent = y;
       sel.appendChild(opt);
     });
   }
 
-  /* ── Header stats ── */
   function updateStats() {
-    const allDates = new Set();
-    allHymns.forEach(h => h.dates.forEach(d => allDates.add(d)));
+    const allDates   = new Set();
+    const allLeaders = new Set();
+    allHymns.forEach(h => h.occurrences.forEach(o => {
+      allDates.add(o.date);
+      if (o.leader) allLeaders.add(o.leader.toLowerCase());
+    }));
     const sorted = [...allDates].sort();
 
     document.getElementById('stat-hymns').textContent    = allHymns.length;
     document.getElementById('stat-services').textContent = allDates.size;
+    document.getElementById('stat-leaders').textContent  = allLeaders.size || '—';
     document.getElementById('stat-since').textContent    = sorted.length
-      ? fmtMonthYear(sorted[0]) : '—';
+      ? fmtMonYear(sorted[0]) : '—';
 
     if (sorted.length) {
       const last = sorted[sorted.length - 1];
@@ -341,83 +400,92 @@
     }
   }
 
-  /* ── Main render ── */
   function render() {
-    const query = document.getElementById('search').value.trim().toLowerCase();
-    const sort  = document.getElementById('sort').value;
-    const year  = document.getElementById('year-filter').value;
+    const query  = document.getElementById('search').value.trim().toLowerCase();
+    const leader = document.getElementById('leader-search').value.trim().toLowerCase();
+    const sort   = document.getElementById('sort').value;
+    const year   = document.getElementById('year-filter').value;
 
     let hymns = allHymns.map(h => {
-      const dates = year ? h.dates.filter(d => d.startsWith(year)) : h.dates;
-      return { ...h, filteredDates: dates };
+      let occs = h.occurrences;
+      if (year)   occs = occs.filter(o => o.date.startsWith(year));
+      if (leader) occs = occs.filter(o => o.leader.toLowerCase().includes(leader));
+      return { ...h, filteredOccs: occs };
     }).filter(h =>
-      h.filteredDates.length > 0 &&
+      h.filteredOccs.length > 0 &&
       (!query || h.name.toLowerCase().includes(query))
     );
 
     hymns.sort((a, b) => {
-      if (sort === 'most-sung') return b.filteredDates.length - a.filteredDates.length;
-      if (sort === 'az')       return a.name.localeCompare(b.name);
-      if (sort === 'za')       return b.name.localeCompare(a.name);
-      if (sort === 'recent')   return lastDate(b).localeCompare(lastDate(a));
+      if (sort === 'most-sung') return b.filteredOccs.length - a.filteredOccs.length;
+      if (sort === 'az')        return a.name.localeCompare(b.name);
+      if (sort === 'za')        return b.name.localeCompare(a.name);
+      if (sort === 'recent') {
+        const aL = a.filteredOccs[a.filteredOccs.length - 1]?.date || '';
+        const bL = b.filteredOccs[b.filteredOccs.length - 1]?.date || '';
+        return bL.localeCompare(aL);
+      }
       return 0;
     });
 
-    document.getElementById('results-meta').textContent =
-      `Showing ${hymns.length} hymn${hymns.length !== 1 ? 's' : ''}` +
-      (query ? ` matching "${query}"` : '') +
-      (year  ? ` in ${year}` : '');
+    const total = hymns.reduce((s, h) => s + h.filteredOccs.length, 0);
+    let meta = `Showing ${hymns.length} hymn${hymns.length !== 1 ? 's' : ''} · ${total} total occurrence${total !== 1 ? 's' : ''}`;
+    if (query)  meta += ` matching "${query}"`;
+    if (leader) meta += ` led by "${leader}"`;
+    if (year)   meta += ` in ${year}`;
+    document.getElementById('results-meta').textContent = meta;
 
     const list = document.getElementById('hymn-list');
-
     if (!hymns.length) {
       list.innerHTML = '<div class="state-msg">No hymns match your search.</div>';
       return;
     }
 
     list.innerHTML = hymns.map(h => {
-      const count      = h.filteredDates.length;
-      const badgeCls   = count >= 5 ? 'badge gold' : 'badge';
-      const highlighted = highlight(esc(h.name), query);
-      const chips      = h.filteredDates
-        .map(d => `<span class="date-chip">${fmtFull(d)}</span>`)
-        .join('');
+      const count   = h.filteredOccs.length;
+      const badgeCls = count >= 5 ? 'badge badge-count hot' : 'badge badge-count';
+      const rows = h.filteredOccs.map(o => {
+        const ldr = o.leader
+          ? `<span class="leader-chip">🎤 ${esc(o.leader)}</span>`
+          : `<span class="leader-chip unknown">Unknown</span>`;
+        return `<tr><td>${fmtFull(o.date)}</td><td>${ldr}</td></tr>`;
+      }).join('');
 
       return `
         <div class="hymn-card" onclick="this.classList.toggle('open')">
           <div class="hymn-header">
-            <span class="hymn-name">${highlighted}</span>
+            <span class="hymn-name">${highlight(esc(h.name), query)}</span>
             <span class="${badgeCls}">${count}×</span>
             <span class="chevron">▼</span>
           </div>
-          <div class="hymn-dates">${chips}</div>
+          <div class="occurrences">
+            <table class="occ-table">
+              <thead><tr><th>Date</th><th>Song Leader</th></tr></thead>
+              <tbody>${rows}</tbody>
+            </table>
+          </div>
         </div>`;
     }).join('');
   }
 
   /* ── Helpers ── */
-  function lastDate(h) {
-    return h.filteredDates.length ? h.filteredDates[h.filteredDates.length - 1] : '';
+  function fmtFull(d) {
+    return new Date(d + 'T12:00:00').toLocaleDateString('en-US',
+      { year: 'numeric', month: 'long', day: 'numeric' });
   }
-
-  function fmtFull(dateStr) {
-    return new Date(dateStr + 'T12:00:00')
-      .toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' });
+  function fmtMonYear(d) {
+    return new Date(d + 'T12:00:00').toLocaleDateString('en-US',
+      { year: 'numeric', month: 'short' });
   }
-
-  function fmtMonthYear(dateStr) {
-    return new Date(dateStr + 'T12:00:00')
-      .toLocaleDateString('en-US', { year: 'numeric', month: 'short' });
-  }
-
   function esc(s) {
     return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
   }
-
-  function highlight(escaped, query) {
-    if (!query) return escaped;
-    const safe = query.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-    return escaped.replace(new RegExp(`(${safe})`, 'gi'), '<mark>$1</mark>');
+  function highlight(escaped, q) {
+    if (!q) return escaped;
+    return escaped.replace(
+      new RegExp(`(${q.replace(/[.*+?^${}()|[\]\\]/g,'\\$&')})`, 'gi'),
+      '<mark>$1</mark>'
+    );
   }
 
   loadData();
