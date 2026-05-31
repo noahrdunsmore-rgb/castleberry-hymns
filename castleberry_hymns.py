@@ -268,7 +268,7 @@ def main():
             if findings:
                 for f in findings:
                     leader = f["leader"] or ""
-                    print(f"  ♪ {f['hymn']}" + (f" (led by {leader})" if leader else ""))
+                    print(f"  >> {f['hymn']}" + (f" (led by {leader})" if leader else ""))
                     hymn_occurrences.setdefault(f["hymn"], []).append({
                         "date": date, "leader": leader
                     })
@@ -280,7 +280,7 @@ def main():
         processed.add(vid_id)
         save_hymns(hymn_occurrences)        # save after every video — never lose progress
         save_processed_videos(processed)
-        time.sleep(5)                        # 5s gap — gentler on YouTube
+        time.sleep(10)                       # 10s gap — gentler on YouTube
 
     print(f"\n✓ Done! {len(hymn_occurrences)} unique hymns across all tracked services.")
     print(f"  Saved → {OUTPUT_FILE}")
