@@ -598,6 +598,27 @@
     btn.disabled = false; btn.textContent = 'Request Access'
 
     if (error) { errEl.textContent = error.message; return }
+
+    // Notify admin via Edge Function
+    if (data.user) {
+      try {
+        await fetch('https://nnutbmnmrjhoteqvcvgr.supabase.co/functions/v1/notify-admin', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer sb_publishable_xUNHW4SrOGZOowS3fFC7QA_jJBq3D5T'
+          },
+          body: JSON.stringify({
+            record: {
+              id: data.user.id,
+              email,
+              raw_user_meta_data: { full_name: name }
+            }
+          })
+        })
+      } catch(e) { console.warn('Admin notification failed:', e) }
+    }
+
     document.getElementById('pending-name').textContent = name
     showView('pending')
   }
