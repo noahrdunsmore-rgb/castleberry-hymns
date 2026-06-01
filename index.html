@@ -292,13 +292,16 @@
     .dl-card-name { font-size: 1rem; font-weight: 600; line-height: 1.3; }
     .dl-card-name mark { background: #FFEDC0; color: inherit; border-radius: 3px; padding: 0 2px; }
     .dl-card-meta { font-size: 0.75rem; color: var(--muted); }
+    .dl-btns { margin-top: auto; display: flex; flex-direction: column; gap: 0.4rem; }
     .dl-btn {
-      margin-top: auto; display: inline-flex; align-items: center; gap: 0.4rem;
-      background: var(--red); color: var(--white); border: none; border-radius: 7px;
-      padding: 0.5rem 1rem; font-size: 0.82rem; font-weight: 600;
-      cursor: pointer; text-decoration: none; transition: background 0.15s;
+      display: inline-flex; align-items: center; justify-content: center; gap: 0.4rem;
+      border-radius: 7px; padding: 0.5rem 1rem; font-size: 0.82rem; font-weight: 600;
+      cursor: pointer; text-decoration: none; transition: background 0.15s, border-color 0.15s, color 0.15s;
     }
-    .dl-btn:hover { background: var(--red-dark); }
+    .dl-btn-primary { background: var(--red); color: var(--white); border: 1.5px solid var(--red); }
+    .dl-btn-primary:hover { background: var(--red-dark); border-color: var(--red-dark); }
+    .dl-btn-outline { background: var(--white); color: var(--red); border: 1.5px solid var(--red); }
+    .dl-btn-outline:hover { background: var(--red-pale); }
     .dl-empty { text-align: center; padding: 3rem 1rem; color: var(--muted); grid-column: 1/-1; }
 
     /* ── Misc ── */
@@ -644,32 +647,36 @@
   }
 
   /* ── Downloads ── */
+  const EC = 'hymn-slides/eChoice Output'  // eChoice folder shorthand
+
   const HYMN_DECKS = [
-    { name: 'A Common Love',                    number: '20387', verses: 2,  file: 'hymn-slides/A Common Love.pptx' },
-    { name: 'A Shield About Me',                number: '20188', verses: 1,  file: 'hymn-slides/A Shield About Me.pptx' },
-    { name: 'Ancient Words',                    number: '20181', verses: 2,  file: 'hymn-slides/Ancient Words.pptx' },
-    { name: 'Awesome God',                      number: '20014', verses: 5,  file: 'hymn-slides/Awesome God.pptx' },
-    { name: 'Before The Throne Of God Above',   number: '20368', verses: 4,  file: 'hymn-slides/Before The Throne Of God Above.pptx' },
-    { name: 'Blessed Be Your Name',             number: '20231', verses: 2,  file: 'hymn-slides/Blessed Be Your Name.pptx' },
-    { name: 'Blue Skies And Rainbows',          number: '20498', verses: 3,  file: 'hymn-slides/Blue Skies And Rainbows.pptx' },
-    { name: 'Bringing In The Sheaves',          number: '20731', verses: 3,  file: 'hymn-slides/Bringing In The Sheaves.pptx' },
-    { name: 'Consecrated Hearts',               number: '20766', verses: 3,  file: 'hymn-slides/Consecrated Hearts.pptx' },
-    { name: 'Go To Dark Gethsemane',            number: '21060', verses: 4,  file: 'hymn-slides/Go To Dark Gethsemane.pptx' },
-    { name: 'God Meant It For Good',            number: '21567', verses: 2,  file: 'hymn-slides/God Meant It For Good.pptx' },
-    { name: 'Holy To The Lord',                 number: '20157', verses: 3,  file: 'hymn-slides/Holy To The Lord.pptx' },
-    { name: 'How Deep The Father\'s Love',      number: '20687', verses: 3,  file: 'hymn-slides/How Deep The Father\'s Love.pptx' },
-    { name: 'I Am The Way',                     number: '20156', verses: 2,  file: 'hymn-slides/I Am The Way.pptx' },
-    { name: 'Immanuel, God With Us',            number: '20203', verses: 3,  file: 'hymn-slides/Immanuel, God With Us.pptx' },
-    { name: 'In Christ Alone',                  number: '20171', verses: 4,  file: 'hymn-slides/In Christ Alone.pptx' },
-    { name: 'Jesus, Draw Me Ever Nearer',       number: '20634', verses: 3,  file: 'hymn-slides/Jesus, Draw Me Ever Nearer.pptx' },
-    { name: 'Just As I Am, I Come Broken',      number: '20603', verses: 3,  file: 'hymn-slides/Just As I Am, I Come Broken.pptx' },
-    { name: 'Just For Today',                   number: '20187', verses: 2,  file: 'hymn-slides/Just For Today.pptx' },
-    { name: 'More Like You',                    number: '20159', verses: 1,  file: 'hymn-slides/More Like You.pptx' },
-    { name: 'Sing Hallelujah To The Lord',      number: '21806', verses: 6,  file: 'hymn-slides/Sing Hallelujah To The Lord.pptx' },
-    { name: 'Sweet Hour of Prayer',             number: '073',   verses: 3,  file: 'hymn-slides/Sweet Hour of Prayer.pptx', author: 'William W. Walford, 1842' },
-    { name: 'The Mountain Song',                number: '20277', verses: 2,  file: 'hymn-slides/The Mountain Song.pptx' },
-    { name: 'The Rock Of My Heart',             number: '20164', verses: 3,  file: 'hymn-slides/The Rock Of My Heart.pptx' },
-    { name: 'Thomas\' Song',                    number: '20163', verses: 4,  file: 'hymn-slides/Thomas\' Song.pptx' },
+    // ── eChoice Library ──────────────────────────────────────────────────────
+    { name: 'A Common Love',                  number: '20387', verses: 2, source: 'eChoice', pptx: `${EC}/A Common Love.pptx`,                  pdf: `${EC}/A Common Love - Print.pdf` },
+    { name: 'A Shield About Me',              number: '20188', verses: 1, source: 'eChoice', pptx: `${EC}/A Shield About Me.pptx`,              pdf: `${EC}/A Shield About Me - Print.pdf` },
+    { name: 'Ancient Words',                  number: '20181', verses: 2, source: 'eChoice', pptx: `${EC}/Ancient Words.pptx`,                  pdf: `${EC}/Ancient Words - Print.pdf` },
+    { name: 'Awesome God',                    number: '20014', verses: 5, source: 'eChoice', pptx: `${EC}/Awesome God.pptx`,                    pdf: `${EC}/Awesome God - Print.pdf` },
+    { name: 'Before The Throne Of God Above', number: '20368', verses: 4, source: 'eChoice', pptx: `${EC}/Before The Throne Of God Above.pptx`, pdf: `${EC}/Before The Throne Of God Above - Print.pdf` },
+    { name: 'Blessed Be Your Name',           number: '20231', verses: 2, source: 'eChoice', pptx: `${EC}/Blessed Be Your Name.pptx`,           pdf: `${EC}/Blessed Be Your Name - Print.pdf` },
+    { name: 'Blue Skies And Rainbows',        number: '20498', verses: 3, source: 'eChoice', pptx: `${EC}/Blue Skies And Rainbows.pptx`,        pdf: `${EC}/Blue Skies And Rainbows - Print.pdf` },
+    { name: 'Bringing In The Sheaves',        number: '20731', verses: 3, source: 'eChoice', pptx: `${EC}/Bringing In The Sheaves.pptx`,        pdf: `${EC}/Bringing In The Sheaves - Print.pdf` },
+    { name: 'Consecrated Hearts',             number: '20766', verses: 3, source: 'eChoice', pptx: `${EC}/Consecrated Hearts.pptx`,             pdf: `${EC}/Consecrated Hearts - Print.pdf` },
+    { name: 'Go To Dark Gethsemane',          number: '21060', verses: 4, source: 'eChoice', pptx: `${EC}/Go To Dark Gethsemane.pptx`,          pdf: `${EC}/Go To Dark Gethsemane - Print.pdf` },
+    { name: 'God Meant It For Good',          number: '21567', verses: 2, source: 'eChoice', pptx: `${EC}/God Meant It For Good.pptx`,          pdf: `${EC}/God Meant It For Good - Print.pdf` },
+    { name: 'Holy To The Lord',               number: '20157', verses: 3, source: 'eChoice', pptx: `${EC}/Holy To The Lord.pptx`,               pdf: `${EC}/Holy To The Lord - Print.pdf` },
+    { name: "How Deep The Father's Love",     number: '20687', verses: 3, source: 'eChoice', pptx: `${EC}/How Deep The Father's Love.pptx`,     pdf: `${EC}/How Deep The Father's Love - Print.pdf` },
+    { name: 'I Am The Way',                   number: '20156', verses: 2, source: 'eChoice', pptx: `${EC}/I Am The Way.pptx`,                   pdf: `${EC}/I Am The Way - Print.pdf` },
+    { name: 'Immanuel, God With Us',          number: '20203', verses: 3, source: 'eChoice', pptx: `${EC}/Immanuel, God With Us.pptx`,          pdf: `${EC}/Immanuel, God With Us - Print.pdf` },
+    { name: 'In Christ Alone',                number: '20171', verses: 4, source: 'eChoice', pptx: `${EC}/In Christ Alone.pptx`,                pdf: `${EC}/In Christ Alone - Print.pdf` },
+    { name: 'Jesus, Draw Me Ever Nearer',     number: '20634', verses: 3, source: 'eChoice', pptx: `${EC}/Jesus, Draw Me Ever Nearer.pptx`,     pdf: `${EC}/Jesus, Draw Me Ever Nearer - Print.pdf` },
+    { name: 'Just As I Am, I Come Broken',    number: '20603', verses: 3, source: 'eChoice', pptx: `${EC}/Just As I Am, I Come Broken.pptx`,    pdf: `${EC}/Just As I Am, I Come Broken - Print.pdf` },
+    { name: 'Just For Today',                 number: '20187', verses: 2, source: 'eChoice', pptx: `${EC}/Just For Today.pptx`,                 pdf: `${EC}/Just For Today - Print.pdf` },
+    { name: 'More Like You',                  number: '20159', verses: 1, source: 'eChoice', pptx: `${EC}/More Like You.pptx`,                  pdf: `${EC}/More Like You - Print.pdf` },
+    { name: 'Sing Hallelujah To The Lord',    number: '21806', verses: 6, source: 'eChoice', pptx: `${EC}/Sing Hallelujah To The Lord.pptx`,    pdf: `${EC}/Sing Hallelujah To The Lord - Print.pdf` },
+    { name: "Thomas' Song",                   number: '20163', verses: 4, source: 'eChoice', pptx: `${EC}/Thomas' Song.pptx`,                   pdf: `${EC}/Thomas' Song - Print.pdf` },
+    { name: 'The Mountain Song',              number: '20277', verses: 2, source: 'eChoice', pptx: `${EC}/The Mountain Song.pptx`,              pdf: `${EC}/The Mountain Song - Print.pdf` },
+    { name: 'The Rock Of My Heart',           number: '20164', verses: 3, source: 'eChoice', pptx: `${EC}/The Rock Of My Heart.pptx`,           pdf: `${EC}/The Rock Of My Heart - Print.pdf` },
+    // ── Service Lineup Extracts ───────────────────────────────────────────────
+    { name: 'Sweet Hour of Prayer', number: '073', verses: 3, source: 'Service', pptx: 'hymn-slides/Sweet Hour of Prayer.pptx', author: 'William W. Walford, 1842' },
   ]
 
   function renderDownloads() {
@@ -683,8 +690,15 @@
       <div class="dl-card">
         <div class="dl-card-icon">🎵</div>
         <div class="dl-card-name">${highlight(esc(h.name), q)}</div>
-        <div class="dl-card-meta">Hymnal #${h.number} &nbsp;·&nbsp; ${h.verses} verse${h.verses!==1?'s':''}${h.author?`<br>${esc(h.author)}`:''}</div>
-        <a class="dl-btn" href="${h.file}" download>&#11015; Download Slides</a>
+        <div class="dl-card-meta">
+          #${h.number} &nbsp;·&nbsp; ${h.verses} verse${h.verses!==1?'s':''}
+          ${h.source ? `&nbsp;·&nbsp; <em>${esc(h.source)}</em>` : ''}
+          ${h.author ? `<br>${esc(h.author)}` : ''}
+        </div>
+        <div class="dl-btns">
+          <a class="dl-btn dl-btn-primary" href="${h.pptx}" download>&#11015; Slide Deck (.pptx)</a>
+          ${h.pdf ? `<a class="dl-btn dl-btn-outline" href="${h.pdf}" download>&#11015; Print Sheet (.pdf)</a>` : ''}
+        </div>
       </div>`).join('')
   }
 
