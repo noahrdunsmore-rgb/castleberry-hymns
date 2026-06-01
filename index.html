@@ -460,7 +460,11 @@
 
   /* ── Auth state check ── */
   async function checkAuth() {
-    const { data: { session } } = await sb.auth.getSession()
+    // Force a fresh token so app_metadata changes are reflected immediately
+    const { data: { session } } = await sb.auth.refreshSession()
+      .then(r => r.data.session ? r : sb.auth.getSession())
+      .catch(() => sb.auth.getSession())
+
     if (!session) { showView('auth'); return }
 
     // Check approval: first from auth token metadata (fast, no RLS issues),
