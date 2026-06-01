@@ -463,7 +463,18 @@
     const { data: { session } } = await sb.auth.getSession()
     if (!session) { showView('auth'); return }
 
-    const { data: profile } = await sb
+    // Check approval: first from auth token metadata (fast, no RLS issues),
+    // then fall back to profiles table
+    const tokenApproved = session.user.app_metadata?.approved === true
+
+    if (tokenApproved) {
+      showView('app')
+      loadData()
+      return
+    }
+
+    // Fallback: query profiles table
+    const { data: profile, error } = await sb
       .from('profiles')
       .select('approved, full_name')
       .eq('id', session.user.id)
@@ -473,7 +484,7 @@
       showView('app')
       loadData()
     } else {
-      const name = profile?.full_name || session.user.email
+      const name = profile?.full_name || session.user.user_metadata?.full_name || session.user.email
       document.getElementById('pending-name').textContent = name
       showView('pending')
     }
