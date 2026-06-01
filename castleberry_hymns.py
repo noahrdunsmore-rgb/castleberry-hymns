@@ -306,7 +306,7 @@ def main():
         save_processed_videos(processed)
         time.sleep(10)                       # 10s gap — gentler on YouTube
 
-    print(f"\n✓ Done! {len(hymn_occurrences)} unique hymns across all tracked services.")
+    print(f"\nDone! {len(hymn_occurrences)} unique hymns across all tracked services.")
     print(f"  Saved → {OUTPUT_FILE}")
 
 
