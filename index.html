@@ -296,12 +296,14 @@
     .dl-card.selected { border-color: var(--red); background: var(--red-pale); box-shadow: 0 0 0 2px var(--red); }
     .dl-card-check {
       position: absolute; top: 0.7rem; right: 0.7rem;
-      width: 20px; height: 20px; border-radius: 50%;
-      border: 2px solid var(--border); background: var(--white);
+      width: 22px; height: 22px; border-radius: 50%;
+      border: 2px solid #bbb; background: var(--white);
       display: flex; align-items: center; justify-content: center;
-      font-size: 0.7rem; color: var(--white); transition: all 0.15s; flex-shrink: 0;
+      font-size: 0.75rem; font-weight: 700; color: transparent;
+      transition: all 0.15s; flex-shrink: 0;
     }
-    .dl-card.selected .dl-card-check { background: var(--red); border-color: var(--red); }
+    .dl-card:hover .dl-card-check { border-color: var(--red); }
+    .dl-card.selected .dl-card-check { background: var(--red); border-color: var(--red); color: white; }
     .dl-card-icon { font-size: 1.8rem; line-height: 1; }
     .dl-card-name { font-size: 1rem; font-weight: 600; line-height: 1.3; padding-right: 1.5rem; }
     .dl-card-name mark { background: #FFEDC0; color: inherit; border-radius: 3px; padding: 0 2px; }
@@ -812,7 +814,8 @@
         <div class="dl-card-icon">🎵</div>
         <div class="dl-card-name">${highlight(esc(h.name), q)}</div>
         <div class="dl-card-meta">
-          #${h.number} &nbsp;·&nbsp; ${h.source ? `<em>${esc(h.source)}</em>` : ''}
+          ${h.number ? `#${h.number} &nbsp;·&nbsp; ` : ''}${h.source ? `<em>${esc(h.source)}</em>` : ''}
+          ${h.verses ? `&nbsp;·&nbsp; ${h.verses} verse${h.verses!==1?'s':''}` : ''}
           ${h.author ? `<br>${esc(h.author)}` : ''}
         </div>
         <div class="dl-btns" onclick="event.stopPropagation()">
