@@ -1,3 +1,9 @@
 supabase-credentials.txt
 .env
 *.env
+
+# eChoice application files and raw assets (only built .pptx files belong in git)
+hymn-slides/eChoice/
+hymn-slides/Templates/
+hymn-slides/Application Folder/
+hymn-slides/Sample Songs_ppt/
