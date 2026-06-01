@@ -801,10 +801,11 @@
       (!q      || h.name.toLowerCase().includes(q)) &&
       (!source || h.source === source)
     ).sort((a, b) => {
-      // When filtering by a library, sort numerically by hymnal number
-      // When showing All Libraries (or no number), sort alphabetically
       if (source && a.number && b.number) {
-        return parseFloat(a.number) - parseFloat(b.number)
+        // Numeric sort within a library — strip trailing letters (008A → 8)
+        const na = parseFloat(a.number.replace(/[A-Za-z]+$/, '')) || 0
+        const nb = parseFloat(b.number.replace(/[A-Za-z]+$/, '')) || 0
+        return na - nb
       }
       return a.name.localeCompare(b.name)
     })
