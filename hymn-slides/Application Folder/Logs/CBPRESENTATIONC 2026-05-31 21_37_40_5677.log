@@ -1,0 +1,43 @@
+EventDateTime~EventLevel~EventMsg~EventException~EventLogger~EventID
+2026-05-31 21:37:40.5677~TRACE~-> Main()~~RJStevensMusicPresentationCreator.Program~0000000001
+2026-05-31 21:37:40.5887~TRACE~   .Net Framework Version: 4.8~~RJStevensMusicPresentationCreator.Program~0000000002
+2026-05-31 21:37:40.5887~TRACE~   OS Version: Windows 10 Enterprise Release 2009 (Build 26200.8457)  64-bit~~RJStevensMusicPresentationCreator.Program~0000000003
+2026-05-31 21:37:40.5887~TRACE~   Total RAM Memory: 32.00 GB physical RAM memory~~RJStevensMusicPresentationCreator.Program~0000000004
+2026-05-31 21:37:40.5887~ WARN~System.UnauthorizedAccessException: Access to the registry key 'HKEY_LOCAL_MACHINE\Software\R.J. Stevens Music\Hymns for Worship Electronic Edition\2.3.8843.25471' is denied.%CRLF%   at Microsoft.Win32.RegistryKey.Win32Error(Int32 errorCode, String str)%CRLF%   at Microsoft.Win32.RegistryKey.CreateSubKeyInternal(String subkey, RegistryKeyPermissionCheck permissionCheck, Object registrySecurityObj, RegistryOptions registryOptions)%CRLF%   at Microsoft.Win32.RegistryKey.CreateSubKey(String subkey)%CRLF%   at RJStevensMusicPresentationCreator.Program.Main() in D:\Repos\RJSM\Presentation Creator Application\Applications\PresentationCreator15\Program.cs:line 151~System.UnauthorizedAccessException: Access to the registry key 'HKEY_LOCAL_MACHINE\Software\R.J. Stevens Music\Hymns for Worship Electronic Edition\2.3.8843.25471' is denied.%CRLF%   at Microsoft.Win32.RegistryKey.Win32Error(Int32 errorCode, String str)%CRLF%   at Microsoft.Win32.RegistryKey.CreateSubKeyInternal(String subkey, RegistryKeyPermissionCheck permissionCheck, Object registrySecurityObj, RegistryOptions registryOptions)%CRLF%   at Microsoft.Win32.RegistryKey.CreateSubKey(String subkey)%CRLF%   at RJStevensMusicPresentationCreator.Program.Main() in D:\Repos\RJSM\Presentation Creator Application\Applications\PresentationCreator15\Program.cs:line 151~RJStevensMusicPresentationCreator.Program~0000000005
+2026-05-31 21:37:40.6154~ INFO~UserRegKey: HKEY_CURRENT_USER\Software\R.J. Stevens Music\Hymns for Worship Electronic Edition~~RJStevensMusicPresentationCreator.Program~0000000006
+2026-05-31 21:37:40.6189~ INFO~HymnalInformationFile: C:\ProgramData\Application Data\R.J. Stevens Music\Hymns for Worship Electronic Edition\Information.hixml~~RJStevensMusicPresentationCreator.Program~0000000007
+2026-05-31 21:37:40.6189~ INFO~RegKey: HKEY_CURRENT_USER\Software\R.J. Stevens Music\Hymns for Worship Electronic Edition~~RJStevensMusicPresentationCreator.RJSMRegistry~0000000008
+2026-05-31 21:37:40.6189~ INFO~ProductApplicationDataFolder: C:\ProgramData\Application Data\R.J. Stevens Music\Hymns for Worship Electronic Edition~~RJStevensMusicPresentationCreator.RJSMRegistry~0000000009
+2026-05-31 21:37:40.6189~ INFO~HymnalInformationFolder: C:\ProgramData\Application Data\R.J. Stevens Music\Hymns for Worship Electronic Edition~~RJStevensMusicPresentationCreator.RJSMRegistry~0000000010
+2026-05-31 21:37:40.6189~ INFO~SlideTemplateFolder: C:\ProgramData\Application Data\R.J. Stevens Music\Hymns for Worship Electronic Edition\Templates~~RJStevensMusicPresentationCreator.RJSMRegistry~0000000011
+2026-05-31 21:37:40.6189~ INFO~LastExecutedDeploymentVersion: 0.0.0.0~~RJStevensMusicPresentationCreator.RJSMRegistry~0000000012
+2026-05-31 21:37:40.6189~ INFO~SelectedHymnal: <All>~~RJStevensMusicPresentationCreator.RJSMRegistry~0000000013
+2026-05-31 21:37:40.6189~ INFO~SelectedTemplate: Single Slide Template (Fast Transition)--Widescreen~~RJStevensMusicPresentationCreator.RJSMRegistry~0000000014
+2026-05-31 21:37:40.6189~ INFO~LastImportFolder: C:\ProgramData\Application Data\R.J. Stevens Music\Hymns for Worship Electronic Edition\eChoice~~RJStevensMusicPresentationCreator.RJSMRegistry~0000000015
+2026-05-31 21:37:40.6189~ INFO~DisplayTools: True~~RJStevensMusicPresentationCreator.RJSMRegistry~0000000016
+2026-05-31 21:37:40.6189~ INFO~HymnList: True~~RJStevensMusicPresentationCreator.RJSMRegistry~0000000017
+2026-05-31 21:37:40.6189~ INFO~HymnText: True~~RJStevensMusicPresentationCreator.RJSMRegistry~0000000018
+2026-05-31 21:37:40.6189~ INFO~HymnalSelection: True~~RJStevensMusicPresentationCreator.RJSMRegistry~0000000019
+2026-05-31 21:37:40.6189~ INFO~TemplateSelection: True~~RJStevensMusicPresentationCreator.RJSMRegistry~0000000020
+2026-05-31 21:37:40.6189~ INFO~FillWindow: False~~RJStevensMusicPresentationCreator.RJSMRegistry~0000000021
+2026-05-31 21:37:40.6189~ INFO~PresenterImage: True~~RJStevensMusicPresentationCreator.RJSMRegistry~0000000022
+2026-05-31 21:37:40.6189~ INFO~SelectorWindowPosition: Normal,-7,0,1311,1039~~RJStevensMusicPresentationCreator.RJSMRegistry~0000000023
+2026-05-31 21:37:40.6189~ INFO~SlideWindowPosition: Normal,0,0,0,0~~RJStevensMusicPresentationCreator.RJSMRegistry~0000000024
+2026-05-31 21:37:40.6189~ INFO~ViewSplitPosition: 0.3598455598455598455598455598~~RJStevensMusicPresentationCreator.RJSMRegistry~0000000025
+2026-05-31 21:37:40.6189~ INFO~HymnsSplitPosition: 0.5691788526434195725534308211~~RJStevensMusicPresentationCreator.RJSMRegistry~0000000026
+2026-05-31 21:37:40.6189~ INFO~HymnsListSplitPosition: 0.6837944664031620553359683794~~RJStevensMusicPresentationCreator.RJSMRegistry~0000000027
+2026-05-31 21:37:40.6189~ INFO~InternalViewerSplitPosition: 0.15~~RJStevensMusicPresentationCreator.RJSMRegistry~0000000028
+2026-05-31 21:37:40.6189~ INFO~DateOfFirstLicenseCheck: 3/15/2020 12:00:00 AM~~RJStevensMusicPresentationCreator.RJSMRegistry~0000000029
+2026-05-31 21:37:40.6189~ INFO~ProductImprovementConsent: True~~RJStevensMusicPresentationCreator.RJSMRegistry~0000000030
+2026-05-31 21:37:40.6189~ INFO~RevisedPrinting: (Latest)~~RJStevensMusicPresentationCreator.RJSMRegistry~0000000031
+2026-05-31 21:37:40.6351~TRACE~   Is fast disk? True~~RJStevensMusicPresentationCreator.Program~0000000032
+2026-05-31 21:37:45.0852~ INFO~AllHymnals Length: 4~~RJStevensMusicPresentationCreator.Program~0000000033
+2026-05-31 21:37:45.0892~TRACE~-> AddTemplates()~~RJStevensMusicPresentationCreator.frmSelector~0000000034
+2026-05-31 21:37:45.0892~TRACE~<- AddTemplates()~~RJStevensMusicPresentationCreator.frmSelector~0000000035
+2026-05-31 21:37:45.0892~FATAL~License Mode: Licensed~~RJStevensMusicPresentationCreator.Program~0000000036
+2026-05-31 21:37:45.0892~FATAL~Override to License Mode: Licensed~~RJStevensMusicPresentationCreator.Program~0000000037
+2026-05-31 21:37:45.2953~TRACE~-> RunOneTimeUpdates()~~RJStevensMusicPresentationCreator.Program~0000000038
+2026-05-31 21:37:45.2953~ INFO~Product Version: 2.3.8843.25471~~RJStevensMusicPresentationCreator.Program~0000000039
+2026-05-31 21:37:45.2953~TRACE~LastExecutedDeploymentVersion: 0.0.0.0~~RJStevensMusicPresentationCreator.Program~0000000040
+2026-05-31 21:37:45.2953~TRACE~<- RunOneTimeUpdates()~~RJStevensMusicPresentationCreator.Program~0000000041
+2026-05-31 21:39:04.7323~ WARN~System.Deployment.Application.InvalidDeploymentException: Application identity is not set.%CRLF%   at System.Deployment.Application.ApplicationDeployment.get_CurrentDeployment()%CRLF%   at RJStevensMusicPresentationCreator.Program.get_AssemblyDeploymentHtml() in D:\Repos\RJSM\Presentation Creator Application\Applications\PresentationCreator15\Program.cs:line 1442~System.Deployment.Application.InvalidDeploymentException: Application identity is not set.%CRLF%   at System.Deployment.Application.ApplicationDeployment.get_CurrentDeployment()%CRLF%   at RJStevensMusicPresentationCreator.Program.get_AssemblyDeploymentHtml() in D:\Repos\RJSM\Presentation Creator Application\Applications\PresentationCreator15\Program.cs:line 1442~RJStevensMusicPresentationCreator.Program~0000000042

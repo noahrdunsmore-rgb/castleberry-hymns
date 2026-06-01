@@ -27,6 +27,33 @@
     ]
   },
   {
+    "name": "Be True to Christ",
+    "occurrences": [
+      {
+        "date": "2025-11-17",
+        "leader": ""
+      }
+    ]
+  },
+  {
+    "name": "Be Unto Your Name",
+    "occurrences": [
+      {
+        "date": "2025-12-01",
+        "leader": "Dunmore"
+      }
+    ]
+  },
+  {
+    "name": "Blessed Assurance",
+    "occurrences": [
+      {
+        "date": "2025-11-24",
+        "leader": ""
+      }
+    ]
+  },
+  {
     "name": "Create in Me a Clean Heart",
     "occurrences": [
       {
@@ -49,6 +76,19 @@
     ]
   },
   {
+    "name": "Dig for Truth",
+    "occurrences": [
+      {
+        "date": "2025-06-02",
+        "leader": "Larry"
+      },
+      {
+        "date": "2025-06-09",
+        "leader": ""
+      }
+    ]
+  },
+  {
     "name": "Glorify Thy Name",
     "occurrences": [
       {
@@ -63,6 +103,23 @@
       {
         "date": "2026-02-16",
         "leader": ""
+      }
+    ]
+  },
+  {
+    "name": "God Meant It for Good",
+    "occurrences": [
+      {
+        "date": "2026-01-05",
+        "leader": "Sawier"
+      },
+      {
+        "date": "2026-01-12",
+        "leader": "Sawyer"
+      },
+      {
+        "date": "2026-01-19",
+        "leader": "Sawyer"
       }
     ]
   },
@@ -94,11 +151,29 @@
     ]
   },
   {
+    "name": "He Loved Me So",
+    "occurrences": [
+      {
+        "date": "2025-06-02",
+        "leader": ""
+      }
+    ]
+  },
+  {
     "name": "Heaven Came Down",
     "occurrences": [
       {
         "date": "2026-02-02",
         "leader": "Sawyer"
+      }
+    ]
+  },
+  {
+    "name": "Here We Are but Straying Pilgrims",
+    "occurrences": [
+      {
+        "date": "2025-12-29",
+        "leader": ""
       }
     ]
   },
@@ -157,11 +232,63 @@
     ]
   },
   {
+    "name": "It Was Finished Upon That Cross",
+    "occurrences": [
+      {
+        "date": "2026-01-05",
+        "leader": ""
+      },
+      {
+        "date": "2026-01-12",
+        "leader": "Sawyer"
+      },
+      {
+        "date": "2026-01-19",
+        "leader": "Sawyer"
+      }
+    ]
+  },
+  {
+    "name": "Jesus Is Calling",
+    "occurrences": [
+      {
+        "date": "2025-11-24",
+        "leader": ""
+      }
+    ]
+  },
+  {
+    "name": "Jesus, Only Jesus",
+    "occurrences": [
+      {
+        "date": "2025-06-02",
+        "leader": "Thomas Holder"
+      },
+      {
+        "date": "2025-06-09",
+        "leader": ""
+      },
+      {
+        "date": "2025-06-16",
+        "leader": ""
+      }
+    ]
+  },
+  {
     "name": "Jesus, You Are All to Us",
     "occurrences": [
       {
         "date": "2026-04-20",
         "leader": "Thomas"
+      }
+    ]
+  },
+  {
+    "name": "Joy to the World",
+    "occurrences": [
+      {
+        "date": "2025-12-01",
+        "leader": ""
       }
     ]
   },
@@ -184,11 +311,60 @@
     ]
   },
   {
+    "name": "Love Lifted Me",
+    "occurrences": [
+      {
+        "date": "2025-11-24",
+        "leader": ""
+      }
+    ]
+  },
+  {
+    "name": "Magnificent, Marvelous Love",
+    "occurrences": [
+      {
+        "date": "2025-12-22",
+        "leader": "Noah"
+      }
+    ]
+  },
+  {
+    "name": "Magnificent, Marvelous, Matchless Love",
+    "occurrences": [
+      {
+        "date": "2025-12-08",
+        "leader": "Chad"
+      },
+      {
+        "date": "2025-12-15",
+        "leader": "Noah"
+      }
+    ]
+  },
+  {
+    "name": "More About Jesus",
+    "occurrences": [
+      {
+        "date": "2025-11-24",
+        "leader": ""
+      }
+    ]
+  },
+  {
     "name": "Oh Come, Let Us Sing for Joy",
     "occurrences": [
       {
         "date": "2026-02-09",
         "leader": "Josh Jackson"
+      }
+    ]
+  },
+  {
+    "name": "Redeemed by the Blood of the Lamb",
+    "occurrences": [
+      {
+        "date": "2025-11-24",
+        "leader": ""
       }
     ]
   },
@@ -206,6 +382,31 @@
     "occurrences": [
       {
         "date": "2026-03-30",
+        "leader": ""
+      }
+    ]
+  },
+  {
+    "name": "Shine, Jesus, Shine",
+    "occurrences": [
+      {
+        "date": "2025-06-02",
+        "leader": ""
+      },
+      {
+        "date": "2025-06-09",
+        "leader": ""
+      },
+      {
+        "date": "2025-06-16",
+        "leader": ""
+      },
+      {
+        "date": "2025-12-01",
+        "leader": ""
+      },
+      {
+        "date": "2025-12-01",
         "leader": ""
       }
     ]
@@ -233,6 +434,15 @@
     "occurrences": [
       {
         "date": "2026-01-26",
+        "leader": ""
+      }
+    ]
+  },
+  {
+    "name": "The Last Mile of the Way",
+    "occurrences": [
+      {
+        "date": "2025-11-24",
         "leader": ""
       }
     ]
@@ -283,11 +493,37 @@
     ]
   },
   {
+    "name": "Thy Word",
+    "occurrences": [
+      {
+        "date": "2025-11-17",
+        "leader": "Chad"
+      }
+    ]
+  },
+  {
     "name": "To God Be the Glory",
     "occurrences": [
       {
         "date": "2026-03-23",
         "leader": "Jack"
+      }
+    ]
+  },
+  {
+    "name": "When I Go Home",
+    "occurrences": [
+      {
+        "date": "2025-12-08",
+        "leader": ""
+      },
+      {
+        "date": "2025-12-15",
+        "leader": ""
+      },
+      {
+        "date": "2025-12-22",
+        "leader": ""
       }
     ]
   },

@@ -1,0 +1,57 @@
+EventDateTime~EventLevel~EventMsg~EventException~EventLogger~EventID
+2024-07-03 13:52:12.7644~TRACE~-> Main()~~RJStevensMusicPresentationCreator.Program~0000000001
+2024-07-03 13:52:12.8054~TRACE~   .Net Framework Version: 4.8~~RJStevensMusicPresentationCreator.Program~0000000002
+2024-07-03 13:52:12.8054~TRACE~   OS Version: Windows 10 Enterprise Release 2009 (Build 19045.4529)  64-bit~~RJStevensMusicPresentationCreator.Program~0000000003
+2024-07-03 13:52:12.8054~TRACE~   Total RAM Memory: 8.00 GB physical RAM memory~~RJStevensMusicPresentationCreator.Program~0000000004
+2024-07-03 13:52:12.8054~ WARN~System.UnauthorizedAccessException: Access to the registry key 'HKEY_LOCAL_MACHINE\Software\R.J. Stevens Music\Hymns for Worship Electronic Edition\2.3.8843.25471' is denied.%CRLF%   at Microsoft.Win32.RegistryKey.Win32Error(Int32 errorCode, String str)%CRLF%   at Microsoft.Win32.RegistryKey.CreateSubKeyInternal(String subkey, RegistryKeyPermissionCheck permissionCheck, Object registrySecurityObj, RegistryOptions registryOptions)%CRLF%   at Microsoft.Win32.RegistryKey.CreateSubKey(String subkey)%CRLF%   at RJStevensMusicPresentationCreator.Program.Main() in D:\Repos\RJSM\Presentation Creator Application\Applications\PresentationCreator15\Program.cs:line 151~System.UnauthorizedAccessException: Access to the registry key 'HKEY_LOCAL_MACHINE\Software\R.J. Stevens Music\Hymns for Worship Electronic Edition\2.3.8843.25471' is denied.%CRLF%   at Microsoft.Win32.RegistryKey.Win32Error(Int32 errorCode, String str)%CRLF%   at Microsoft.Win32.RegistryKey.CreateSubKeyInternal(String subkey, RegistryKeyPermissionCheck permissionCheck, Object registrySecurityObj, RegistryOptions registryOptions)%CRLF%   at Microsoft.Win32.RegistryKey.CreateSubKey(String subkey)%CRLF%   at RJStevensMusicPresentationCreator.Program.Main() in D:\Repos\RJSM\Presentation Creator Application\Applications\PresentationCreator15\Program.cs:line 151~RJStevensMusicPresentationCreator.Program~0000000005
+2024-07-03 13:52:12.8354~ INFO~UserRegKey: HKEY_CURRENT_USER\Software\R.J. Stevens Music\Hymns for Worship Electronic Edition~~RJStevensMusicPresentationCreator.Program~0000000006
+2024-07-03 13:52:12.8354~ INFO~HymnalInformationFile: C:\ProgramData\Application Data\R.J. Stevens Music\Hymns for Worship Electronic Edition\Information.hixml~~RJStevensMusicPresentationCreator.Program~0000000007
+2024-07-03 13:52:12.8354~ INFO~RegKey: HKEY_CURRENT_USER\Software\R.J. Stevens Music\Hymns for Worship Electronic Edition~~RJStevensMusicPresentationCreator.RJSMRegistry~0000000008
+2024-07-03 13:52:12.8354~ INFO~ProductApplicationDataFolder: C:\ProgramData\Application Data\R.J. Stevens Music\Hymns for Worship Electronic Edition~~RJStevensMusicPresentationCreator.RJSMRegistry~0000000009
+2024-07-03 13:52:12.8354~ INFO~HymnalInformationFolder: C:\ProgramData\Application Data\R.J. Stevens Music\Hymns for Worship Electronic Edition~~RJStevensMusicPresentationCreator.RJSMRegistry~0000000010
+2024-07-03 13:52:12.8494~ INFO~SlideTemplateFolder: C:\ProgramData\Application Data\R.J. Stevens Music\Hymns for Worship Electronic Edition\Templates~~RJStevensMusicPresentationCreator.RJSMRegistry~0000000011
+2024-07-03 13:52:12.8494~ INFO~LastExecutedDeploymentVersion: 0.0.0.0~~RJStevensMusicPresentationCreator.RJSMRegistry~0000000012
+2024-07-03 13:52:12.8494~ INFO~SelectedHymnal: <All>~~RJStevensMusicPresentationCreator.RJSMRegistry~0000000013
+2024-07-03 13:52:12.8494~ INFO~SelectedTemplate: Single Slide Template (Fast Transition)~~RJStevensMusicPresentationCreator.RJSMRegistry~0000000014
+2024-07-03 13:52:12.8494~ INFO~LastImportFolder: C:\Users\cofc_\Downloads~~RJStevensMusicPresentationCreator.RJSMRegistry~0000000015
+2024-07-03 13:52:12.8494~ INFO~DisplayTools: True~~RJStevensMusicPresentationCreator.RJSMRegistry~0000000016
+2024-07-03 13:52:12.8654~ INFO~HymnList: True~~RJStevensMusicPresentationCreator.RJSMRegistry~0000000017
+2024-07-03 13:52:12.8654~ INFO~HymnText: True~~RJStevensMusicPresentationCreator.RJSMRegistry~0000000018
+2024-07-03 13:52:12.8654~ INFO~HymnalSelection: True~~RJStevensMusicPresentationCreator.RJSMRegistry~0000000019
+2024-07-03 13:52:12.8654~ INFO~TemplateSelection: True~~RJStevensMusicPresentationCreator.RJSMRegistry~0000000020
+2024-07-03 13:52:12.8654~ INFO~FillWindow: False~~RJStevensMusicPresentationCreator.RJSMRegistry~0000000021
+2024-07-03 13:52:12.8654~ INFO~PresenterImage: True~~RJStevensMusicPresentationCreator.RJSMRegistry~0000000022
+2024-07-03 13:52:12.8654~ INFO~SelectorWindowPosition: Normal,448,66,1024,908~~RJStevensMusicPresentationCreator.RJSMRegistry~0000000023
+2024-07-03 13:52:12.8654~ INFO~SlideWindowPosition: Normal,0,0,0,0~~RJStevensMusicPresentationCreator.RJSMRegistry~0000000024
+2024-07-03 13:52:12.8654~ INFO~ViewSplitPosition: 0.1329365079365079365079365079~~RJStevensMusicPresentationCreator.RJSMRegistry~0000000025
+2024-07-03 13:52:12.8654~ INFO~HymnsSplitPosition: 0.6833773087071240105540897098~~RJStevensMusicPresentationCreator.RJSMRegistry~0000000026
+2024-07-03 13:52:12.8654~ INFO~HymnsListSplitPosition: 0.8532818532818532818532818533~~RJStevensMusicPresentationCreator.RJSMRegistry~0000000027
+2024-07-03 13:52:12.8654~ INFO~InternalViewerSplitPosition: 0.22~~RJStevensMusicPresentationCreator.RJSMRegistry~0000000028
+2024-07-03 13:52:12.8654~ INFO~DateOfFirstLicenseCheck: 3/15/2020 12:00:00 AM~~RJStevensMusicPresentationCreator.RJSMRegistry~0000000029
+2024-07-03 13:52:12.8654~ INFO~ProductImprovementConsent: False~~RJStevensMusicPresentationCreator.RJSMRegistry~0000000030
+2024-07-03 13:52:12.8654~ INFO~RevisedPrinting: 15~~RJStevensMusicPresentationCreator.RJSMRegistry~0000000031
+2024-07-03 13:52:12.8654~TRACE~   Is fast disk? True~~RJStevensMusicPresentationCreator.Program~0000000032
+2024-07-03 13:52:15.2652~ INFO~AllHymnals Length: 3~~RJStevensMusicPresentationCreator.Program~0000000033
+2024-07-03 13:52:15.2812~TRACE~-> AddTemplates()~~RJStevensMusicPresentationCreator.frmSelector~0000000034
+2024-07-03 13:52:15.2812~TRACE~<- AddTemplates()~~RJStevensMusicPresentationCreator.frmSelector~0000000035
+2024-07-03 13:52:15.2812~FATAL~License Mode: Licensed~~RJStevensMusicPresentationCreator.Program~0000000036
+2024-07-03 13:52:15.2812~FATAL~Override to License Mode: Licensed~~RJStevensMusicPresentationCreator.Program~0000000037
+2024-07-03 13:52:15.6419~TRACE~-> RunOneTimeUpdates()~~RJStevensMusicPresentationCreator.Program~0000000038
+2024-07-03 13:52:15.6419~ INFO~Product Version: 2.3.8843.25471~~RJStevensMusicPresentationCreator.Program~0000000039
+2024-07-03 13:52:15.6419~ INFO~Deployment Version: 2.2.0.7~~RJStevensMusicPresentationCreator.Program~0000000040
+2024-07-03 13:52:15.6479~TRACE~LastExecutedDeploymentVersion: 0.0.0.0~~RJStevensMusicPresentationCreator.Program~0000000041
+2024-07-03 13:52:15.6479~TRACE~<- RunOneTimeUpdates()~~RJStevensMusicPresentationCreator.Program~0000000042
+2024-07-03 13:56:45.0894~DEBUG~-- Disable(DisableCount = 0)~~RJStevensMusicPresentationCreator.frmSelector~0000000043
+2024-07-03 13:56:45.2268~DEBUG~-- SetMessage(messageText = Preparing slides for the selected hymns...)~~RJStevensMusicPresentationCreator.frmSelector~0000000044
+2024-07-03 13:56:45.2418~TRACE~Text changing from '' to 'End of Verse 1'~~RJStevensMusicPresentationCreator.SlideToAdd~0000000045
+2024-07-03 13:56:45.2418~TRACE~Text changing from '' to 'End of Verse 2'~~RJStevensMusicPresentationCreator.SlideToAdd~0000000046
+2024-07-03 13:56:45.2418~TRACE~Text changing from '' to 'End of Song'~~RJStevensMusicPresentationCreator.SlideToAdd~0000000047
+2024-07-03 13:56:45.2418~TRACE~Text changing from '' to 'End of Verse 1'~~RJStevensMusicPresentationCreator.SlideToAdd~0000000048
+2024-07-03 13:56:45.2418~TRACE~Text changing from '' to 'End of Song'~~RJStevensMusicPresentationCreator.SlideToAdd~0000000049
+2024-07-03 13:56:45.2418~DEBUG~-- SetMessage(messageText = )~~RJStevensMusicPresentationCreator.frmSelector~0000000050
+2024-07-03 13:56:45.2418~DEBUG~-- Enable(overrideCount = False, DisableCount = 1, NoEnable = False)~~RJStevensMusicPresentationCreator.frmSelector~0000000051
+2024-07-03 13:57:27.6877~DEBUG~-- Disable(DisableCount = 0)~~RJStevensMusicPresentationCreator.frmSelector~0000000052
+2024-07-03 13:57:28.6307~DEBUG~-- SetMessage(messageText = Saving PowerPoint Presentation file...)~~RJStevensMusicPresentationCreator.frmSelector~0000000053
+2024-07-03 13:57:34.2318~DEBUG~-- SetMessage(messageText = )~~RJStevensMusicPresentationCreator.frmSelector~0000000054
+2024-07-03 13:57:34.2318~DEBUG~-- Enable(overrideCount = False, DisableCount = 1, NoEnable = False)~~RJStevensMusicPresentationCreator.frmSelector~0000000055
+2024-07-03 13:57:52.6446~TRACE~<- Main()~~RJStevensMusicPresentationCreator.Program~0000000056

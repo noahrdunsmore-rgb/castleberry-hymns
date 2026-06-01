@@ -50,13 +50,37 @@ def load_existing_hymns() -> dict:
     return {}
 
 
+def normalize_hymn_name(name: str) -> str:
+    """Return a lowercase, punctuation-stripped key for fuzzy deduplication."""
+    return re.sub(r"[^\w\s]", "", name).lower().strip()
+
+
 def save_hymns(hymn_occurrences: dict) -> None:
+    # Merge entries whose normalized names are identical (handles punctuation variants)
+    merged: dict[str, dict] = {}
+    for name, occs in hymn_occurrences.items():
+        key = normalize_hymn_name(name)
+        if key not in merged:
+            merged[key] = {"name": name, "occurrences": list(occs)}
+        else:
+            # Prefer the title with more punctuation/length (looks nicer)
+            if len(name) > len(merged[key]["name"]):
+                merged[key]["name"] = name
+            merged[key]["occurrences"].extend(occs)
+            # Deduplicate by date
+            seen, deduped = set(), []
+            for o in merged[key]["occurrences"]:
+                if o["date"] not in seen:
+                    seen.add(o["date"])
+                    deduped.append(o)
+            merged[key]["occurrences"] = deduped
+
     output = [
         {
-            "name": name,
-            "occurrences": sorted(occs, key=lambda x: x["date"]),
+            "name": v["name"],
+            "occurrences": sorted(v["occurrences"], key=lambda x: x["date"]),
         }
-        for name, occs in sorted(hymn_occurrences.items())
+        for v in sorted(merged.values(), key=lambda x: x["name"])
     ]
     with open(OUTPUT_FILE, "w", encoding="utf-8") as f:
         json.dump(output, f, indent=2, ensure_ascii=False)

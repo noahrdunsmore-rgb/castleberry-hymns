@@ -1,0 +1,160 @@
+<!doctype html>
+<html lang="en">
+<head>
+<title>Expert Mode Entry Documentation</title>
+<meta http-equiv='Content-Type' content='text/html; charset=iso-8859-1'>
+<link rel='stylesheet' href='bootstrap.min.css'>
+<style>
+<!--
+code {
+	color: black !important;
+	background-color: lightyellow !important;
+	font-size: 16px;
+	font-weight: bold;
+}
+h4 {
+	color: midnightblue !important;
+}
+.badge {
+	background-color: midnightblue !important;
+	color: lightyellow !important;
+	margin-right: 5px;
+}
+-->
+</style>
+</head>
+
+<body style='background-color: whitesmoke; color: midnightblue;'>
+<div class='container-fluid'>
+<a href='ExpertModeEntryHelp.html' target='_blank'>Open this in your web browser...</a>
+<hr id='topRule' />
+<p>To add hymns, enter the expert mode instructions, then press <kbd>ENTER</kbd>.</p>
+<p>Separate hymn numbers with a semi-colon <kbd>;</kbd>.  Parts of a hymn can optionally follow the number using a colon <kbd>:</kbd> for separation.</p>
+<p>Format <code>###[:vv...][;###[:vv...]]</code></p>
+<p>Where <code>###</code> is a hymn number, <code>v</code> is a verse number, <code>C</code> for chorus, <code>D</code> for coda, <code>R</code> for refrain, <code>S</code> for sanctus, and <code>A</code> for amen.</p>
+<p>(Internal Viewer ONLY – does not export) To add a blank text-only slide 
+enter <kbd>W</kbd> for white or <kbd>B</kbd> for black instead of a hymn number. Text can be added 
+on these blank slides using a colon <kbd>:</kbd> then typing the message to be displayed.</p>
+<h4 class='text-primary text-bold'>Numeric Keypad</h4>
+<p>Since Expert Mode is used (in conjunction with Internal Viewer) during a song worship service where 
+speed is key, the vast majority of hymns can be specified using only the numeric 
+keypad.  The semi-colon is entered by pressing the slash <kbd>/</kbd> key, the colon is 
+entered by pressing the minus <kbd>-</kbd> key, and the chorus can be specified using the 
+plus <kbd>+</kbd> key.  All other non-numeric keys are must be entered using the alpha portion of the keyboard.</p>
+<p>Expert Mode Entry allows the user to press <kbd>*</kbd> to jump to the currently displayed
+hymn part in the Displayed Hymn Tree if the Internal Viewer is visible.</p>
+
+<h4 class='text-primary text-bold'>Examples</h4>
+<table class='table table-striped table-borderless'>
+<thead>
+<tr>
+<th scope='col'>#</th>
+<th scope='col'>Example Description</th>
+<th scope='col'>Example Entry <small>(press <kbd>ENTER</kbd> after typing into Expert Mode Entry)</small></th>
+<th scope='col'>Hymn Portions Added to List</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<th>1</th>
+<th>Entire HFWR hymn</th>
+<th><code>1</code></th>
+<td>
+<span style='margin-right: 15px;'>&#119070;&nbsp;HFW-Revised #1</span>Verse 1, Verse 2, Verse 3, Verse 4
+</td>
+</tr>
+<tr>
+<th>2</th>
+<th>Entire HFWS hymn</th>
+<th><code>1002</code></th>
+<td>
+<span style='margin-right: 15px;'>&#119070;&nbsp;HFW-Supplement #2</span>Verse 1, Chorus, Verse 2, Chorus, Verse 3, Chorus
+</td>
+</tr>
+<tr>
+<th>3</th>
+<th>Multiple entire hymns</th>
+<th><code>1;534;1002;20152</code></th>
+<td>
+<span style='margin-right: 15px;'>&#119070;&nbsp;HFW-Revised #1</span>Verse 1, Verse 2, Verse 3, Verse 4<br/>
+<span style='margin-right: 15px;'>&#119070;&nbsp;HFW-Revised #534</span>Verse 1, Chorus, Verse 2, Chorus, Verse 3, Chorus<br/>
+<span style='margin-right: 15px;'>&#119070;&nbsp;HFW-Supplement #2</span>Verse 1, Chorus, Verse 2, Chorus, Verse 3, Chorus</br/>
+<span style='margin-right: 15px;'>&#119070;&nbsp;HFW-eChoice #20152</span>Verse 1, Verse 2, Verse 3, Coda
+</td>
+</tr>
+<tr>
+<th>4</th>
+<th>Certain verses</th>
+<th><code>1:124</code></th>
+<td>
+<span style='margin-right: 15px;'>&#119070;&nbsp;HFW-Revised #1</span>Verse 1, Verse 2, Verse 4
+</td>
+</tr>
+<tr>
+<th>5</th>
+<th>Chorus placement</th>
+<th><code>38:12C34C</code></th>
+<td>
+<span style='margin-right: 15px;'>&#119070;&nbsp;HFW-Revised #38</span>Verse 1, Verse 2, Chorus, Verse 3, Verse 4, Chorus
+</td>
+</tr>
+<tr>
+<th>6</th>
+<th>Combination</th>
+<th><code>1:124;534:12C3C;1002:13;20188</code></th>
+<td>
+<span style='margin-right: 15px;'>&#119070;&nbsp;HFW-Revised #1</span>Verse 1, Verse 2, Verse 4<br/>
+<span style='margin-right: 15px;'>&#119070;&nbsp;HFW-Revised #534</span>Verse 1, Verse 2, Chorus, Verse 3, Chorus<br/>
+<span style='margin-right: 15px;'>&#119070;&nbsp;HFW-Supplement #2</span>Verse 1, Chorus, Verse 3, Chorus</br/>
+<span style='margin-right: 15px;'>&#119070;&nbsp;HFW-eChoice #20188</span>Verse 1
+</td>
+</tr>
+<tr>
+<td colspan='4'>
+<h4 class='text-primary text-bold'>Use of the Auto Add Chorus button</h4>
+When <b>Auto Add Chorus</b> button is enabled (default), the specified parts 
+of the hymn will be augmented with a chorus per verse if no chorus is included.
+</td>
+</tr>
+<tr>
+<th>7</th>
+<th>Auto Add Chorus ON</th>
+<th><code>5:14</code></th>
+<td>
+<span style='margin-right: 15px;'>&#119070;&nbsp;HFW-Revised #5</span>Verse 1, Chorus, Verse 4, Chorus
+</td>
+</tr>
+<tr>
+<th>8</th>
+<th>Auto Add Chorus OFF</th>
+<th><code>5:14</code></th>
+<td>
+<span style='margin-right: 15px;'>&#119070;&nbsp;HFW-Revised #5</span>Verse 1, Verse 4
+</td>
+</tr>
+<tr>
+<td colspan='4'>
+<h4 class='text-primary text-bold'>Blank/Text-only Slides (Internal Viewer ONLY)</h4>
+To add a blank slide, enter <kbd>W</kbd> (for white) or <kbd>B</kbd> (for 
+black).  Optional text can be specified after a colon but the text may not 
+include a semicolon since that indicates the next section of the entry.
+</td>
+</tr>
+<tr>
+<th>9</th>
+<th>Combination with blank slides</th>
+<th><code>1;W:Prayer;534:123C;B:Lord’s Supper;1002</code></th>
+<td>
+<span style='margin-right: 15px;'>&#119070;&nbsp;HFW-Revised #1</span>Verse 1, Verse 2, Verse 3, Verse 4<br/>
+<span style='margin-right: 15px;'>&#119081;&nbsp;Blank Slide (White)</span>Prayer<br/>
+<span style='margin-right: 15px;'>&#119070;&nbsp;HFW-Revised #534</span>Verse 1, Verse 2, Verse 3, Chorus<br/>
+<span style='margin-right: 15px;'>&#119081;&nbsp;Blank Slide (Black)</span>Lord's Supper<br/>
+<span style='margin-right: 15px;'>&#119070;&nbsp;HFW-Supplement #2</span>Verse 1, Chorus, Verse 2, Chorus, Verse 3, Chorus
+</td>
+</tr>
+</tbody>
+<table>
+
+</div>
+</body>
+</html>
