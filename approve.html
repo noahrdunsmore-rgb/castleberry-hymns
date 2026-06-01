@@ -37,16 +37,13 @@
       }
 
       try {
-        const res = await fetch(`${SUPABASE_URL}/functions/v1/aprove-user?token=${token}`, {
+        const res  = await fetch(`${SUPABASE_URL}/functions/v1/aprove-user?token=${token}`, {
           method: 'GET',
           headers: { 'Authorization': `Bearer ${ANON_KEY}` }
         })
-        const text = await res.text()
-
-        // The function returns HTML — extract the message from h2
-        const match = text.match(/<h2[^>]*>(.*?)<\/h2>/)
-        const msg   = match ? match[1] : (res.ok ? 'User approved!' : 'Something went wrong.')
-        const ok    = res.ok
+        const data = await res.json()
+        const msg  = data.message || (res.ok ? 'User approved!' : 'Something went wrong.')
+        const ok   = data.success === true
 
         el.innerHTML = `
           <h2 class="${ok ? 'success' : 'error'}">${msg}</h2>
