@@ -800,7 +800,14 @@
     const filtered = HYMN_DECKS.filter(h =>
       (!q      || h.name.toLowerCase().includes(q)) &&
       (!source || h.source === source)
-    )
+    ).sort((a, b) => {
+      // When filtering by a library, sort numerically by hymnal number
+      // When showing All Libraries (or no number), sort alphabetically
+      if (source && a.number && b.number) {
+        return parseFloat(a.number) - parseFloat(b.number)
+      }
+      return a.name.localeCompare(b.name)
+    })
     document.getElementById('dl-meta').textContent =
       `${filtered.length} slide deck${filtered.length!==1?'s':''} available` + (q ? ` matching "${q}"` : '')
     const grid = document.getElementById('dl-grid')
