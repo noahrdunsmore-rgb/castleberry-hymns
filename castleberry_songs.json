@@ -9,6 +9,15 @@
     ]
   },
   {
+    "name": "All Things Praise Thee",
+    "occurrences": [
+      {
+        "date": "2025-07-28",
+        "leader": ""
+      }
+    ]
+  },
+  {
     "name": "All the Way My Savior Leads Me",
     "occurrences": [
       {
@@ -23,6 +32,15 @@
       {
         "date": "2026-04-06",
         "leader": "Thomas"
+      }
+    ]
+  },
+  {
+    "name": "Be Still, My Soul",
+    "occurrences": [
+      {
+        "date": "2025-07-14",
+        "leader": "Cody"
       }
     ]
   },
@@ -48,14 +66,61 @@
     "name": "Blessed Assurance",
     "occurrences": [
       {
+        "date": "2025-09-09",
+        "leader": ""
+      },
+      {
         "date": "2025-11-24",
         "leader": ""
       }
     ]
   },
   {
+    "name": "Come Just as You Are",
+    "occurrences": [
+      {
+        "date": "2025-08-04",
+        "leader": "Larry"
+      },
+      {
+        "date": "2025-08-18",
+        "leader": ""
+      },
+      {
+        "date": "2025-08-25",
+        "leader": ""
+      }
+    ]
+  },
+  {
+    "name": "Come, Thou Fount of Every Blessing",
+    "occurrences": [
+      {
+        "date": "2025-09-15",
+        "leader": ""
+      }
+    ]
+  },
+  {
+    "name": "Count Your Blessings",
+    "occurrences": [
+      {
+        "date": "2025-09-29",
+        "leader": "Josh"
+      }
+    ]
+  },
+  {
     "name": "Create in Me a Clean Heart",
     "occurrences": [
+      {
+        "date": "2025-08-04",
+        "leader": "Larry"
+      },
+      {
+        "date": "2025-08-25",
+        "leader": ""
+      },
       {
         "date": "2026-04-06",
         "leader": "Chad"
@@ -89,11 +154,29 @@
     ]
   },
   {
+    "name": "Give Me Thy Heart",
+    "occurrences": [
+      {
+        "date": "2025-09-01",
+        "leader": "Larry"
+      }
+    ]
+  },
+  {
     "name": "Glorify Thy Name",
     "occurrences": [
       {
         "date": "2026-02-23",
         "leader": "Jim"
+      }
+    ]
+  },
+  {
+    "name": "God Is Love",
+    "occurrences": [
+      {
+        "date": "2025-09-01",
+        "leader": ""
       }
     ]
   },
@@ -111,7 +194,7 @@
     "occurrences": [
       {
         "date": "2026-01-05",
-        "leader": "Sawier"
+        "leader": "Sawyer"
       },
       {
         "date": "2026-01-12",
@@ -120,6 +203,15 @@
       {
         "date": "2026-01-19",
         "leader": "Sawyer"
+      }
+    ]
+  },
+  {
+    "name": "Have Thine Own Way, Lord",
+    "occurrences": [
+      {
+        "date": "2025-09-01",
+        "leader": ""
       }
     ]
   },
@@ -135,6 +227,10 @@
   {
     "name": "He Is in Our Midst",
     "occurrences": [
+      {
+        "date": "2025-08-11",
+        "leader": ""
+      },
       {
         "date": "2026-02-16",
         "leader": ""
@@ -156,6 +252,15 @@
       {
         "date": "2025-06-02",
         "leader": ""
+      }
+    ]
+  },
+  {
+    "name": "Heal Us All",
+    "occurrences": [
+      {
+        "date": "2025-10-27",
+        "leader": "Nathan Hershey"
       }
     ]
   },
@@ -187,10 +292,28 @@
     ]
   },
   {
+    "name": "His Blood",
+    "occurrences": [
+      {
+        "date": "2025-08-04",
+        "leader": "Larry"
+      }
+    ]
+  },
+  {
     "name": "How Deep the Father's Love for Us",
     "occurrences": [
       {
         "date": "2026-02-02",
+        "leader": ""
+      }
+    ]
+  },
+  {
+    "name": "How Sweet, How Heavenly",
+    "occurrences": [
+      {
+        "date": "2025-07-21",
         "leader": ""
       }
     ]
@@ -209,6 +332,15 @@
     "occurrences": [
       {
         "date": "2026-03-30",
+        "leader": ""
+      }
+    ]
+  },
+  {
+    "name": "I Want to Be a Worker for the Lord",
+    "occurrences": [
+      {
+        "date": "2025-09-09",
         "leader": ""
       }
     ]
@@ -275,11 +407,29 @@
     ]
   },
   {
+    "name": "Jesus, Thou Joy of Loving Hearts",
+    "occurrences": [
+      {
+        "date": "2025-09-15",
+        "leader": ""
+      }
+    ]
+  },
+  {
     "name": "Jesus, You Are All to Us",
     "occurrences": [
       {
         "date": "2026-04-20",
         "leader": "Thomas"
+      }
+    ]
+  },
+  {
+    "name": "Joshua Fit the Battle of Jericho",
+    "occurrences": [
+      {
+        "date": "2025-06-30",
+        "leader": ""
       }
     ]
   },
@@ -293,6 +443,15 @@
     ]
   },
   {
+    "name": "King of Kings",
+    "occurrences": [
+      {
+        "date": "2025-09-01",
+        "leader": "Larry"
+      }
+    ]
+  },
+  {
     "name": "Light the Fire",
     "occurrences": [
       {
@@ -302,8 +461,25 @@
     ]
   },
   {
+    "name": "Lord, We Come Before Thee Now",
+    "occurrences": [
+      {
+        "date": "2025-10-13",
+        "leader": ""
+      }
+    ]
+  },
+  {
     "name": "Love Divine, All Loves Excelling",
     "occurrences": [
+      {
+        "date": "2025-09-01",
+        "leader": ""
+      },
+      {
+        "date": "2025-09-09",
+        "leader": ""
+      },
       {
         "date": "2026-02-02",
         "leader": ""
@@ -351,11 +527,47 @@
     ]
   },
   {
+    "name": "O the Blood",
+    "occurrences": [
+      {
+        "date": "2025-08-18",
+        "leader": ""
+      }
+    ]
+  },
+  {
     "name": "Oh Come, Let Us Sing for Joy",
     "occurrences": [
       {
         "date": "2026-02-09",
         "leader": "Josh Jackson"
+      }
+    ]
+  },
+  {
+    "name": "Oh, the Blood",
+    "occurrences": [
+      {
+        "date": "2025-08-25",
+        "leader": ""
+      }
+    ]
+  },
+  {
+    "name": "Praise the Lord, Praise the Lord",
+    "occurrences": [
+      {
+        "date": "2025-09-09",
+        "leader": ""
+      }
+    ]
+  },
+  {
+    "name": "Redeemed",
+    "occurrences": [
+      {
+        "date": "2025-08-04",
+        "leader": ""
       }
     ]
   },
@@ -412,10 +624,28 @@
     ]
   },
   {
+    "name": "Shout Hallelujah",
+    "occurrences": [
+      {
+        "date": "2025-06-30",
+        "leader": "Noah Dunmore"
+      }
+    ]
+  },
+  {
     "name": "Soldiers of Christ Arise",
     "occurrences": [
       {
         "date": "2026-01-26",
+        "leader": ""
+      }
+    ]
+  },
+  {
+    "name": "Standing on the Promises",
+    "occurrences": [
+      {
+        "date": "2025-09-09",
         "leader": ""
       }
     ]
@@ -469,6 +699,10 @@
     "name": "There Is a Redeemer",
     "occurrences": [
       {
+        "date": "2025-09-01",
+        "leader": ""
+      },
+      {
         "date": "2026-01-26",
         "leader": ""
       }
@@ -505,8 +739,30 @@
     "name": "To God Be the Glory",
     "occurrences": [
       {
+        "date": "2025-09-09",
+        "leader": ""
+      },
+      {
         "date": "2026-03-23",
         "leader": "Jack"
+      }
+    ]
+  },
+  {
+    "name": "Today Is the Day",
+    "occurrences": [
+      {
+        "date": "2025-06-30",
+        "leader": ""
+      }
+    ]
+  },
+  {
+    "name": "Victory in Jesus",
+    "occurrences": [
+      {
+        "date": "2025-09-09",
+        "leader": ""
       }
     ]
   },
@@ -541,6 +797,19 @@
     ]
   },
   {
+    "name": "Whom Shall I Fear",
+    "occurrences": [
+      {
+        "date": "2025-08-04",
+        "leader": "Larry"
+      },
+      {
+        "date": "2025-08-25",
+        "leader": ""
+      }
+    ]
+  },
+  {
     "name": "Work for the Night Is Coming",
     "occurrences": [
       {
@@ -564,6 +833,19 @@
       {
         "date": "2026-03-30",
         "leader": ""
+      }
+    ]
+  },
+  {
+    "name": "Zion Sing",
+    "occurrences": [
+      {
+        "date": "2025-10-13",
+        "leader": ""
+      },
+      {
+        "date": "2025-10-27",
+        "leader": "Nathan Hershey"
       }
     ]
   }
