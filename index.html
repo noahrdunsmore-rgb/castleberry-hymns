@@ -608,13 +608,7 @@
             'Content-Type': 'application/json',
             'Authorization': 'Bearer sb_publishable_xUNHW4SrOGZOowS3fFC7QA_jJBq3D5T'
           },
-          body: JSON.stringify({
-            record: {
-              id: data.user.id,
-              email,
-              raw_user_meta_data: { full_name: name }
-            }
-          })
+          body: JSON.stringify({ email, userId: data.user.id })
         })
       } catch(e) { console.warn('Admin notification failed:', e) }
     }
