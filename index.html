@@ -381,6 +381,24 @@
         <input class="auth-input" type="password" id="signin-password" placeholder="Password" onkeydown="if(event.key==='Enter')signIn()">
         <div class="auth-error" id="signin-error"></div>
         <button class="auth-btn" id="signin-btn" onclick="signIn()">Sign In</button>
+        <p style="text-align:center;margin-top:0.75rem;">
+          <a href="#" onclick="showForgotPassword();return false;"
+             style="color:#C31832;font-size:0.9rem;text-decoration:none;">Forgot password?</a>
+        </p>
+      </div>
+    </div>
+
+    <!-- Forgot Password -->
+    <div id="auth-forgot" style="display:none;">
+      <div class="auth-form">
+        <p style="color:#666;font-size:0.9rem;margin:0 0 1rem;">Enter your email and we'll send you a reset link.</p>
+        <input class="auth-input" type="email" id="forgot-email" placeholder="Email address" onkeydown="if(event.key==='Enter')sendResetEmail()">
+        <div class="auth-error" id="forgot-error"></div>
+        <button class="auth-btn" id="forgot-btn" onclick="sendResetEmail()">Send Reset Link</button>
+        <p style="text-align:center;margin-top:0.75rem;">
+          <a href="#" onclick="hideForgotPassword();return false;"
+             style="color:#C31832;font-size:0.9rem;text-decoration:none;">Back to sign in</a>
+        </p>
       </div>
     </div>
 
@@ -558,8 +576,45 @@
     el.classList.add('active')
     document.getElementById('auth-signin').style.display   = tab === 'signin'   ? 'block' : 'none'
     document.getElementById('auth-register').style.display = tab === 'register' ? 'block' : 'none'
+    document.getElementById('auth-forgot').style.display   = 'none'
     document.getElementById('signin-error').textContent = ''
     document.getElementById('reg-error').textContent = ''
+  }
+
+  /* ── Forgot password ── */
+  function showForgotPassword() {
+    document.getElementById('auth-signin').style.display  = 'none'
+    document.getElementById('auth-forgot').style.display  = 'block'
+    document.getElementById('forgot-error').textContent   = ''
+    document.getElementById('forgot-email').value         = ''
+  }
+
+  function hideForgotPassword() {
+    document.getElementById('auth-forgot').style.display  = 'none'
+    document.getElementById('auth-signin').style.display  = 'block'
+  }
+
+  async function sendResetEmail() {
+    const email = document.getElementById('forgot-email').value.trim()
+    const errEl = document.getElementById('forgot-error')
+    const btn   = document.getElementById('forgot-btn')
+    errEl.textContent = ''
+
+    if (!email) { errEl.textContent = 'Please enter your email.'; return }
+
+    btn.disabled = true; btn.textContent = 'Sending…'
+    const { error } = await sb.auth.resetPasswordForEmail(email, {
+      redirectTo: 'https://noahrdunsmore-rgb.github.io/castleberry-hymns/reset-password.html'
+    })
+    btn.disabled = false; btn.textContent = 'Send Reset Link'
+
+    if (error) {
+      errEl.textContent = error.message
+    } else {
+      document.getElementById('auth-forgot').innerHTML =
+        '<p style="text-align:center;color:#C31832;font-weight:bold;padding:1rem 0;">Check your email for a reset link!</p>' +
+        '<p style="text-align:center;"><a href="#" onclick="hideForgotPassword();return false;" style="color:#888;font-size:0.9rem;">Back to sign in</a></p>'
+    }
   }
 
   /* ── Sign in ── */
