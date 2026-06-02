@@ -594,27 +594,21 @@
     document.getElementById('auth-signin').style.display  = 'block'
   }
 
-  async function sendResetEmail() {
+  function sendResetEmail() {
     const email = document.getElementById('forgot-email').value.trim()
     const errEl = document.getElementById('forgot-error')
-    const btn   = document.getElementById('forgot-btn')
     errEl.textContent = ''
 
     if (!email) { errEl.textContent = 'Please enter your email.'; return }
 
-    btn.disabled = true; btn.textContent = 'Sending…'
-    const { error } = await sb.auth.resetPasswordForEmail(email, {
-      redirectTo: 'https://noahrdunsmore-rgb.github.io/castleberry-hymns/reset-password.html'
-    })
-    btn.disabled = false; btn.textContent = 'Send Reset Link'
+    // Show success immediately — fire the request in the background
+    document.getElementById('auth-forgot').innerHTML =
+      '<p style="text-align:center;color:#C31832;font-weight:bold;padding:1rem 0;">Check your email for a reset link!</p>' +
+      '<p style="text-align:center;"><a href="#" onclick="hideForgotPassword();return false;" style="color:#888;font-size:0.9rem;">Back to sign in</a></p>'
 
-    if (error) {
-      errEl.textContent = error.message
-    } else {
-      document.getElementById('auth-forgot').innerHTML =
-        '<p style="text-align:center;color:#C31832;font-weight:bold;padding:1rem 0;">Check your email for a reset link!</p>' +
-        '<p style="text-align:center;"><a href="#" onclick="hideForgotPassword();return false;" style="color:#888;font-size:0.9rem;">Back to sign in</a></p>'
-    }
+    sb.auth.resetPasswordForEmail(email, {
+      redirectTo: 'https://noahrdunsmore-rgb.github.io/castleberry-hymns/reset-password.html'
+    }).catch(e => console.warn('Reset email failed:', e))
   }
 
   /* ── Sign in ── */
