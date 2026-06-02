@@ -20,16 +20,18 @@
   <img src="logo.png" alt="Castleberry Church of Christ">
   <div id="status">
     <div class="spinner"></div>
-    <p>Processing approval...</p>
+    <p>Processing...</p>
   </div>
 
   <script>
     const SUPABASE_URL = 'https://nnutbmnmrjhoteqvcvgr.supabase.co'
     const ANON_KEY     = 'sb_publishable_xUNHW4SrOGZOowS3fFC7QA_jJBq3D5T'
 
-    async function approve() {
-      const token = new URLSearchParams(window.location.search).get('token')
-      const el    = document.getElementById('status')
+    async function processAction() {
+      const params = new URLSearchParams(window.location.search)
+      const token  = params.get('token')
+      const action = params.get('action') || 'approve'
+      const el     = document.getElementById('status')
 
       if (!token) {
         el.innerHTML = '<h2 class="error">Invalid link.</h2>'
@@ -37,13 +39,13 @@
       }
 
       try {
-        const res  = await fetch(`${SUPABASE_URL}/functions/v1/aprove-user?token=${token}`, {
-          method: 'GET',
-          headers: { 'Authorization': `Bearer ${ANON_KEY}` }
-        })
+        const res  = await fetch(
+          `${SUPABASE_URL}/functions/v1/aprove-user?token=${encodeURIComponent(token)}&action=${action}`,
+          { method: 'GET', headers: { 'Authorization': `Bearer ${ANON_KEY}` } }
+        )
         const data = await res.json()
-        const msg  = data.message || (res.ok ? 'User approved!' : 'Something went wrong.')
         const ok   = data.success === true
+        const msg  = data.message || (ok ? 'Done!' : 'Something went wrong.')
 
         el.innerHTML = `
           <h2 class="${ok ? 'success' : 'error'}">${msg}</h2>
@@ -53,7 +55,7 @@
       }
     }
 
-    approve()
+    processAction()
   </script>
 </body>
 </html>
