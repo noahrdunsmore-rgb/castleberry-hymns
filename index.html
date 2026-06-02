@@ -601,16 +601,14 @@
 
     // Notify admin via Edge Function
     if (data.user) {
-      try {
-        await fetch('https://nnutbmnmrjhoteqvcvgr.supabase.co/functions/v1/notify-admin', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            'Authorization': 'Bearer sb_publishable_xUNHW4SrOGZOowS3fFC7QA_jJBq3D5T'
-          },
-          body: JSON.stringify({ email, userId: data.user.id })
-        })
-      } catch(e) { console.warn('Admin notification failed:', e) }
+      fetch('https://nnutbmnmrjhoteqvcvgr.supabase.co/functions/v1/notify-admin', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer sb_publishable_xUNHW4SrOGZOowS3fFC7QA_jJBq3D5T'
+        },
+        body: JSON.stringify({ email, userId: data.user.id })
+      }).catch(e => console.warn('Admin notification failed:', e))
     }
 
     document.getElementById('pending-name').textContent = name
