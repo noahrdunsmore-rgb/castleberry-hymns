@@ -235,6 +235,7 @@
     .dl-panel .topic-bar {
       max-width: none; margin-left: 0; margin-right: 0;
     }
+    .tracker-panel .recent-services,
     .tracker-panel .period-bar,
     .tracker-panel .chart-section,
     .tracker-panel .controls,
@@ -310,6 +311,30 @@
     }
     select:focus { outline: none; border-color: var(--red); }
     .leader-wrap { min-width: 160px; position: relative; }
+
+    /* ── Recent services ── */
+    .recent-services { margin-top: 1.1rem; }
+    .recent-title {
+      font-size: 0.78rem; font-weight: 700; text-transform: uppercase;
+      letter-spacing: 0.07em; color: var(--muted); margin-bottom: 0.6rem;
+    }
+    .svc-card {
+      background: var(--white); border: 1.5px solid var(--border); border-radius: 10px;
+      border-left: 4px solid var(--red);
+      padding: 0.75rem 1rem 0.85rem; margin-bottom: 0.6rem;
+    }
+    .svc-card-head {
+      display: flex; align-items: center; gap: 0.5rem; flex-wrap: wrap;
+      margin-bottom: 0.5rem;
+    }
+    .svc-date { font-size: 0.92rem; font-weight: 700; color: var(--dark); }
+    .svc-card-songs { list-style: none; display: flex; flex-direction: column; gap: 0.2rem; }
+    .svc-card-songs li {
+      font-size: 0.86rem; color: var(--text); padding-left: 0.9rem; position: relative;
+    }
+    .svc-card-songs li::before {
+      content: '♪'; position: absolute; left: 0; color: var(--red); font-size: 0.8rem;
+    }
 
     /* ── Period tabs ── */
     .period-bar { max-width: 1000px; margin: 1.1rem auto 0; padding: 0 1.2rem; display: flex; align-items: center; gap: 0.4rem; }
@@ -578,6 +603,9 @@
     <div class="stat"><div class="stat-number" id="stat-since">—</div><div class="stat-label">Tracking Since</div></div>
   </div>
 
+  <!-- Recent services -->
+  <div class="recent-services" id="recent-services"></div>
+
   <!-- Period filter -->
   <div class="period-bar">
     <span class="period-label">Period</span>
@@ -845,11 +873,48 @@
       ])
       if (!songsRes.ok) throw new Error(songsRes.status)
       allHymns = await songsRes.json()
-      initYearFilter(); updateStats(); render(); renderDownloads()
+      initYearFilter(); updateStats(); renderRecentServices(); render(); renderDownloads()
     } catch (e) {
       document.getElementById('hymn-list').innerHTML =
         '<div class="state-msg">Could not load hymn data. Please try again later.</div>'
     }
+  }
+
+  /* ── Recent services ── */
+  function renderRecentServices() {
+    const el = document.getElementById('recent-services')
+    if (!el) return
+    // Group occurrences into services keyed by date + service label
+    const map = new Map()
+    allHymns.forEach(h => h.occurrences.forEach(o => {
+      const key = o.date + '|' + (o.service || '')
+      if (!map.has(key)) map.set(key, { date: o.date, service: o.service || '', leader: o.leader || '', songs: [] })
+      const svc = map.get(key)
+      svc.songs.push(h.name)
+      if (!svc.leader && o.leader) svc.leader = o.leader
+    }))
+    const services = [...map.values()]
+      .sort((a, b) => b.date.localeCompare(a.date))
+      .slice(0, 3)
+    if (!services.length) { el.innerHTML = ''; return }
+
+    const cards = services.map(s => {
+      const ldr = s.leader
+        ? `<span class="leader-chip">🎤 ${esc(s.leader)}</span>`
+        : `<span class="leader-chip unknown">Unknown leader</span>`
+      const svcChip = s.service ? `<span class="svc-chip">${esc(s.service)}</span>` : ''
+      const songs = s.songs.map(n => `<li>${esc(n)}</li>`).join('')
+      return `
+        <div class="svc-card">
+          <div class="svc-card-head">
+            <span class="svc-date">${fmtRecent(s.date)}</span>
+            ${svcChip}
+            ${ldr}
+          </div>
+          <ul class="svc-card-songs">${songs}</ul>
+        </div>`
+    }).join('')
+    el.innerHTML = `<div class="recent-title">Recent Services</div>${cards}`
   }
 
   /* ── Last-sung lookup ── */
@@ -1247,6 +1312,7 @@
 
   /* ── Helpers ── */
   function fmtFull(d)    { return new Date(d+'T12:00:00').toLocaleDateString('en-US',{year:'numeric',month:'long',day:'numeric'}) }
+  function fmtRecent(d)  { return new Date(d+'T12:00:00').toLocaleDateString('en-US',{weekday:'short',month:'long',day:'numeric'}) }
   function fmtMonYear(d) { return new Date(d+'T12:00:00').toLocaleDateString('en-US',{year:'numeric',month:'short'}) }
   function esc(s)        { return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;') }
   function highlight(escaped, q) {
