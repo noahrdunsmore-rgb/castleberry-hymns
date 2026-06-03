@@ -6,6 +6,7 @@
   <title>Castleberry Church of Christ — Hymn Tracker</title>
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script src="https://cdn.jsdelivr.net/npm/jszip@3.10.1/dist/jszip.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
   <style>
     :root {
       --red:      #C31832;
@@ -243,6 +244,29 @@
     select:focus { outline: none; border-color: var(--red); }
     .leader-wrap { min-width: 160px; position: relative; }
 
+    /* ── Period tabs ── */
+    .period-bar { max-width: 860px; margin: 1.1rem auto 0; padding: 0 1.2rem; display: flex; align-items: center; gap: 0.4rem; }
+    .period-label { font-size: 0.75rem; color: var(--muted); margin-right: 0.4rem; text-transform: uppercase; letter-spacing: 0.06em; }
+    .period-btn {
+      padding: 0.3rem 0.85rem; border-radius: 20px; border: 1.5px solid var(--border);
+      background: var(--white); color: var(--muted); font-size: 0.8rem; cursor: pointer;
+      font-weight: 500; transition: all 0.15s;
+    }
+    .period-btn.active { background: var(--red); color: #fff; border-color: var(--red); }
+    .period-btn:hover:not(.active) { border-color: var(--red); color: var(--red); }
+
+    /* ── Top songs chart ── */
+    .chart-section { max-width: 860px; margin: 1.1rem auto 0; padding: 0 1.2rem; }
+    .chart-card {
+      background: var(--white); border: 1.5px solid var(--border); border-radius: 10px;
+      padding: 1.2rem 1.4rem 1rem;
+    }
+    .chart-title { font-size: 0.78rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.07em; color: var(--muted); margin-bottom: 0.9rem; }
+    .chart-wrap { position: relative; height: 220px; }
+
+    /* ── Last sung chip on card ── */
+    .last-sung { font-size: 0.72rem; color: var(--muted); margin-left: auto; margin-right: 0.5rem; white-space: nowrap; }
+
     /* ── Results meta ── */
     .results-meta { max-width: 860px; margin: 0.75rem auto 0.4rem; padding: 0 1.2rem; font-size: 0.8rem; color: var(--muted); }
 
@@ -457,6 +481,24 @@
     <div class="stat"><div class="stat-number" id="stat-since">—</div><div class="stat-label">Tracking Since</div></div>
   </div>
 
+  <!-- Period filter -->
+  <div class="period-bar">
+    <span class="period-label">Period</span>
+    <button class="period-btn" onclick="setPeriod('30d',this)">30 Days</button>
+    <button class="period-btn" onclick="setPeriod('3mo',this)">3 Months</button>
+    <button class="period-btn" onclick="setPeriod('6mo',this)">6 Months</button>
+    <button class="period-btn" onclick="setPeriod('1yr',this)">1 Year</button>
+    <button class="period-btn active" onclick="setPeriod('all',this)">All Time</button>
+  </div>
+
+  <!-- Top songs chart -->
+  <div class="chart-section">
+    <div class="chart-card">
+      <div class="chart-title">Top Songs</div>
+      <div class="chart-wrap"><canvas id="top-chart"></canvas></div>
+    </div>
+  </div>
+
   <div class="controls">
     <div class="search-wrap">
       <span class="search-icon">🔍</span>
@@ -470,10 +512,7 @@
       <option value="most-sung">Most Sung</option>
       <option value="az">A → Z</option>
       <option value="za">Z → A</option>
-      <option value="recent">Most Recent</option>
-    </select>
-    <select id="year-filter" onchange="render()">
-      <option value="">All Time</option>
+      <option value="recent">Last Sung</option>
     </select>
   </div>
 
@@ -700,26 +739,92 @@
     }
   }
 
-  function initYearFilter() {
-    const years = new Set()
-    allHymns.forEach(h => h.occurrences.forEach(o => years.add(o.date.slice(0, 4))))
-    const sel = document.getElementById('year-filter')
-    sel.innerHTML = '<option value="">All Time</option>'
-    ;[...years].sort().reverse().forEach(y => {
-      const opt = document.createElement('option')
-      opt.value = y; opt.textContent = y; sel.appendChild(opt)
+  let activePeriod = 'all'
+  let topChart     = null
+
+  function setPeriod(p, btn) {
+    activePeriod = p
+    document.querySelectorAll('.period-btn').forEach(b => b.classList.remove('active'))
+    btn.classList.add('active')
+    updateStats(); render()
+  }
+
+  function periodCutoff() {
+    if (activePeriod === 'all') return null
+    const d = new Date()
+    if (activePeriod === '30d') d.setDate(d.getDate() - 30)
+    if (activePeriod === '3mo') d.setMonth(d.getMonth() - 3)
+    if (activePeriod === '6mo') d.setMonth(d.getMonth() - 6)
+    if (activePeriod === '1yr') d.setFullYear(d.getFullYear() - 1)
+    return d.toISOString().slice(0, 10)
+  }
+
+  function filterByPeriod(occs) {
+    const cut = periodCutoff()
+    return cut ? occs.filter(o => o.date >= cut) : occs
+  }
+
+  function updateChart(hymns) {
+    const top = [...hymns]
+      .sort((a, b) => b.filteredOccs.length - a.filteredOccs.length)
+      .slice(0, 10)
+      .reverse()
+    const labels = top.map(h => h.name.length > 32 ? h.name.slice(0, 30) + '…' : h.name)
+    const data   = top.map(h => h.filteredOccs.length)
+    if (topChart) {
+      topChart.data.labels        = labels
+      topChart.data.datasets[0].data = data
+      topChart.update()
+      return
+    }
+    topChart = new Chart(document.getElementById('top-chart'), {
+      type: 'bar',
+      data: {
+        labels,
+        datasets: [{
+          data,
+          backgroundColor: 'rgba(195,24,50,0.82)',
+          borderRadius: 4,
+          barThickness: 16,
+        }]
+      },
+      options: {
+        indexAxis: 'y',
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: { legend: { display: false } },
+        scales: {
+          x: { grid: { color: '#f0f0f0' }, ticks: { precision: 0, font: { size: 11 } } },
+          y: { grid: { display: false }, ticks: { font: { size: 11 } } }
+        }
+      }
     })
   }
 
+  function initYearFilter() {
+    // year filter removed — replaced by period tabs
+    // period tabs used instead of year dropdown
+  }
+
   function updateStats() {
+    // Always compute totals from full dataset for the fixed cards
     const allDates = new Set(), allLeaders = new Set()
     allHymns.forEach(h => h.occurrences.forEach(o => {
       allDates.add(o.date)
       if (o.leader) allLeaders.add(o.leader.toLowerCase())
     }))
     const sorted = [...allDates].sort()
-    document.getElementById('stat-hymns').textContent    = allHymns.length
-    document.getElementById('stat-services').textContent = allDates.size
+
+    // Period-aware: unique hymns and services within period
+    const periodDates = new Set()
+    let   periodHymns = 0
+    allHymns.forEach(h => {
+      const occs = filterByPeriod(h.occurrences)
+      if (occs.length) { periodHymns++; occs.forEach(o => periodDates.add(o.date)) }
+    })
+
+    document.getElementById('stat-hymns').textContent    = periodHymns
+    document.getElementById('stat-services').textContent = periodDates.size
     document.getElementById('stat-leaders').textContent  = allLeaders.size || '—'
     document.getElementById('stat-since').textContent    = sorted.length ? fmtMonYear(sorted[0]) : '—'
     if (sorted.length) {
@@ -732,11 +837,8 @@
     const query  = document.getElementById('search').value.trim().toLowerCase()
     const leader = document.getElementById('leader-search').value.trim().toLowerCase()
     const sort   = document.getElementById('sort').value
-    const year   = document.getElementById('year-filter').value
-
     let hymns = allHymns.map(h => {
-      let occs = h.occurrences
-      if (year)   occs = occs.filter(o => o.date.startsWith(year))
+      let occs = filterByPeriod(h.occurrences)
       if (leader) occs = occs.filter(o => o.leader.toLowerCase().includes(leader))
       return { ...h, filteredOccs: occs }
     }).filter(h => h.filteredOccs.length > 0 && (!query || h.name.toLowerCase().includes(query)))
@@ -757,8 +859,8 @@
     let meta = `Showing ${hymns.length} hymn${hymns.length!==1?'s':''} · ${total} total occurrence${total!==1?'s':''}`
     if (query)  meta += ` matching "${query}"`
     if (leader) meta += ` led by "${leader}"`
-    if (year)   meta += ` in ${year}`
     document.getElementById('results-meta').textContent = meta
+    updateChart(hymns)
 
     const list = document.getElementById('hymn-list')
     if (!hymns.length) { list.innerHTML = '<div class="state-msg">No hymns match your search.</div>'; return }
@@ -766,7 +868,10 @@
     list.innerHTML = hymns.map(h => {
       const count    = h.filteredOccs.length
       const badgeCls = count >= 5 ? 'badge badge-count hot' : 'badge badge-count'
-      const rows = h.filteredOccs.map(o => {
+      const sortedOccs = [...h.filteredOccs].sort((a,b) => b.date.localeCompare(a.date))
+      const lastDate   = sortedOccs[0]?.date
+      const lastSungStr = lastDate ? `Last sung ${fmtFull(lastDate)}` : ''
+      const rows = sortedOccs.map(o => {
         const ldr = o.leader
           ? `<span class="leader-chip">🎤 ${esc(o.leader)}</span>`
           : `<span class="leader-chip unknown">Unknown</span>`
@@ -777,6 +882,7 @@
           <div class="hymn-header">
             <span class="hymn-name">${highlight(esc(h.name), query)}</span>
             <span class="${badgeCls}">${count}x</span>
+            ${lastSungStr ? `<span class="last-sung">${lastSungStr}</span>` : ''}
             <span class="chevron">▼</span>
           </div>
           <div class="occurrences">
