@@ -17,6 +17,17 @@
     ]
   },
   {
+    "name": "A Common Love",
+    "occurrences": [
+      {
+        "date": "2026-05-31",
+        "service": "Sunday 11:00 AM",
+        "leader": "Thomas Holder",
+        "source": "email"
+      }
+    ]
+  },
+  {
     "name": "A Passion for My God",
     "occurrences": [
       {
@@ -122,6 +133,17 @@
     ]
   },
   {
+    "name": "Be Strong and Courageous",
+    "occurrences": [
+      {
+        "date": "2026-05-31",
+        "service": "Sunday 11:00 AM",
+        "leader": "Thomas Holder",
+        "source": "email"
+      }
+    ]
+  },
+  {
     "name": "Be Thou My Vision",
     "occurrences": [
       {
@@ -213,6 +235,17 @@
         "date": "2026-03-01",
         "service": "Sunday 11:00 AM",
         "leader": "Noah Dunsmore",
+        "source": "email"
+      }
+    ]
+  },
+  {
+    "name": "Christ for the World We Sing",
+    "occurrences": [
+      {
+        "date": "2026-05-24",
+        "service": "Sunday 9:15 AM",
+        "leader": "Shawn Abraham",
         "source": "email"
       }
     ]
@@ -500,6 +533,12 @@
         "leader": "Jason Brackeen",
         "service": "Sunday 11:00 AM",
         "source": "youtube"
+      },
+      {
+        "date": "2026-05-03",
+        "service": "Sunday 11:00 AM",
+        "leader": "Sawyer Gann",
+        "source": "email"
       }
     ]
   },
@@ -714,6 +753,17 @@
     ]
   },
   {
+    "name": "I Know That My Redeemer Lives",
+    "occurrences": [
+      {
+        "date": "2026-06-03",
+        "service": "Wednesday Evening",
+        "leader": "Coyte Greer",
+        "source": "email"
+      }
+    ]
+  },
+  {
     "name": "I Surrender All",
     "occurrences": [
       {
@@ -731,6 +781,12 @@
         "date": "2025-08-10",
         "service": "Sunday 11:00 AM",
         "leader": "Noah Dunsmore",
+        "source": "email"
+      },
+      {
+        "date": "2026-05-31",
+        "service": "Sunday 11:00 AM",
+        "leader": "Thomas Holder",
         "source": "email"
       }
     ]
@@ -776,6 +832,23 @@
         "leader": "Larry Watkins",
         "service": "Sunday 11:00 AM",
         "source": "youtube"
+      },
+      {
+        "date": "2026-05-24",
+        "service": "Sunday 9:15 AM",
+        "leader": "Shawn Abraham",
+        "source": "email"
+      }
+    ]
+  },
+  {
+    "name": "In His Presence",
+    "occurrences": [
+      {
+        "date": "2026-05-13",
+        "service": "Wednesday Evening",
+        "leader": "Coyte Greer",
+        "source": "email"
       }
     ]
   },
@@ -977,6 +1050,17 @@
     ]
   },
   {
+    "name": "Just As I Am, Without One Plea",
+    "occurrences": [
+      {
+        "date": "2026-05-27",
+        "service": "Wednesday Evening",
+        "leader": "Josh Jackson",
+        "source": "email"
+      }
+    ]
+  },
+  {
     "name": "King of Kings",
     "occurrences": [
       {
@@ -1012,6 +1096,12 @@
         "leader": "Larry Watkins",
         "service": "Sunday 11:00 AM",
         "source": "youtube"
+      },
+      {
+        "date": "2026-05-03",
+        "service": "Sunday 11:00 AM",
+        "leader": "Sawyer Gann",
+        "source": "email"
       }
     ]
   },
@@ -1100,6 +1190,39 @@
     ]
   },
   {
+    "name": "None of Self and All of Thee",
+    "occurrences": [
+      {
+        "date": "2026-05-03",
+        "service": "Sunday 11:00 AM",
+        "leader": "Sawyer Gann",
+        "source": "email"
+      }
+    ]
+  },
+  {
+    "name": "Nothing But the Blood",
+    "occurrences": [
+      {
+        "date": "2026-05-06",
+        "service": "Wednesday Evening",
+        "leader": "Jim Colby",
+        "source": "email"
+      }
+    ]
+  },
+  {
+    "name": "O Magnify My Master",
+    "occurrences": [
+      {
+        "date": "2026-05-13",
+        "service": "Wednesday Evening",
+        "leader": "Coyte Greer",
+        "source": "email"
+      }
+    ]
+  },
+  {
     "name": "O the Blood",
     "occurrences": [
       {
@@ -1156,6 +1279,17 @@
         "date": "2025-12-07",
         "service": "Sunday 11:00 AM",
         "leader": "Noah Dunsmore",
+        "source": "email"
+      }
+    ]
+  },
+  {
+    "name": "Oh, The Things We May Do",
+    "occurrences": [
+      {
+        "date": "2026-05-20",
+        "service": "Wednesday Evening",
+        "leader": "Larry Watkins",
         "source": "email"
       }
     ]
@@ -1282,6 +1416,17 @@
     ]
   },
   {
+    "name": "Savior Grant Me Rest and Peace",
+    "occurrences": [
+      {
+        "date": "2026-05-03",
+        "service": "Sunday 11:00 AM",
+        "leader": "Sawyer Gann",
+        "source": "email"
+      }
+    ]
+  },
+  {
     "name": "Send the Light",
     "occurrences": [
       {
@@ -1379,6 +1524,17 @@
     ]
   },
   {
+    "name": "Soul, a Savior Thou Art Needing",
+    "occurrences": [
+      {
+        "date": "2026-05-20",
+        "service": "Wednesday Evening",
+        "leader": "Larry Watkins",
+        "source": "email"
+      }
+    ]
+  },
+  {
     "name": "Standing on the Promises",
     "occurrences": [
       {
@@ -1407,6 +1563,17 @@
         "date": "2025-12-07",
         "service": "Sunday 11:00 AM",
         "leader": "Noah Dunsmore",
+        "source": "email"
+      }
+    ]
+  },
+  {
+    "name": "Take Time to Be Holy",
+    "occurrences": [
+      {
+        "date": "2026-05-27",
+        "service": "Wednesday Evening",
+        "leader": "Josh Jackson",
         "source": "email"
       }
     ]
@@ -1600,6 +1767,28 @@
     ]
   },
   {
+    "name": "This World Is Not My Home",
+    "occurrences": [
+      {
+        "date": "2026-05-06",
+        "service": "Wednesday Evening",
+        "leader": "Jim Colby",
+        "source": "email"
+      }
+    ]
+  },
+  {
+    "name": "Thus Remember Me",
+    "occurrences": [
+      {
+        "date": "2026-05-03",
+        "service": "Sunday 11:00 AM",
+        "leader": "Sawyer Gann",
+        "source": "email"
+      }
+    ]
+  },
+  {
     "name": "Thy Word",
     "occurrences": [
       {
@@ -1686,6 +1875,12 @@
         "service": "Sunday 11:00 AM",
         "leader": "Noah Dunsmore",
         "source": "email"
+      },
+      {
+        "date": "2026-05-31",
+        "service": "Sunday 11:00 AM",
+        "leader": "Thomas Holder",
+        "source": "email"
       }
     ]
   },
@@ -1720,6 +1915,17 @@
         "leader": "Noah Dunsmore",
         "service": "Sunday 11:00 AM",
         "source": "youtube"
+      }
+    ]
+  },
+  {
+    "name": "When I Survey the Wondrous Cross",
+    "occurrences": [
+      {
+        "date": "2026-05-31",
+        "service": "Sunday 11:00 AM",
+        "leader": "Thomas Holder",
+        "source": "email"
       }
     ]
   },
@@ -1765,6 +1971,17 @@
         "leader": "Thomas Holder",
         "service": "Sunday 11:00 AM",
         "source": "youtube"
+      }
+    ]
+  },
+  {
+    "name": "Why Do You Wait",
+    "occurrences": [
+      {
+        "date": "2026-06-03",
+        "service": "Wednesday Evening",
+        "leader": "Coyte Greer",
+        "source": "email"
       }
     ]
   },
