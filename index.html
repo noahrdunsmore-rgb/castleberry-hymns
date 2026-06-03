@@ -307,6 +307,22 @@
     }
     .leader-chip.unknown { background: #F0F0F0; color: var(--muted); font-style: italic; font-weight: 400; }
 
+    /* ── Topic chips ── */
+    .topic-bar {
+      max-width: 860px; margin: 0.9rem auto 0; padding: 0 1.2rem;
+      display: flex; align-items: center; gap: 0.4rem; flex-wrap: wrap;
+    }
+    .topic-label { font-size: 0.72rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.06em; margin-right: 0.3rem; white-space: nowrap; }
+    .topic-chip {
+      padding: 0.28rem 0.75rem; border-radius: 20px; border: 1.5px solid var(--border);
+      background: var(--white); color: #555; font-size: 0.78rem; cursor: pointer;
+      font-weight: 500; transition: all 0.15s; white-space: nowrap;
+    }
+    .topic-chip.active { background: var(--red); color: #fff; border-color: var(--red); }
+    .topic-chip:hover:not(.active) { border-color: var(--red); color: var(--red); }
+    .topic-chip.clear-chip { background: #f5f5f5; border-color: #ddd; color: var(--muted); font-size: 0.72rem; }
+    .topic-chip.clear-chip:hover { background: #eee; border-color: #ccc; color: #444; }
+
     /* ── Downloads ── */
     .dl-controls { max-width: 860px; margin: 1.4rem auto 0; padding: 0 1.2rem; display: flex; gap: 0.6rem; flex-wrap: wrap; align-items: center; }
     .dl-meta { max-width: 860px; margin: 0.75rem auto 0.4rem; padding: 0 1.2rem; font-size: 0.8rem; color: var(--muted); }
@@ -516,6 +532,10 @@
     </select>
   </div>
 
+  <!-- Topic chips for Tracker — populated once hymn_topics.json loads -->
+  <div class="topic-bar" id="tracker-topic-bar" style="display:none">
+    <span class="topic-label">Topic</span>
+  </div>
   <div class="results-meta" id="results-meta"></div>
   <div class="hymn-list" id="hymn-list"><div class="state-msg">Loading hymns…</div></div>
   <footer id="footer">Updated automatically every Sunday night</footer>
@@ -535,6 +555,10 @@
       <option value="eChoice">eChoice</option>
       <option value="Service">Service Lineup</option>
     </select>
+  </div>
+  <!-- Topic chips — populated by JS once hymn_topics.json loads -->
+  <div class="topic-bar" id="dl-topic-bar" style="display:none">
+    <span class="topic-label">Topic</span>
   </div>
   <div class="dl-meta" id="dl-meta"></div>
   <div class="dl-grid" id="dl-grid"><div class="dl-empty">Loading…</div></div>
@@ -841,7 +865,11 @@
       let occs = filterByPeriod(h.occurrences)
       if (leader) occs = occs.filter(o => o.leader.toLowerCase().includes(leader))
       return { ...h, filteredOccs: occs }
-    }).filter(h => h.filteredOccs.length > 0 && (!query || h.name.toLowerCase().includes(query)))
+    }).filter(h =>
+      h.filteredOccs.length > 0 &&
+      (!query || h.name.toLowerCase().includes(query)) &&
+      hymnMatchesTopic(h.name, activeTrackerTopic)
+    )
 
     hymns.sort((a, b) => {
       if (sort === 'most-sung') return b.filteredOccs.length - a.filteredOccs.length
@@ -952,6 +980,10 @@
     btn.innerHTML = '&#11015; Download ZIP'
   }
 
+  let HYMN_TOPICS    = {}   // { "Hymn Name": ["Topic1", "Topic2"], ... }
+  let activeDlTopic  = ''   // selected topic in Downloads
+  let activeTrackerTopic = ''  // selected topic in Tracker
+
   async function loadCatalogue() {
     if (HYMN_DECKS.length) return   // already loaded
     try {
@@ -961,6 +993,76 @@
       document.getElementById('dl-grid').innerHTML =
         '<div class="dl-empty">Could not load hymn catalogue.</div>'
     }
+    // Load topic tags (optional — silently skip if not generated yet)
+    try {
+      const res = await fetch('hymn_topics.json?v=' + Date.now())
+      if (res.ok) {
+        HYMN_TOPICS = await res.json()
+        buildTopicChips()
+      }
+    } catch(e) { /* topics not available yet */ }
+  }
+
+  function buildTopicChips() {
+    // Gather all unique topics from the loaded data
+    const topicCounts = {}
+    Object.values(HYMN_TOPICS).forEach(tags => {
+      tags.forEach(t => { topicCounts[t] = (topicCounts[t] || 0) + 1 })
+    })
+    // Sort by frequency, take top 20
+    const topics = Object.entries(topicCounts)
+      .sort((a, b) => b[1] - a[1])
+      .slice(0, 20)
+      .map(([t]) => t)
+
+    // Downloads topic bar
+    const dlBar = document.getElementById('dl-topic-bar')
+    if (dlBar && topics.length) {
+      dlBar.style.display = 'flex'
+      const chips = topics.map(t =>
+        `<button class="topic-chip" onclick="setDlTopic('${t.replace(/'/g,"\\'")}',this)">${t}</button>`
+      ).join('')
+      dlBar.innerHTML = `<span class="topic-label">Topic</span>${chips}`
+    }
+
+    // Tracker topic bar
+    const trBar = document.getElementById('tracker-topic-bar')
+    if (trBar && topics.length) {
+      trBar.style.display = 'flex'
+      const chips = topics.map(t =>
+        `<button class="topic-chip" onclick="setTrackerTopic('${t.replace(/'/g,"\\'")}',this)">${t}</button>`
+      ).join('')
+      trBar.innerHTML = `<span class="topic-label">Topic</span>${chips}`
+    }
+  }
+
+  function setDlTopic(topic, btn) {
+    if (activeDlTopic === topic) {
+      activeDlTopic = ''
+      document.querySelectorAll('#dl-topic-bar .topic-chip').forEach(b => b.classList.remove('active'))
+    } else {
+      activeDlTopic = topic
+      document.querySelectorAll('#dl-topic-bar .topic-chip').forEach(b => b.classList.remove('active'))
+      btn.classList.add('active')
+    }
+    renderDownloads()
+  }
+
+  function setTrackerTopic(topic, btn) {
+    if (activeTrackerTopic === topic) {
+      activeTrackerTopic = ''
+      document.querySelectorAll('#tracker-topic-bar .topic-chip').forEach(b => b.classList.remove('active'))
+    } else {
+      activeTrackerTopic = topic
+      document.querySelectorAll('#tracker-topic-bar .topic-chip').forEach(b => b.classList.remove('active'))
+      btn.classList.add('active')
+    }
+    render()
+  }
+
+  function hymnMatchesTopic(name, topic) {
+    if (!topic || !HYMN_TOPICS[name]) return true
+    return HYMN_TOPICS[name].includes(topic)
   }
 
   function renderDownloads() {
@@ -968,7 +1070,8 @@
     const source = document.getElementById('dl-source').value
     const filtered = HYMN_DECKS.filter(h =>
       (!q      || h.name.toLowerCase().includes(q)) &&
-      (!source || h.source === source)
+      (!source || h.source === source) &&
+      hymnMatchesTopic(h.name, activeDlTopic)
     ).sort((a, b) => {
       if (source && a.number && b.number) {
         // Numeric sort within a library — strip trailing letters (008A → 8)
