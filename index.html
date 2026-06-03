@@ -306,6 +306,7 @@
       font-size: 0.75rem; font-weight: 500;
     }
     .leader-chip.unknown { background: #F0F0F0; color: var(--muted); font-style: italic; font-weight: 400; }
+    .svc-chip { display: inline-block; background: #EEF3FF; color: #3B5BDB; font-size: 0.72rem; font-weight: 600; border-radius: 5px; padding: 1px 7px; letter-spacing: 0.01em; white-space: nowrap; }
 
     /* ── Topic chips ── */
     .topic-bar {
@@ -903,7 +904,10 @@
         const ldr = o.leader
           ? `<span class="leader-chip">🎤 ${esc(o.leader)}</span>`
           : `<span class="leader-chip unknown">Unknown</span>`
-        return `<tr><td>${fmtFull(o.date)}</td><td>${ldr}</td></tr>`
+        const svc = o.service
+          ? `<span class="svc-chip">${esc(o.service)}</span>`
+          : ''
+        return `<tr><td>${fmtFull(o.date)}</td><td>${svc}</td><td>${ldr}</td></tr>`
       }).join('')
       return `
         <div class="hymn-card" onclick="this.classList.toggle('open')">
@@ -915,7 +919,7 @@
           </div>
           <div class="occurrences">
             <table class="occ-table">
-              <thead><tr><th>Date</th><th>Song Leader</th></tr></thead>
+              <thead><tr><th>Date</th><th>Service</th><th>Song Leader</th></tr></thead>
               <tbody>${rows}</tbody>
             </table>
           </div>

@@ -1,0 +1,85 @@
+{
+  "_comment": "Castleberry worship-service frame slides. The deck builder renders one slide per frame item in a lineup using these definitions. Edit text/colors here; add 'background' (a path to a full-bleed image, relative to the project root) to any frame to use Parker's exact artwork instead of the solid background.",
+
+  "style": {
+    "bg": "1C1C1C",
+    "accent": "C31832",
+    "text": "FFFFFF",
+    "muted": "C9C9C9",
+    "title_font": "Century Schoolbook",
+    "body_font": "Century Schoolbook",
+    "title_size": 54,
+    "subtitle_size": 30,
+    "body_size": 30,
+    "ref_size": 24
+  },
+
+  "frames": {
+    "blank": {
+      "title": ""
+    },
+    "welcome": {
+      "title": "Welcome to Castleberry",
+      "subtitle": "Church of Christ"
+    },
+    "countdown": {
+      "title": "Worship begins shortly",
+      "subtitle": "Please silence your phones"
+    },
+    "please_be_seated": {
+      "title": "Please be Seated"
+    },
+    "please_stand": {
+      "title": "Please Stand"
+    },
+    "call_to_worship": {
+      "title": "Call to Worship"
+    },
+    "prayer": {
+      "title": "Prayer"
+    },
+    "opening_prayer": {
+      "title": "Opening Prayer"
+    },
+    "closing_prayer": {
+      "title": "Closing Prayer"
+    },
+    "scripture_reading": {
+      "title": "Scripture Reading"
+    },
+    "lords_supper": {
+      "title": "The Lord's Supper",
+      "lines": [
+        "“Do this in remembrance of Me.”",
+        "— Jesus"
+      ]
+    },
+    "communion": {
+      "title": "The Lord's Supper",
+      "lines": [
+        "“Do this in remembrance of Me.”",
+        "— Jesus"
+      ]
+    },
+    "giving": {
+      "title": "Giving Back to the Lord",
+      "lines": [
+        "Each one must give as he has decided in his heart, not reluctantly or under compulsion, for God loves a cheerful giver.",
+        "(2 Corinthians 9:7)"
+      ]
+    },
+    "sermon": {
+      "title": "The Message"
+    },
+    "invitation": {
+      "title": "Invitation"
+    },
+    "announcements": {
+      "title": "Announcements"
+    },
+    "dismissal": {
+      "title": "Go in Peace",
+      "subtitle": "Until we meet again"
+    }
+  }
+}

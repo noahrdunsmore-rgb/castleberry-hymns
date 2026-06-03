@@ -1,0 +1,6 @@
+{
+  "_comment": "Copy this to email_config.json and fill in. Use a Gmail App Password (https://myaccount.google.com/apppasswords), NOT your normal login password. email_config.json is git-ignored.",
+  "gmail_address": "you@gmail.com",
+  "app_password": "abcd efgh ijkl mnop",
+  "notify_to": "you@gmail.com"
+}
