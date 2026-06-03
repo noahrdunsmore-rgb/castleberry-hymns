@@ -96,6 +96,12 @@
         "leader": "Thomas Holder",
         "service": "Sunday 11:00 AM",
         "source": "youtube"
+      },
+      {
+        "date": "2026-04-26",
+        "service": "Sunday 11:00 AM",
+        "leader": "Thomas Holder",
+        "source": "email"
       }
     ]
   },
@@ -106,6 +112,17 @@
         "date": "2025-10-04",
         "service": "Gospel Meeting",
         "leader": "Noah Dunsmore",
+        "source": "email"
+      }
+    ]
+  },
+  {
+    "name": "Are You Washed in the Blood",
+    "occurrences": [
+      {
+        "date": "2026-04-26",
+        "service": "Sunday 11:00 AM",
+        "leader": "Thomas Holder",
         "source": "email"
       }
     ]
@@ -179,6 +196,17 @@
         "leader": "Noah Dunsmore",
         "service": "Sunday 11:00 AM",
         "source": "youtube"
+      }
+    ]
+  },
+  {
+    "name": "Beautiful Lamb of God",
+    "occurrences": [
+      {
+        "date": "2026-04-26",
+        "service": "Sunday 11:00 AM",
+        "leader": "Thomas Holder",
+        "source": "email"
       }
     ]
   },
@@ -303,6 +331,17 @@
     ]
   },
   {
+    "name": "Come Thou Almighty King",
+    "occurrences": [
+      {
+        "date": "2026-04-29",
+        "service": "Wednesday Evening",
+        "leader": "Nathan Hersey",
+        "source": "email"
+      }
+    ]
+  },
+  {
     "name": "Come to Jesus Today",
     "occurrences": [
       {
@@ -372,6 +411,12 @@
         "leader": "Noah Dunsmore",
         "service": "Sunday 11:00 AM",
         "source": "youtube"
+      },
+      {
+        "date": "2026-04-26",
+        "service": "Sunday 11:00 AM",
+        "leader": "Thomas Holder",
+        "source": "email"
       }
     ]
   },
@@ -599,6 +644,17 @@
     ]
   },
   {
+    "name": "He Lives",
+    "occurrences": [
+      {
+        "date": "2026-04-05",
+        "service": "Sunday 11:00 AM",
+        "leader": "Sawyer Gann",
+        "source": "email"
+      }
+    ]
+  },
+  {
     "name": "He Loved Me So",
     "occurrences": [
       {
@@ -661,6 +717,17 @@
         "leader": "Larry Watkins",
         "service": "Sunday 11:00 AM",
         "source": "youtube"
+      }
+    ]
+  },
+  {
+    "name": "Highest Place",
+    "occurrences": [
+      {
+        "date": "2026-04-26",
+        "service": "Sunday 11:00 AM",
+        "leader": "Thomas Holder",
+        "source": "email"
       }
     ]
   },
@@ -749,12 +816,24 @@
         "service": "5th Sunday PM",
         "leader": "Noah Dunsmore",
         "source": "email"
+      },
+      {
+        "date": "2026-05-17",
+        "service": "Sunday 9:15 AM",
+        "leader": "Brett Billingsley",
+        "source": "email"
       }
     ]
   },
   {
     "name": "I Know That My Redeemer Lives",
     "occurrences": [
+      {
+        "date": "2026-04-08",
+        "service": "Wednesday Evening",
+        "leader": "Josh Jackson",
+        "source": "email"
+      },
       {
         "date": "2026-06-03",
         "service": "Wednesday Evening",
@@ -1078,6 +1157,17 @@
     ]
   },
   {
+    "name": "Lift Your Voice in Praise",
+    "occurrences": [
+      {
+        "date": "2026-04-29",
+        "service": "Wednesday Evening",
+        "leader": "Nathan Hersey",
+        "source": "email"
+      }
+    ]
+  },
+  {
     "name": "Light the Fire",
     "occurrences": [
       {
@@ -1204,6 +1294,12 @@
     "name": "Nothing But the Blood",
     "occurrences": [
       {
+        "date": "2026-04-05",
+        "service": "Sunday 11:00 AM",
+        "leader": "Sawyer Gann",
+        "source": "email"
+      },
+      {
         "date": "2026-05-06",
         "service": "Wednesday Evening",
         "leader": "Jim Colby",
@@ -1317,6 +1413,17 @@
     ]
   },
   {
+    "name": "One Day",
+    "occurrences": [
+      {
+        "date": "2026-04-05",
+        "service": "Sunday 11:00 AM",
+        "leader": "Sawyer Gann",
+        "source": "email"
+      }
+    ]
+  },
+  {
     "name": "Praise the Lord",
     "occurrences": [
       {
@@ -1367,6 +1474,17 @@
         "date": "2026-02-08",
         "service": "Sunday 11:00 AM",
         "leader": "Noah Dunsmore",
+        "source": "email"
+      }
+    ]
+  },
+  {
+    "name": "Resurrection",
+    "occurrences": [
+      {
+        "date": "2026-04-05",
+        "service": "Sunday 11:00 AM",
+        "leader": "Sawyer Gann",
         "source": "email"
       }
     ]
@@ -1634,6 +1752,17 @@
     ]
   },
   {
+    "name": "The Lord Is My Light",
+    "occurrences": [
+      {
+        "date": "2026-04-26",
+        "service": "Sunday 11:00 AM",
+        "leader": "Thomas Holder",
+        "source": "email"
+      }
+    ]
+  },
+  {
     "name": "The Solid Rock",
     "occurrences": [
       {
@@ -1796,6 +1925,12 @@
         "leader": "Chad Slone",
         "service": "Sunday 11:00 AM",
         "source": "youtube"
+      },
+      {
+        "date": "2026-04-26",
+        "service": "Sunday 11:00 AM",
+        "leader": "Thomas Holder",
+        "source": "email"
       }
     ]
   },
@@ -1885,6 +2020,17 @@
     ]
   },
   {
+    "name": "We Saw Thee Not",
+    "occurrences": [
+      {
+        "date": "2026-04-05",
+        "service": "Sunday 11:00 AM",
+        "leader": "Sawyer Gann",
+        "source": "email"
+      }
+    ]
+  },
+  {
     "name": "When All of God's Singers Get Home",
     "occurrences": [
       {
@@ -1937,6 +2083,12 @@
         "leader": "Shawn Abraham",
         "service": "Sunday 11:00 AM",
         "source": "youtube"
+      },
+      {
+        "date": "2026-05-17",
+        "service": "Sunday 9:15 AM",
+        "leader": "Brett Billingsley",
+        "source": "email"
       }
     ]
   },
