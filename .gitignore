@@ -24,3 +24,10 @@ __pycache__/
 email_config.json
 saturday_build.log
 app.log
+
+# Local extraction launcher — contains a hardcoded ANTHROPIC_API_KEY, must stay local
+run_extraction.bat
+extraction_log.txt
+
+# Manual backup snapshots of the song tracker (git history already preserves these)
+*.bak*.json
