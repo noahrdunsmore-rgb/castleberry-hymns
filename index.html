@@ -626,27 +626,30 @@
 <!-- RIGHT: HYMN DOWNLOADS PANEL -->
 <div id="page-downloads" class="dl-panel">
   <div class="panel-header">
-    <h2>Hymn Slide Decks</h2>
+    <h2>Hymn Downloader</h2>
     <p>892 songs &mdash; HFWR, HFWS, eChoice</p>
   </div>
   <div class="panel-scroll">
   <div class="dl-controls">
     <div class="search-wrap">
       <span class="search-icon">🔍</span>
-      <input type="text" id="dl-search" placeholder="Search hymn slide decks…" oninput="dlShowAll=false;document.getElementById('show-all-btn').classList.remove('active');renderDownloads()">
+      <input type="text" id="dl-search" placeholder="Search hymn title…" oninput="dlShowAll=false;document.getElementById('show-all-btn').classList.remove('active');renderDownloads()">
+    </div>
+    <div class="search-wrap">
+      <span class="search-icon">🏷</span>
+      <input type="text" id="dl-topic-search" placeholder="Search by topic (Grace, Easter…)" oninput="activeDlTopic='';document.querySelectorAll('#dl-topic-bar .topic-chip').forEach(b=>b.classList.remove('active'));renderDownloads()">
     </div>
     <select id="dl-source" onchange="renderDownloads()">
       <option value="">All Libraries</option>
       <option value="HFWR">HFWR</option>
       <option value="HFWS">HFWS</option>
       <option value="eChoice">eChoice</option>
-      <option value="Service">Service Lineup</option>
     </select>
     <button class="period-btn" id="show-all-btn" onclick="showAllDecks()">Show All</button>
   </div>
   <!-- Topic chips — populated by JS once hymn_topics.json loads -->
   <div class="topic-bar" id="dl-topic-bar" style="display:none">
-    <span class="topic-label">Topic</span>
+    <span class="topic-label">Quick topics</span>
   </div>
   <div class="dl-meta" id="dl-meta"></div>
   <div class="dl-grid" id="dl-grid"><div class="dl-empty">Search for a hymn above, pick a topic, or click <strong>Show All</strong>.</div></div>
@@ -1170,6 +1173,8 @@
       activeDlTopic = topic
       document.querySelectorAll('#dl-topic-bar .topic-chip').forEach(b => b.classList.remove('active'))
       btn.classList.add('active')
+      const ti = document.getElementById('dl-topic-search')
+      if (ti) ti.value = ''   // clear free-text when a chip is picked
     }
     renderDownloads()
   }
@@ -1194,13 +1199,19 @@
   function renderDownloads() {
     const q      = document.getElementById('dl-search').value.trim().toLowerCase()
     const source = document.getElementById('dl-source').value
-    const hasFilter = q || source || activeDlTopic || dlShowAll
+    const topicQ  = (document.getElementById('dl-topic-search')?.value || '').trim().toLowerCase()
+    const hasFilter = q || source || activeDlTopic || topicQ || dlShowAll
     if (!hasFilter) return   // stay on the empty prompt until user asks
-    const filtered = HYMN_DECKS.filter(h =>
-      (!q      || h.name.toLowerCase().includes(q)) &&
-      (!source || h.source === source) &&
-      hymnMatchesTopic(h.name, activeDlTopic)
-    ).sort((a, b) => {
+    const filtered = HYMN_DECKS.filter(h => {
+      if (q      && !h.name.toLowerCase().includes(q)) return false
+      if (source && h.source !== source)                 return false
+      if (activeDlTopic && !hymnMatchesTopic(h.name, activeDlTopic)) return false
+      if (topicQ) {
+        const tags = (HYMN_TOPICS[h.name] || []).map(t => t.toLowerCase())
+        if (!tags.some(t => t.includes(topicQ))) return false
+      }
+      return true
+    }).sort((a, b) => {
       if (source && a.number && b.number) {
         // Numeric sort within a library — strip trailing letters (008A → 8)
         const na = parseFloat(a.number.replace(/[A-Za-z]+$/, '')) || 0
