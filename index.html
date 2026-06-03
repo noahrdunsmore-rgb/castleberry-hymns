@@ -219,6 +219,7 @@
     }
     .panel-header h2 { font-size: 0.9rem; font-weight: 700; color: var(--dark); }
     .panel-header p { font-size: 0.75rem; color: var(--muted); }
+    .panel-header-updated { font-size: 0.72rem; color: var(--muted); margin-left: auto; white-space: nowrap; flex-shrink: 0; }
     .panel-scroll { flex: 1; overflow-y: auto; }
 
     /* Strip max-width / auto-margin constraints inside panels */
@@ -232,7 +233,8 @@
     .dl-panel .dl-controls,
     .dl-panel .dl-meta,
     .dl-panel .dl-grid,
-    .dl-panel .topic-bar {
+    .dl-panel .topic-bar,
+    .dl-panel .sermon-section {
       max-width: none; margin-left: 0; margin-right: 0;
     }
     .tracker-panel .recent-services,
@@ -245,7 +247,8 @@
     .dl-panel .dl-controls,
     .dl-panel .dl-meta,
     .dl-panel .dl-grid,
-    .dl-panel .topic-bar { padding-left: 0.9rem; padding-right: 0.9rem; }
+    .dl-panel .topic-bar,
+    .dl-panel .sermon-section { padding-left: 0.9rem; padding-right: 0.9rem; }
     .tracker-panel .chart-wrap { height: 160px; }
     .tracker-panel .hymn-list { padding-bottom: 1rem; }
     .dl-panel .dl-grid {
@@ -482,6 +485,35 @@
     }
     .bulk-clear-btn:hover { border-color: white; color: white; }
 
+    /* ── Sermon matcher ── */
+    .sermon-toggle {
+      display: flex; align-items: center; gap: 0.5rem;
+      padding: 0.55rem 0.9rem; border-radius: 7px;
+      border: 1.5px solid var(--border); background: var(--white);
+      color: var(--text); font-size: 0.82rem; font-weight: 600;
+      cursor: pointer; transition: all 0.15s; white-space: nowrap;
+    }
+    .sermon-toggle.active { background: var(--red); color: var(--white); border-color: var(--red); }
+    .sermon-toggle:hover:not(.active) { border-color: var(--red); color: var(--red); }
+    .sermon-section {
+      display: none; flex-direction: column; gap: 0.6rem;
+      border-top: 1.5px solid var(--border);
+      padding-top: 0.8rem; padding-bottom: 0.8rem;
+      background: #FAFAFA;
+    }
+    .sermon-section.open { display: flex; }
+    .sermon-label { font-size: 0.78rem; font-weight: 700; color: var(--dark); }
+    .sermon-hint { font-size: 0.73rem; color: var(--muted); }
+    .sermon-textarea {
+      width: 100%; min-height: 100px; max-height: 200px;
+      padding: 0.6rem 0.8rem; border: 1.5px solid var(--border); border-radius: 8px;
+      font-size: 0.85rem; font-family: inherit; color: var(--text);
+      background: var(--white); resize: vertical; transition: border-color 0.15s;
+    }
+    .sermon-textarea:focus { outline: none; border-color: var(--red); }
+    .sermon-meta { font-size: 0.78rem; color: var(--muted); }
+    .sermon-meta strong { color: var(--red); }
+
     /* ── Misc ── */
     .state-msg { text-align: center; padding: 3rem 1rem; color: var(--muted); }
     footer { text-align: center; padding: 1.1rem; color: var(--muted); font-size: 0.76rem; border-top: 1px solid var(--border); }
@@ -594,6 +626,7 @@
   <div class="panel-header">
     <h2>Hymn Tracker</h2>
     <p>frequency, dates &amp; song leaders</p>
+    <span class="panel-header-updated" id="tracker-last-updated"></span>
   </div>
   <div class="panel-scroll">
   <div class="stats-bar">
@@ -674,7 +707,19 @@
       <option value="eChoice">eChoice</option>
     </select>
     <button class="period-btn" id="show-all-btn" onclick="showAllDecks()">Show All</button>
+    <button class="sermon-toggle" id="sermon-toggle-btn" onclick="toggleSermonMatcher()">📖 Match Sermon</button>
   </div>
+
+  <!-- Sermon matcher -->
+  <div class="sermon-section" id="sermon-section">
+    <div>
+      <div class="sermon-label">Paste sermon text or outline</div>
+      <div class="sermon-hint">Hymns will be suggested based on the sermon's themes and topics.</div>
+    </div>
+    <textarea class="sermon-textarea" id="sermon-input" placeholder="Paste your sermon text, outline, or scripture references here…" oninput="debounceSermon()"></textarea>
+    <div class="sermon-meta" id="sermon-meta"></div>
+  </div>
+
   <!-- Topic chips — populated by JS once hymn_topics.json loads -->
   <div class="topic-bar" id="dl-topic-bar" style="display:none">
     <span class="topic-label">Quick topics</span>
@@ -873,7 +918,7 @@
       ])
       if (!songsRes.ok) throw new Error(songsRes.status)
       allHymns = await songsRes.json()
-      initYearFilter(); updateStats(); renderRecentServices(); render(); renderDownloads()
+      initYearFilter(); updateStats(); updateLastUpdated(); renderRecentServices(); render(); renderDownloads()
     } catch (e) {
       document.getElementById('hymn-list').innerHTML =
         '<div class="state-msg">Could not load hymn data. Please try again later.</div>'
@@ -1318,6 +1363,123 @@
   function highlight(escaped, q) {
     if (!q) return escaped
     return escaped.replace(new RegExp(`(${q.replace(/[.*+?^${}()|[\]\\]/g,'\\$&')})`, 'gi'), '<mark>$1</mark>')
+  }
+
+  /* ── Last updated (tracker panel header) ── */
+  function updateLastUpdated() {
+    const el = document.getElementById('tracker-last-updated')
+    if (!el || !allHymns.length) return
+    const dates = []
+    allHymns.forEach(h => h.occurrences.forEach(o => { if (o.date) dates.push(o.date) }))
+    if (!dates.length) return
+    const latest = dates.sort().pop()
+    el.textContent = 'Updated ' + fmtFull(latest)
+  }
+
+  /* ── Sermon matcher ── */
+  let sermonTimer = null
+  const SERMON_STOPWORDS = new Set([
+    'the','a','an','and','or','but','in','on','at','to','for','of','with','by',
+    'from','is','was','are','were','be','been','being','have','has','had',
+    'do','does','did','will','would','could','should','may','might','shall',
+    'that','this','these','those','it','its','we','our','us','you','your',
+    'he','she','they','them','his','her','their','i','my','me','who','which',
+    'not','no','so','if','as','up','out','can','all','there','when','what',
+    'his','him','god','lord','jesus','christ','holy','spirit','one','know',
+    'come','let','shall','man','men','o','oh','thy','thee','thou','hath'
+  ])
+
+  function toggleSermonMatcher() {
+    const section = document.getElementById('sermon-section')
+    const btn     = document.getElementById('sermon-toggle-btn')
+    const open    = section.classList.toggle('open')
+    btn.classList.toggle('active', open)
+    if (!open) {
+      // Clear sermon results and restore normal downloader state
+      document.getElementById('sermon-input').value = ''
+      document.getElementById('sermon-meta').textContent = ''
+      renderDownloads()
+    } else {
+      document.getElementById('sermon-input').focus()
+    }
+  }
+
+  function debounceSermon() {
+    clearTimeout(sermonTimer)
+    sermonTimer = setTimeout(runSermonMatcher, 350)
+  }
+
+  function runSermonMatcher() {
+    const text = document.getElementById('sermon-input').value.trim()
+    const meta = document.getElementById('sermon-meta')
+
+    if (text.length < 30) {
+      meta.textContent = ''
+      document.getElementById('dl-meta').textContent = ''
+      document.getElementById('dl-grid').innerHTML = '<div class="dl-empty">Keep typing — suggestions will appear once there\'s enough text.</div>'
+      return
+    }
+
+    // Tokenize sermon
+    const words = text.toLowerCase().replace(/[^a-z\s]/g, ' ').split(/\s+/)
+      .filter(w => w.length > 3 && !SERMON_STOPWORDS.has(w))
+    const wordSet = new Set(words)
+
+    // Score each hymn in the catalogue
+    const scored = HYMN_DECKS.map((h, idx) => {
+      const tags   = (HYMN_TOPICS[h.name] || []).map(t => t.toLowerCase())
+      const hwords = h.name.toLowerCase().replace(/[^a-z\s]/g, ' ').split(/\s+/)
+        .filter(w => w.length > 3 && !SERMON_STOPWORDS.has(w))
+
+      let score = 0
+      // Each topic tag that appears in the sermon text
+      tags.forEach(tag => {
+        const tagWords = tag.toLowerCase().split(/\s+/)
+        const hits = tagWords.filter(tw => wordSet.has(tw) || text.toLowerCase().includes(tag)).length
+        score += hits * 2
+        if (text.toLowerCase().includes(tag)) score += 3
+      })
+      // Hymn title words that appear in sermon
+      hwords.forEach(w => { if (wordSet.has(w)) score += 1 })
+
+      return { h, idx, score, tags }
+    }).filter(x => x.score > 0)
+      .sort((a, b) => b.score - a.score)
+      .slice(0, 20)
+
+    if (!scored.length) {
+      meta.innerHTML = ''
+      document.getElementById('dl-meta').textContent = 'No strong matches found — try adding more sermon text.'
+      document.getElementById('dl-grid').innerHTML = '<div class="dl-empty">No hymns matched the sermon themes. Try adding more text or scripture references.</div>'
+      return
+    }
+
+    // Display matched topics for transparency
+    const topTopics = [...new Set(scored.flatMap(x => x.tags))].slice(0, 8)
+    meta.innerHTML = `Matched themes: ${topTopics.map(t => `<span class="svc-chip">${esc(t)}</span>`).join(' ')}`
+
+    document.getElementById('dl-meta').textContent =
+      `${scored.length} suggested hymn${scored.length !== 1 ? 's' : ''} for this sermon`
+
+    const grid = document.getElementById('dl-grid')
+    grid.innerHTML = scored.map(({ h, idx }) => {
+      const sel = selectedHymns.has(idx)
+      return `
+      <div class="dl-card${sel ? ' selected' : ''}" onclick="toggleSelect(event, ${idx})">
+        <div class="dl-card-check">${sel ? '&#10003;' : ''}</div>
+        <div class="dl-card-icon">🎵</div>
+        <div class="dl-card-name">${esc(h.name)}</div>
+        <div class="dl-card-meta">
+          ${h.number ? `#${h.number} &nbsp;·&nbsp; ` : ''}${h.source ? `<em>${esc(h.source)}</em>` : ''}
+          ${h.verses ? `&nbsp;·&nbsp; ${h.verses} verse${h.verses !== 1 ? 's' : ''}` : ''}
+          ${h.author ? `<br>${esc(h.author)}` : ''}
+        </div>
+        <div class="dl-btns" onclick="event.stopPropagation()">
+          <a class="dl-btn dl-btn-primary" href="${h.pptx}" download>&#11015; Slide Deck (.pptx)</a>
+          ${h.pdf ? `<a class="dl-btn dl-btn-outline" href="${h.pdf}" download>&#11015; Print Sheet (.pdf)</a>` : ''}
+        </div>
+      </div>`
+    }).join('')
   }
 
   /* ── Boot ── */
