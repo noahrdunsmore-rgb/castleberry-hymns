@@ -633,7 +633,7 @@
   <div class="dl-controls">
     <div class="search-wrap">
       <span class="search-icon">🔍</span>
-      <input type="text" id="dl-search" placeholder="Search hymn slide decks…" oninput="renderDownloads()">
+      <input type="text" id="dl-search" placeholder="Search hymn slide decks…" oninput="dlShowAll=false;document.getElementById('show-all-btn').classList.remove('active');renderDownloads()">
     </div>
     <select id="dl-source" onchange="renderDownloads()">
       <option value="">All Libraries</option>
@@ -642,13 +642,14 @@
       <option value="eChoice">eChoice</option>
       <option value="Service">Service Lineup</option>
     </select>
+    <button class="period-btn" id="show-all-btn" onclick="showAllDecks()">Show All</button>
   </div>
   <!-- Topic chips — populated by JS once hymn_topics.json loads -->
   <div class="topic-bar" id="dl-topic-bar" style="display:none">
     <span class="topic-label">Topic</span>
   </div>
   <div class="dl-meta" id="dl-meta"></div>
-  <div class="dl-grid" id="dl-grid"><div class="dl-empty">Loading…</div></div>
+  <div class="dl-grid" id="dl-grid"><div class="dl-empty">Search for a hymn above, pick a topic, or click <strong>Show All</strong>.</div></div>
 </div>
 
   </div><!-- end panel-scroll -->
@@ -1098,9 +1099,16 @@
     btn.innerHTML = '&#11015; Download ZIP'
   }
 
-  let HYMN_TOPICS    = {}   // { "Hymn Name": ["Topic1", "Topic2"], ... }
-  let activeDlTopic  = ''   // selected topic in Downloads
-  let activeTrackerTopic = ''  // selected topic in Tracker
+  let HYMN_TOPICS    = {}
+  let activeDlTopic  = ''
+  let activeTrackerTopic = ''
+  let dlShowAll      = false   // true once user clicks Show All
+
+  function showAllDecks() {
+    dlShowAll = true
+    document.getElementById('show-all-btn').classList.add('active')
+    renderDownloads()
+  }
 
   async function loadCatalogue() {
     if (HYMN_DECKS.length) return   // already loaded
@@ -1186,6 +1194,8 @@
   function renderDownloads() {
     const q      = document.getElementById('dl-search').value.trim().toLowerCase()
     const source = document.getElementById('dl-source').value
+    const hasFilter = q || source || activeDlTopic || dlShowAll
+    if (!hasFilter) return   // stay on the empty prompt until user asks
     const filtered = HYMN_DECKS.filter(h =>
       (!q      || h.name.toLowerCase().includes(q)) &&
       (!source || h.source === source) &&
