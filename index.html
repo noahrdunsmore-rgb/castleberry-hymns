@@ -200,45 +200,80 @@
     }
     .header-signout:hover { border-color: var(--white); color: var(--white); }
 
-    /* ── Last-sung lookup hero ── */
-    .lookup-section {
-      max-width: 1000px; margin: 1.4rem auto 0; padding: 0 1.2rem;
+    /* ── Side-by-side dashboard layout ── */
+    #view-app { display: flex; flex-direction: column; height: 100vh; overflow: hidden; }
+    .dashboard {
+      flex: 1; display: flex; overflow: hidden; min-height: 0;
     }
-    .lookup-box {
-      background: var(--white); border: 2px solid var(--border);
-      border-radius: 12px; padding: 1.1rem 1.3rem;
-      transition: border-color 0.15s;
+    .tracker-panel {
+      flex: 0 0 56%; display: flex; flex-direction: column; overflow: hidden;
+      border-right: 2px solid var(--border);
     }
-    .lookup-box:focus-within { border-color: var(--red); }
+    .dl-panel {
+      flex: 1; display: flex; flex-direction: column; overflow: hidden;
+    }
+    .panel-header {
+      flex-shrink: 0; padding: 0.7rem 1.1rem 0.5rem;
+      border-bottom: 1.5px solid var(--border); background: var(--white);
+      display: flex; align-items: baseline; gap: 0.6rem;
+    }
+    .panel-header h2 { font-size: 0.9rem; font-weight: 700; color: var(--dark); }
+    .panel-header p { font-size: 0.75rem; color: var(--muted); }
+    .panel-scroll { flex: 1; overflow-y: auto; }
+
+    /* Strip max-width / auto-margin constraints inside panels */
+    .tracker-panel .stats-bar,
+    .tracker-panel .period-bar,
+    .tracker-panel .chart-section,
+    .tracker-panel .controls,
+    .tracker-panel .topic-bar,
+    .tracker-panel .results-meta,
+    .tracker-panel .hymn-list,
+    .dl-panel .dl-controls,
+    .dl-panel .dl-meta,
+    .dl-panel .dl-grid,
+    .dl-panel .topic-bar {
+      max-width: none; margin-left: 0; margin-right: 0;
+    }
+    .tracker-panel .period-bar,
+    .tracker-panel .chart-section,
+    .tracker-panel .controls,
+    .tracker-panel .topic-bar,
+    .tracker-panel .results-meta,
+    .tracker-panel .hymn-list { padding-left: 0.9rem; padding-right: 0.9rem; }
+    .dl-panel .dl-controls,
+    .dl-panel .dl-meta,
+    .dl-panel .dl-grid,
+    .dl-panel .topic-bar { padding-left: 0.9rem; padding-right: 0.9rem; }
+    .tracker-panel .chart-wrap { height: 160px; }
+    .tracker-panel .hymn-list { padding-bottom: 1rem; }
+    .dl-panel .dl-grid {
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      padding-bottom: 1rem;
+    }
+
+    /* ── Lookup bar (slim, full-width above dashboard) ── */
+    .lookup-bar {
+      flex-shrink: 0; background: var(--white);
+      border-bottom: 1.5px solid var(--border);
+      padding: 0.55rem 1.2rem; display: flex; align-items: center; gap: 0.7rem;
+    }
     .lookup-label {
       font-size: 0.72rem; font-weight: 700; text-transform: uppercase;
-      letter-spacing: 0.08em; color: var(--muted); margin-bottom: 0.55rem;
+      letter-spacing: 0.07em; color: var(--muted); white-space: nowrap; flex-shrink: 0;
     }
-    .lookup-row { display: flex; gap: 0.6rem; align-items: center; }
     .lookup-input {
-      flex: 1; padding: 0.6rem 0.9rem;
-      border: 1.5px solid var(--border); border-radius: 8px;
-      font-size: 1rem; background: var(--bg); color: var(--text);
+      flex: 0 0 260px; padding: 0.38rem 0.75rem;
+      border: 1.5px solid var(--border); border-radius: 7px;
+      font-size: 0.88rem; background: var(--bg); color: var(--text);
       transition: border-color 0.15s;
     }
     .lookup-input:focus { outline: none; border-color: var(--red); }
-    .lookup-result {
-      margin-top: 0.7rem; min-height: 1.5rem; font-size: 0.9rem;
-    }
-    .lookup-result.found { color: var(--text); }
+    .lookup-result { flex: 1; font-size: 0.85rem; color: var(--muted); min-width: 0; }
     .lookup-result.found .lr-name { font-weight: 700; color: var(--dark); }
     .lookup-result.found .lr-date { color: var(--red); font-weight: 600; }
-    .lookup-result.found .lr-meta { color: var(--muted); font-size: 0.82rem; }
-    .lookup-result.empty { color: var(--muted); font-style: italic; font-size: 0.88rem; }
-
-    /* ── Section dividers ── */
-    .section-header {
-      max-width: 1000px; margin: 2.5rem auto 0; padding: 0 1.2rem;
-      display: flex; align-items: baseline; gap: 0.8rem;
-      border-bottom: 2px solid var(--border); padding-bottom: 0.6rem;
-    }
-    .section-header h2 { font-size: 1rem; font-weight: 700; color: var(--dark); letter-spacing: 0.01em; }
-    .section-header p { font-size: 0.8rem; color: var(--muted); }
+    .lookup-result.found .lr-meta { color: var(--muted); font-size: 0.78rem; }
+    .lookup-result.empty { font-style: italic; }
 
     /* ── Stats bar ── */
     .stats-bar { background: var(--red); display: flex; justify-content: center; }
@@ -339,9 +374,6 @@
     }
     .leader-chip.unknown { background: #F0F0F0; color: var(--muted); font-style: italic; font-weight: 400; }
     .svc-chip { display: inline-block; background: #EEF3FF; color: #3B5BDB; font-size: 0.72rem; font-weight: 600; border-radius: 5px; padding: 1px 7px; letter-spacing: 0.01em; white-space: nowrap; }
-    .src-chip { display: inline-block; font-size: 0.68rem; border-radius: 4px; padding: 1px 5px; white-space: nowrap; margin-left: 3px; }
-    .src-chip.email   { background: #E6FAF0; color: #1a7a44; }
-    .src-chip.youtube { background: #FFF4E5; color: #9a5700; opacity: 0.7; }
 
     /* ── Topic chips ── */
     .topic-bar {
@@ -522,23 +554,23 @@
   </div>
 </header>
 
-<!-- Last-sung lookup hero -->
-<div class="lookup-section">
-  <div class="lookup-box">
-    <div class="lookup-label">When was this last sung?</div>
-    <div class="lookup-row">
-      <input class="lookup-input" type="text" id="lookup-input" placeholder="Type any hymn or song title…" oninput="lookupSong(this.value)" autocomplete="off">
-    </div>
-    <div class="lookup-result" id="lookup-result"></div>
-  </div>
+<!-- Lookup bar (full-width slim strip above dashboard) -->
+<div class="lookup-bar">
+  <span class="lookup-label">Last sung?</span>
+  <input class="lookup-input" type="text" id="lookup-input" placeholder="Type any hymn title…" oninput="lookupSong(this.value)" autocomplete="off">
+  <div class="lookup-result" id="lookup-result">Start typing to search history</div>
 </div>
 
-<!-- HYMN TRACKER SECTION -->
-<div id="page-tracker">
-  <div class="section-header" style="margin-top:1.4rem">
+<!-- Two-panel dashboard -->
+<div class="dashboard">
+
+<!-- LEFT: HYMN TRACKER PANEL -->
+<div id="page-tracker" class="tracker-panel">
+  <div class="panel-header">
     <h2>Hymn Tracker</h2>
-    <p>Every song sung in a cappella worship &mdash; frequency, dates, and song leaders</p>
+    <p>frequency, dates &amp; song leaders</p>
   </div>
+  <div class="panel-scroll">
   <div class="stats-bar">
     <div class="stat"><div class="stat-number" id="stat-hymns">—</div><div class="stat-label">Unique Hymns</div></div>
     <div class="stat"><div class="stat-number" id="stat-services">—</div><div class="stat-label">Services Tracked</div></div>
@@ -587,15 +619,17 @@
   </div>
   <div class="results-meta" id="results-meta"></div>
   <div class="hymn-list" id="hymn-list"><div class="state-msg">Loading hymns…</div></div>
-  <footer id="footer">Updated automatically every Sunday night</footer>
-</div>
+  <footer id="footer">Updated every Sunday night</footer>
+  </div><!-- end panel-scroll -->
+</div><!-- end tracker-panel -->
 
-<!-- HYMN DOWNLOADS SECTION -->
-<div id="page-downloads">
-  <div class="section-header">
+<!-- RIGHT: HYMN DOWNLOADS PANEL -->
+<div id="page-downloads" class="dl-panel">
+  <div class="panel-header">
     <h2>Hymn Slide Decks</h2>
-    <p>Download presentation files &mdash; 892 songs across HFWR, HFWS, and eChoice</p>
+    <p>892 songs &mdash; HFWR, HFWS, eChoice</p>
   </div>
+  <div class="panel-scroll">
   <div class="dl-controls">
     <div class="search-wrap">
       <span class="search-icon">🔍</span>
@@ -616,6 +650,10 @@
   <div class="dl-meta" id="dl-meta"></div>
   <div class="dl-grid" id="dl-grid"><div class="dl-empty">Loading…</div></div>
 </div>
+
+  </div><!-- end panel-scroll -->
+</div><!-- end dl-panel -->
+</div><!-- end dashboard -->
 
 <!-- ── Bulk download bar (fixed bottom) ── -->
 <div class="bulk-bar" id="bulk-bar">
@@ -829,40 +867,15 @@
       return
     }
 
-    const best = scored[0].h
+    const best  = scored[0].h
     const allOccs = [...best.occurrences].sort((a, b) => b.date.localeCompare(a.date))
-    const last = allOccs[0]
+    const last  = allOccs[0]
     const total = allOccs.length
 
-    let html = `<span class="lr-name">${esc(best.name)}</span> &mdash; `
-    if (last) {
-      html += `Last sung <span class="lr-date">${fmtFull(last.date)}</span>`
-      if (last.leader) html += ` by <strong>${esc(last.leader)}</strong>`
-      if (last.service) html += ` <span class="svc-chip">${esc(last.service)}</span>`
-      html += ` &middot; <span class="lr-meta">Sung ${total}&#215; total`
-      if (total > 1) {
-        const first = allOccs[allOccs.length - 1]
-        html += `, first on ${fmtFull(first.date)}`
-      }
-      html += `</span>`
-      // List all occurrences if more than one
-      if (total > 1) {
-        html += `<div style="margin-top:.5rem;font-size:.8rem;color:var(--muted)">`
-        allOccs.slice(0, 8).forEach(o => {
-          html += `<div>${fmtFull(o.date)}`
-          if (o.leader) html += ` &middot; ${esc(o.leader)}`
-          if (o.service) html += ` &middot; ${esc(o.service)}`
-          html += `</div>`
-        })
-        if (total > 8) html += `<div>&hellip; and ${total - 8} more</div>`
-        html += `</div>`
-      }
-    } else {
-      html += `<span class="lr-meta">No occurrences recorded yet.</span>`
-    }
-
     el.className = 'lookup-result found'
-    el.innerHTML = html
+    if (!last) { el.innerHTML = `<span class="lr-name">${esc(best.name)}</span> &mdash; <span class="lr-meta">no occurrences recorded</span>`; return }
+    const svcPart = last.service ? ` &middot; <span class="svc-chip">${esc(last.service)}</span>` : ''
+    el.innerHTML = `<span class="lr-name">${esc(best.name)}</span> &mdash; last sung <span class="lr-date">${fmtFull(last.date)}</span>${last.leader ? ` by <strong>${esc(last.leader)}</strong>` : ''}${svcPart} <span class="lr-meta">(${total}&#215; total)</span>`
   }
 
   let activePeriod = 'all'
@@ -1008,12 +1021,7 @@
         const svc = o.service
           ? `<span class="svc-chip">${esc(o.service)}</span>`
           : ''
-        const src = o.source === 'email'
-          ? `<span class="src-chip email" title="Confirmed from leader's email">✓ email</span>`
-          : o.source === 'youtube'
-          ? `<span class="src-chip youtube" title="From YouTube transcript">YT</span>`
-          : ''
-        return `<tr><td>${fmtFull(o.date)}</td><td>${svc}</td><td>${ldr}${src}</td></tr>`
+        return `<tr><td>${fmtFull(o.date)}</td><td>${svc}</td><td>${ldr}</td></tr>`
       }).join('')
       return `
         <div class="hymn-card" onclick="this.classList.toggle('open')">
