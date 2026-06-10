@@ -555,7 +555,7 @@
 
     /* —— Sign-in: two-column welcome —— */
     #view-auth {
-      min-height: 100vh; display: grid !important; grid-template-columns: 1.05fr 0.95fr;
+      min-height: 100vh; display: grid; grid-template-columns: 1.05fr 0.95fr;
       background: var(--bg); padding: 0; align-items: stretch;
     }
     .welcome-left {
@@ -1023,7 +1023,8 @@
       el.style.display = 'none'
     })
     const target = document.getElementById('view-' + view)
-    target.style.display = 'flex'
+    // Auth view uses the two-column grid; pending/app use flex.
+    target.style.display = view === 'auth' ? 'grid' : 'flex'
   }
 
   /* ── Auth state check ── */
