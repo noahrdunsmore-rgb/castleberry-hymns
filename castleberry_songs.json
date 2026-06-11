@@ -124,6 +124,12 @@
         "service": "Sunday 11:00 AM",
         "leader": "Thomas Holder",
         "source": "email"
+      },
+      {
+        "date": "2026-06-07",
+        "service": "Sunday 11:00 AM",
+        "leader": "Sawyer Gann",
+        "source": "email"
       }
     ]
   },
@@ -206,6 +212,12 @@
         "date": "2026-04-26",
         "service": "Sunday 11:00 AM",
         "leader": "Thomas Holder",
+        "source": "email"
+      },
+      {
+        "date": "2026-06-07",
+        "service": "Sunday 11:00 AM",
+        "leader": "Sawyer Gann",
         "source": "email"
       }
     ]
@@ -878,6 +890,12 @@
         "service": "Sunday 11:00 AM",
         "leader": "Thomas Holder",
         "source": "email"
+      },
+      {
+        "date": "2026-06-10",
+        "service": "Wednesday Evening",
+        "leader": "Josh Jackson",
+        "source": "email"
       }
     ]
   },
@@ -1168,6 +1186,17 @@
     ]
   },
   {
+    "name": "Lamb of God",
+    "occurrences": [
+      {
+        "date": "2026-06-07",
+        "service": "Sunday 11:00 AM",
+        "leader": "Sawyer Gann",
+        "source": "email"
+      }
+    ]
+  },
+  {
     "name": "Lift Your Voice in Praise",
     "occurrences": [
       {
@@ -1265,6 +1294,17 @@
         "leader": "Noah Dunsmore",
         "service": "Sunday 11:00 AM",
         "source": "youtube"
+      }
+    ]
+  },
+  {
+    "name": "Mended and Whole",
+    "occurrences": [
+      {
+        "date": "2026-06-07",
+        "service": "Sunday 11:00 AM",
+        "leader": "Sawyer Gann",
+        "source": "email"
       }
     ]
   },
@@ -2037,6 +2077,28 @@
         "date": "2026-04-05",
         "service": "Sunday 11:00 AM",
         "leader": "Sawyer Gann",
+        "source": "email"
+      }
+    ]
+  },
+  {
+    "name": "We Will Glorify the King of Kings",
+    "occurrences": [
+      {
+        "date": "2026-06-07",
+        "service": "Sunday 11:00 AM",
+        "leader": "Sawyer Gann",
+        "source": "email"
+      }
+    ]
+  },
+  {
+    "name": "What Will Your Answer Be?",
+    "occurrences": [
+      {
+        "date": "2026-06-10",
+        "service": "Wednesday Evening",
+        "leader": "Josh Jackson",
         "source": "email"
       }
     ]
