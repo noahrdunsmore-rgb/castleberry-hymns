@@ -10,7 +10,7 @@
   <link rel="icon" href="logo.png" type="image/png">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,600;12..96,700&family=Instrument+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Oswald:wght@500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@500;600&family=Manrope:wght@400;500;600;700;800&family=Oswald:wght@500;600;700&family=Petrona:ital,opsz,wght@0,8..144,500;0,8..144,600;1,8..144,500&display=swap" rel="stylesheet">
   <style>
     :root {
       /* Heritage Bulletin palette */
@@ -1224,6 +1224,8 @@
       #view-app .controls, #view-app .dl-controls { grid-template-columns: 1fr; gap: 8px; }
       #view-app .history-controls { grid-template-columns: 1fr; }
       #view-app .controls select, #view-app .dl-controls select { width: 100%; }
+      #view-app .history-controls input,
+      #view-app .history-controls select { min-height: 46px; }
       #view-app .dl-controls .period-btn, #view-app .dl-controls .sermon-toggle { justify-self: stretch; }
       #view-app .dl-grid { grid-template-columns: 1fr; }
       #view-app .dl-controls input, #view-app .dl-controls select,
@@ -1246,6 +1248,389 @@
       .welcome-h1 { font-size: 42px; }
       .welcome-right { padding: 24px 16px; }
       .welcome-right .auth-card { padding: 26px 22px; }
+    }
+
+    /* ================================================================
+       CONTEMPORARY HYMNAL — contestant B
+       Cool manuscript surfaces, score-like rhythm and crisp app utility.
+       ================================================================ */
+    :root {
+      --hymnal-ink: #151B2B;
+      --hymnal-navy: #202A43;
+      --hymnal-slate: #59657A;
+      --hymnal-canvas: #EEF1F5;
+      --hymnal-paper: #FFFFFF;
+      --hymnal-paper-2: #F7F8FA;
+      --hymnal-line: #D7DCE5;
+      --hymnal-line-dark: #BBC3D0;
+      --hymnal-red: #C92843;
+      --hymnal-red-dark: #9D1830;
+      --hymnal-red-soft: #FBE8EC;
+      --hymnal-brass: #B38A45;
+      --hymnal-display: 'Petrona', Georgia, serif;
+      --hymnal-body: 'Manrope', system-ui, sans-serif;
+      --hymnal-utility: 'IBM Plex Mono', ui-monospace, monospace;
+    }
+
+    body {
+      color: var(--hymnal-ink);
+      background:
+        linear-gradient(rgba(21,27,43,.025) 1px, transparent 1px),
+        var(--hymnal-canvas);
+      background-size: 100% 28px;
+      font-family: var(--hymnal-body);
+    }
+    h1, h2, h3 { font-family: var(--hymnal-display); }
+    :where(button, a, input, select, textarea):focus-visible {
+      outline: 3px solid rgba(201,40,67,.3);
+      outline-offset: 3px;
+    }
+
+    /* Authentication reads like the opening leaf of the same product. */
+    #view-auth { background: var(--hymnal-canvas); }
+    #view-auth .welcome-left {
+      position: relative;
+      background: var(--hymnal-navy);
+      border-right: 8px solid var(--hymnal-red);
+    }
+    #view-auth .welcome-left::after {
+      content: 'CASTLEBERRY  /  WORSHIP PREPARATION';
+      position: absolute; right: 24px; bottom: 26px;
+      color: rgba(255,255,255,.38);
+      font: 600 10px/1 var(--hymnal-utility);
+      letter-spacing: .12em; writing-mode: vertical-rl;
+    }
+    #view-auth .welcome-left .staff-lines {
+      opacity: .09;
+      background: repeating-linear-gradient(0deg, transparent 0 22px, #fff 22px 23px);
+      mask-image: linear-gradient(90deg, transparent, #000 18%, #000 74%, transparent);
+    }
+    #view-auth .welcome-brand .wm-lines { font-family: 'Oswald', sans-serif; }
+    #view-auth .welcome-eyebrow {
+      color: #F6AABA; font: 600 10px/1 var(--hymnal-utility); letter-spacing: .16em;
+    }
+    #view-auth .welcome-h1 {
+      max-width: 680px; color: white;
+      font: 500 clamp(46px, 5.7vw, 78px)/.98 var(--hymnal-display);
+      letter-spacing: -.045em;
+    }
+    #view-auth .welcome-h1::first-line { font-style: italic; }
+    #view-auth .welcome-p { color: #D9DEEA; font: 500 16px/1.65 var(--hymnal-body); }
+    #view-auth .welcome-stats { border-top-color: rgba(255,255,255,.16); }
+    #view-auth .welcome-stats .ws-num { font-family: var(--hymnal-display); font-weight: 500; }
+    #view-auth .welcome-stats .ws-lbl { font-family: var(--hymnal-utility); letter-spacing: .08em; }
+    #view-auth .welcome-right { background: var(--hymnal-canvas); }
+    #view-auth .welcome-right .auth-card {
+      border: 1px solid var(--hymnal-line); border-radius: 6px;
+      background: var(--hymnal-paper); box-shadow: 0 24px 60px rgba(32,42,67,.12);
+    }
+    #view-auth .auth-card::before {
+      content: 'MEMBERS’ WORKSPACE'; display: block; margin-bottom: 26px;
+      color: var(--hymnal-red); font: 600 10px/1 var(--hymnal-utility); letter-spacing: .13em;
+    }
+    #view-auth .auth-heading { font: 500 38px/1 var(--hymnal-display); letter-spacing: -.04em; }
+    #view-auth .auth-subhead { font-family: var(--hymnal-body); }
+    #view-auth .auth-tabs { padding: 3px; border-radius: 4px; background: #E9EDF3; }
+    #view-auth .auth-tab { border-radius: 2px; font-family: var(--hymnal-body); }
+    #view-auth .auth-tab { min-height: 44px; }
+    #view-auth .auth-input { border-radius: 3px; background: var(--hymnal-paper-2); }
+    #view-auth .auth-btn { min-height: 48px; border-radius: 3px; background: var(--hymnal-red); }
+
+    /* Navigation: quiet shell, unmistakable wordmark, no floating-pill chrome. */
+    #view-app { color: var(--hymnal-ink); background: var(--hymnal-canvas); font-family: var(--hymnal-body); }
+    #view-app header { background: var(--hymnal-paper); box-shadow: 0 1px 0 var(--hymnal-line); }
+    #view-app .header-inner { min-height: 76px; max-width: 1380px; }
+    .cb-wordmark svg { width: 36px; height: 36px; }
+    .cb-wordmark .wm-top { color: var(--hymnal-ink); font-size: 17px; }
+    .cb-wordmark .wm-bot { color: var(--hymnal-slate); }
+    .workspace-nav {
+      gap: 0; padding: 0; border: 1px solid var(--hymnal-line); border-radius: 4px;
+      background: var(--hymnal-paper-2);
+    }
+    .workspace-tab {
+      min-width: 118px; min-height: 42px; border-radius: 0;
+      color: var(--hymnal-slate); font: 700 12px/1 var(--hymnal-body); letter-spacing: .01em;
+    }
+    .workspace-tab + .workspace-tab { border-left: 1px solid var(--hymnal-line); }
+    .workspace-tab:hover { color: var(--hymnal-ink); background: white; }
+    .workspace-tab.active { color: var(--hymnal-ink); background: white; }
+    .workspace-tab.active::after {
+      left: 12px; right: 12px; bottom: -1px; height: 3px;
+      border-radius: 0; background: var(--hymnal-red);
+    }
+    .header-signout {
+      color: var(--hymnal-slate); border-color: var(--hymnal-line-dark); border-radius: 3px;
+      font-family: var(--hymnal-body);
+    }
+    .header-signout:hover { color: var(--hymnal-red-dark); border-color: var(--hymnal-red); }
+
+    /* Hero thesis: a working score, not a marketing banner. */
+    #view-app .lookup-bar {
+      min-height: 248px; grid-template-columns: minmax(0, 1.45fr) minmax(340px, .55fr);
+      gap: clamp(40px, 7vw, 110px); padding: 44px max(34px, calc((100vw - 1320px) / 2));
+      background: var(--hymnal-navy); border: 0;
+    }
+    #view-app .lookup-bar::before {
+      inset: 42px 0 auto; height: 116px; opacity: .12; transform: none;
+      background: repeating-linear-gradient(0deg, transparent 0 22px, white 22px 23px);
+      mask-image: linear-gradient(90deg, transparent 0, #000 12%, #000 85%, transparent 100%);
+    }
+    #view-app .lookup-bar::after {
+      width: 1px; height: 154px; right: 34%; top: 47px; border-radius: 0;
+      background: rgba(255,255,255,.2); box-shadow: 8px 0 0 rgba(255,255,255,.06);
+    }
+    .greeting-eyebrow {
+      margin-bottom: 18px; padding: 0; border: 0; border-radius: 0; background: transparent;
+      color: #F8B5C2; font: 600 10px/1 var(--hymnal-utility); letter-spacing: .16em;
+    }
+    .greeting-eyebrow::before {
+      width: 24px; height: 2px; border-radius: 0; background: var(--hymnal-red); box-shadow: none;
+    }
+    .greeting-h1 {
+      max-width: 760px; color: white;
+      font: 500 clamp(48px, 5.6vw, 78px)/.94 var(--hymnal-display);
+      letter-spacing: -.05em;
+    }
+    .greeting-h1::first-line { font-style: italic; }
+    .greeting-sub { max-width: 560px; color: #CCD3E0; font: 500 13px/1.6 var(--hymnal-body); }
+    .home-deadline {
+      position: relative; isolation: isolate; overflow: hidden; min-height: 154px;
+      justify-content: flex-end; padding: 24px 26px; border: 1px solid rgba(255,255,255,.24);
+      border-radius: 4px; background: rgba(255,255,255,.065); box-shadow: none; backdrop-filter: none;
+    }
+    .home-deadline::before {
+      content: ''; position: absolute; z-index: -1; inset: 18px 0 auto; height: 69px;
+      background: repeating-linear-gradient(0deg, transparent 0 13px, rgba(255,255,255,.28) 13px 14px);
+    }
+    .home-deadline::after {
+      content: ''; position: absolute; z-index: -1; top: 18px; bottom: 58px; left: 62%; width: 3px;
+      background: var(--hymnal-red); box-shadow: 0 0 0 5px rgba(201,40,67,.14);
+    }
+    .home-deadline-label { color: #F8B5C2; font: 600 9px/1 var(--hymnal-utility); }
+    .home-deadline strong { color: white; font: 500 24px/1.1 var(--hymnal-display); letter-spacing: -.03em; }
+    .home-deadline > span:last-child { color: #CCD3E0; font-family: var(--hymnal-body); }
+
+    /* App canvas and section framing. */
+    #view-app .dashboard { max-width: 1320px; padding: 22px 24px 30px; }
+    #page-overview.workspace-active,
+    #page-history.workspace-active,
+    #page-downloads.workspace-active {
+      border-color: var(--hymnal-line); border-radius: 5px; background: var(--hymnal-paper);
+      box-shadow: 0 16px 40px rgba(32,42,67,.07);
+    }
+    #view-app .panel-header {
+      min-height: 64px; padding: 17px 22px; border-color: var(--hymnal-line); background: white;
+    }
+    #view-app .panel-header::before {
+      width: 32px; height: 18px; opacity: 1;
+      background:
+        linear-gradient(90deg, var(--hymnal-red) 0 3px, transparent 3px 100%),
+        repeating-linear-gradient(0deg, transparent 0 3px, var(--hymnal-line-dark) 3px 4px);
+    }
+    #view-app .panel-header h2 { font: 500 22px/1 var(--hymnal-display); letter-spacing: -.035em; }
+    #view-app .panel-header p,
+    #view-app .panel-header-updated { color: var(--hymnal-slate); }
+    #view-app .panel-scroll { background: var(--hymnal-paper-2); }
+
+    /* The three measures form a real Sunday-preparation sequence. */
+    .home-actions { position: relative; gap: 0; padding: 24px 20px 0; }
+    .home-actions::before {
+      content: ''; position: absolute; z-index: 0; left: 76px; right: 76px; top: 65px; height: 1px;
+      background: var(--hymnal-line-dark);
+    }
+    .home-action {
+      min-height: 218px; gap: 11px; padding: 24px 25px 22px; border-radius: 0;
+      border-color: var(--hymnal-line); background: white; box-shadow: none;
+    }
+    .home-action + .home-action { border-left: 0; }
+    .home-action::before { display: none; }
+    .home-action-marker {
+      position: relative; z-index: 1; display: flex; align-items: center; gap: 10px;
+      width: fit-content; margin-bottom: 6px; background: white;
+    }
+    .flow-step {
+      display: grid; place-items: center; width: 38px; height: 38px; flex: 0 0 38px;
+      border: 1px solid var(--hymnal-line-dark); border-radius: 50%; color: var(--hymnal-navy);
+      background: var(--hymnal-paper); font: 600 10px/1 var(--hymnal-utility);
+    }
+    .home-action:last-child .flow-step { color: white; border-color: var(--hymnal-red); background: var(--hymnal-red); }
+    .home-action:hover { z-index: 1; border-color: var(--hymnal-red); background: white; box-shadow: 0 12px 30px rgba(32,42,67,.09); }
+    .home-action-kicker { color: var(--hymnal-red); font: 600 9px/1 var(--hymnal-utility); letter-spacing: .14em; }
+    .home-action strong { font: 500 25px/1.05 var(--hymnal-display); letter-spacing: -.035em; }
+    .home-action > span:nth-child(3) { color: var(--hymnal-slate); font: 500 13px/1.55 var(--hymnal-body); }
+    .home-action-link {
+      padding: 0; border-radius: 0; color: var(--hymnal-red-dark); background: transparent;
+      font: 700 11px/1 var(--hymnal-body); letter-spacing: 0; text-transform: none;
+    }
+    .home-action-primary {
+      color: var(--hymnal-ink); border-color: var(--hymnal-line); background: white; box-shadow: none;
+    }
+    .home-action-primary::after { display: none; }
+    .home-action-primary::before { display: none; }
+    .home-action-primary > span:nth-child(3) { color: var(--hymnal-slate); }
+    .home-action-primary .home-action-link { color: var(--hymnal-red-dark); background: transparent; }
+    .home-action-primary:hover { border-color: var(--hymnal-red); background: white; }
+    .home-section-label { padding: 28px 20px 0; }
+    .home-section-label strong { font: 500 20px/1 var(--hymnal-display); }
+    .home-activity-toggle { display: none; }
+    .home-activity.activity-collapsed { display: block; }
+
+    /* Topic rails disclose overflow instead of silently clipping it. */
+    .topic-rail-shell { position: relative; }
+    .topic-rail-hint { display: none; }
+
+    /* Information surfaces: spare, square, legible. */
+    .tracker-panel .stats-bar { margin: 18px 20px 0; border-color: var(--hymnal-line); border-radius: 3px; }
+    #view-app .stat { border-color: var(--hymnal-line); }
+    #view-app .stat-number { font: 500 29px/1 var(--hymnal-display); }
+    #view-app .stat-label { color: var(--hymnal-slate); font: 600 9px/1.2 var(--hymnal-utility); }
+    .tracker-panel .recent-services { padding: 0 20px; }
+    #view-app .svc-card { border-color: var(--hymnal-line); border-left-color: var(--hymnal-red); border-radius: 3px; }
+    #view-app .svc-date { font: 500 17px/1.2 var(--hymnal-display); }
+    #view-app .period-btn,
+    #view-app .topic-chip,
+    #view-app .sermon-toggle {
+      border-color: var(--hymnal-line); border-radius: 3px; color: var(--hymnal-slate); background: white;
+    }
+    #view-app .period-btn.active,
+    #view-app .topic-chip.active,
+    #view-app .sermon-toggle.active { color: white; border-color: var(--hymnal-navy); background: var(--hymnal-navy); }
+    #view-app .chart-card { border-color: var(--hymnal-line); border-radius: 3px; }
+    #view-app .controls,
+    #view-app .dl-controls { gap: 8px; }
+    #view-app input[type="text"],
+    #view-app select,
+    #view-app .sermon-textarea { border-color: var(--hymnal-line); border-radius: 3px; background: white; }
+    #view-app input[type="text"]:focus,
+    #view-app select:focus,
+    #view-app .sermon-textarea:focus { border-color: var(--hymnal-red); }
+    .history-answer { border-radius: 3px; border-color: var(--hymnal-line-dark); background: white; }
+    .history-answer.found,
+    .history-answer.empty { border-color: #E9A6B3; background: var(--hymnal-red-soft); }
+    #view-app .hymn-card { border-color: var(--hymnal-line); border-radius: 3px; }
+    #view-app .hymn-card:hover { border-color: var(--hymnal-red); box-shadow: 0 8px 24px rgba(32,42,67,.07); }
+    #view-app .hymn-name { font-weight: 700; }
+    #view-app .badge-count { color: var(--hymnal-navy); background: #E9EDF3; }
+    #view-app .badge-count.hot,
+    #view-app .leader-chip { color: var(--hymnal-red-dark); background: var(--hymnal-red-soft); }
+
+    /* Slide library is a catalogue, not a gallery. */
+    #view-app .dl-grid { gap: 8px; }
+    #view-app .dl-card { padding: 17px; border-color: var(--hymnal-line); border-radius: 3px; background: white; }
+    #view-app .dl-card:hover { border-color: var(--hymnal-red); box-shadow: 0 10px 26px rgba(32,42,67,.08); }
+    #view-app .dl-card.selected { border-color: var(--hymnal-red); background: var(--hymnal-red-soft); box-shadow: inset 4px 0 0 var(--hymnal-red); }
+    #view-app .dl-card-icon { border-radius: 2px; color: var(--hymnal-red); background: var(--hymnal-red-soft); }
+    #view-app .dl-card-icon::before { font-family: var(--hymnal-display); }
+    #view-app .dl-card-name { font-weight: 700; }
+    #view-app .dl-card-meta { color: var(--hymnal-slate); }
+    #view-app .dl-card-check::before { border-radius: 2px; }
+    #view-app .dl-btn { border-radius: 2px; }
+    #view-app .dl-btn-primary { border-color: var(--hymnal-red); background: var(--hymnal-red); }
+    #view-app .dl-btn-outline { color: var(--hymnal-red-dark); border-color: #E9A6B3; }
+    #view-app .bulk-bar { bottom: 0; background: var(--hymnal-navy); }
+    .download-notice { border-radius: 3px; background: var(--hymnal-navy); }
+
+    @media (max-width: 720px) {
+      #view-auth .welcome-left {
+        display: grid; grid-template-columns: 1fr; justify-content: start;
+        gap: 10px; min-height: 0; padding: 16px 20px 18px; border-right: 0; border-bottom: 5px solid var(--hymnal-red);
+      }
+      #view-auth .welcome-left::after { display: none; }
+      #view-auth .welcome-left .staff-lines { opacity: .075; }
+      #view-auth .welcome-brand { gap: 9px; }
+      #view-auth .welcome-brand svg { width: 34px; height: 33px; }
+      #view-auth .welcome-brand .wm-top,
+      #view-auth .welcome-brand .wm-bot { font-size: 14px; }
+      #view-auth .welcome-mid { margin-top: 2px; }
+      #view-auth .welcome-eyebrow { display: none; }
+      #view-auth .welcome-h1 {
+        max-width: 340px; margin: 0; font-size: 31px; line-height: .98; letter-spacing: -.035em;
+      }
+      #view-auth .welcome-p { display: none; }
+      #view-auth .welcome-stats { display: none; }
+      #view-auth .welcome-right { align-items: flex-start; padding: 12px; }
+      #view-auth .welcome-right .auth-card { max-width: 100%; padding: 18px 20px; }
+      #view-auth .auth-card::before { margin-bottom: 14px; }
+      #view-auth .auth-tabs { margin-bottom: 16px; }
+      #view-auth .auth-tab { min-height: 44px; padding: 10px 12px; }
+      #view-auth .auth-heading { font-size: 31px; }
+      #view-auth .auth-subhead { margin-bottom: 16px; font-size: 13px; }
+      #view-auth .auth-form { gap: 7px; }
+      #view-auth .auth-input { min-height: 46px; padding: 10px 12px; }
+      #view-auth .auth-btn { min-height: 48px; margin-top: 5px; }
+      #view-auth .auth-scripture { display: none; }
+      #view-app { padding-bottom: 70px; }
+      #view-app.home-flow { padding-bottom: 70px; }
+      #view-app .header-inner { display: flex; min-height: 62px; padding: 10px 14px; }
+      .cb-wordmark { flex: 1; }
+      .workspace-nav {
+        position: fixed; z-index: 1000; left: 0; right: 0; bottom: 0;
+        display: grid; grid-template-columns: repeat(3, 1fr); width: 100%; min-height: 70px;
+        padding: 6px 8px calc(6px + env(safe-area-inset-bottom));
+        border: 0; border-top: 1px solid var(--hymnal-line); border-radius: 0;
+        background: rgba(255,255,255,.97); box-shadow: 0 -8px 28px rgba(32,42,67,.08);
+        backdrop-filter: blur(16px);
+      }
+      .workspace-tab { min-height: 54px; padding: 23px 8px 7px; border: 0 !important; font-size: 11px; }
+      .workspace-tab::before {
+        position: absolute; top: 7px; left: 50%; transform: translateX(-50%);
+        color: var(--hymnal-slate); font: 500 15px/1 var(--hymnal-display);
+      }
+      .workspace-tab[data-workspace="overview"]::before { content: '⌂'; }
+      .workspace-tab[data-workspace="history"]::before { content: '◴'; }
+      .workspace-tab[data-workspace="downloads"]::before { content: '♫'; }
+      .workspace-tab.active::before { color: var(--hymnal-red); }
+      .workspace-tab.active::after { left: 30%; right: 30%; top: 0; bottom: auto; height: 3px; }
+      #view-app .lookup-bar {
+        grid-template-columns: 1fr; gap: 16px; min-height: 0; padding: 25px 18px 20px;
+      }
+      #view-app .lookup-bar::before { top: 22px; height: 82px; }
+      #view-app .lookup-bar::after { display: none; }
+      .greeting-eyebrow { margin-bottom: 12px; }
+      .greeting-h1 { font-size: clamp(40px, 12vw, 52px); }
+      .greeting-sub { margin-top: 9px; }
+      .home-deadline { min-height: 112px; padding: 18px 20px; }
+      .home-deadline::before { top: 13px; }
+      .home-deadline::after { top: 13px; bottom: 48px; }
+      #view-app .dashboard { padding: 12px 10px 14px; }
+      #page-overview.workspace-active,
+      #page-history.workspace-active,
+      #page-downloads.workspace-active { border-radius: 3px; }
+      #view-app .panel-header { padding: 14px; }
+      .home-actions { grid-template-columns: 1fr; gap: 8px; padding: 12px 12px 0; }
+      .home-actions::before { left: 42px; right: auto; top: 42px; bottom: 42px; width: 1px; height: auto; }
+      .home-action { min-height: 0; padding: 19px; border: 1px solid var(--hymnal-line) !important; }
+      .home-action-marker { padding-right: 8px; }
+      .flow-step { width: 34px; height: 34px; flex-basis: 34px; }
+      .home-action strong { max-width: 100%; font-size: 24px; }
+      .home-section-label { display: none; }
+      .home-activity-toggle {
+        display: flex; align-items: center; justify-content: space-between; width: calc(100% - 24px);
+        min-height: 50px; margin: 12px; padding: 0 16px; border: 1px solid var(--hymnal-line);
+        color: var(--hymnal-ink); background: white; font: 700 13px/1 var(--hymnal-body); cursor: pointer;
+      }
+      .home-activity-toggle[aria-expanded="true"] { border-color: var(--hymnal-red); color: var(--hymnal-red-dark); }
+      .home-activity.activity-collapsed { display: none; }
+      .home-section-label .panel-header-updated {
+        width: auto; max-width: 48%; margin-left: 0; white-space: normal; text-align: right;
+      }
+      .tracker-panel .stats-bar { margin-left: 12px; margin-right: 12px; }
+      .topic-rail-shell:has(.topic-bar[style*="flex"])::after {
+        content: ''; position: absolute; z-index: 2; top: 0; right: 12px; width: 38px; height: 48px;
+        background: linear-gradient(90deg, rgba(247,248,250,0), var(--hymnal-paper-2));
+        pointer-events: none; transition: opacity .15s ease;
+      }
+      .topic-rail-shell:focus-within::after { opacity: 0; }
+      .topic-rail-shell:has(.topic-bar[style*="flex"]) .topic-rail-hint {
+        display: block; margin: -1px 14px 5px; color: var(--hymnal-slate); text-align: right;
+        font: 600 9px/1 var(--hymnal-utility); letter-spacing: .04em;
+      }
+      #view-app .topic-bar { scroll-padding-inline: 14px; }
+      #view-app .topic-chip:focus-visible { outline-offset: -3px; }
+      .bulk-bar.visible { bottom: 70px !important; transform: none !important; }
+      #view-app.bulk-active #page-downloads .panel-scroll { padding-bottom: 96px; }
+      #view-app.bulk-active .download-notice { bottom: calc(152px + env(safe-area-inset-bottom)); }
+      .download-notice { bottom: calc(84px + env(safe-area-inset-bottom)); }
     }
 
     @media (prefers-reduced-motion: reduce) {
@@ -1393,14 +1778,14 @@
 <!-- Home introduction -->
 <div class="lookup-bar" id="home-hero">
   <div class="greeting-block">
-    <div class="greeting-eyebrow">Castleberry worship</div>
-    <h1 class="greeting-h1">What are you working on<span id="greeting-name"></span>?</h1>
-    <div class="greeting-sub" id="greeting-sub">Choose a task below and get straight to work.</div>
+    <div class="greeting-eyebrow">Next service · <span id="next-service-date">This Sunday</span></div>
+    <h1 class="greeting-h1">What are you preparing<span id="greeting-name"></span>?</h1>
+    <div class="greeting-sub" id="greeting-sub">Review history, collect slides, then assemble the service deck.</div>
   </div>
   <div class="home-deadline" aria-label="Service deck deadline">
-    <span class="home-deadline-label">Weekly deck deadline</span>
+    <span class="home-deadline-label">Next handoff</span>
     <strong>Saturday · 11:50 PM</strong>
-    <span>Build on the presentation PC</span>
+    <span>Builder runs on the presentation PC</span>
   </div>
 </div>
 
@@ -1410,25 +1795,25 @@
 <!-- OVERVIEW -->
 <div id="page-overview" class="tracker-panel overview-panel workspace-active" aria-hidden="false">
   <div class="panel-header">
-    <h2>Start here</h2>
-    <p>Choose the job you need to finish</p>
+    <h2>Sunday preparation</h2>
+    <p>Follow the service flow or jump to any task</p>
   </div>
   <div class="panel-scroll">
   <div class="home-actions">
     <button type="button" class="home-action" onclick="openWorkspace('history', 'search')">
-      <span class="home-action-kicker">Song history</span>
+      <span class="home-action-marker"><span class="flow-step" aria-hidden="true">01</span><span class="home-action-kicker">Review</span></span>
       <strong>Check a hymn</strong>
       <span>See when it was last sung, who led it and how often it appears.</span>
       <span class="home-action-link">Search history <span aria-hidden="true">→</span></span>
     </button>
     <button type="button" class="home-action" onclick="openWorkspace('downloads', 'dl-search')">
-      <span class="home-action-kicker">Slide library</span>
+      <span class="home-action-marker"><span class="flow-step" aria-hidden="true">02</span><span class="home-action-kicker">Gather</span></span>
       <strong>Find presentation slides</strong>
       <span>Search prepared PowerPoint and print files across all hymn libraries.</span>
       <span class="home-action-link">Find slides <span aria-hidden="true">→</span></span>
     </button>
     <a class="home-action home-action-primary" href="http://127.0.0.1:5000" target="_blank">
-      <span class="home-action-kicker">Presentation PC</span>
+      <span class="home-action-marker"><span class="flow-step" aria-hidden="true">03</span><span class="home-action-kicker">Assemble · Presentation PC</span></span>
       <strong>Build the service deck</strong>
       <span>Paste the lineup, review the order and create Sunday&rsquo;s complete deck.</span>
       <span class="home-action-link">Open local builder <span aria-hidden="true">→</span></span>
@@ -1438,6 +1823,10 @@
     <div><strong>Recent activity</strong><span>What the congregation has been singing</span></div>
     <span class="panel-header-updated" id="tracker-last-updated"></span>
   </div>
+  <button type="button" class="home-activity-toggle" aria-expanded="false" aria-controls="home-activity" onclick="toggleHomeActivity(this)">
+    <span>View recent activity</span><span aria-hidden="true">↓</span>
+  </button>
+  <div class="home-activity activity-collapsed" id="home-activity">
   <div class="stats-bar">
     <div class="stat"><div class="stat-number" id="stat-hymns">—</div><div class="stat-label">Unique Hymns</div></div>
     <div class="stat"><div class="stat-number" id="stat-services">—</div><div class="stat-label">Services Tracked</div></div>
@@ -1465,6 +1854,7 @@
       <div class="chart-wrap"><canvas id="top-chart"></canvas></div>
     </div>
   </div>
+  </div><!-- end home-activity -->
 
   </div><!-- end panel-scroll -->
 </div><!-- end overview-panel -->
@@ -1503,8 +1893,11 @@
   <div class="history-answer" id="lookup-result" aria-live="polite">Search by title to see the latest service immediately.</div>
 
   <!-- Topic chips for Tracker — populated once hymn_topics.json loads -->
-  <div class="topic-bar" id="tracker-topic-bar" style="display:none">
-    <span class="topic-label">Topic</span>
+  <div class="topic-rail-shell">
+    <div class="topic-bar" id="tracker-topic-bar" style="display:none" aria-label="Hymn topics; scroll horizontally for more topics">
+      <span class="topic-label">Topic</span>
+    </div>
+    <span class="topic-rail-hint" aria-hidden="true">Swipe for more →</span>
   </div>
   <div class="results-meta" id="results-meta"></div>
   <div class="hymn-list" id="hymn-list"><div class="state-msg">Loading hymns…</div></div>
@@ -1555,8 +1948,11 @@
   </div>
 
   <!-- Topic chips — populated by JS once hymn_topics.json loads -->
-  <div class="topic-bar" id="dl-topic-bar" style="display:none">
-    <span class="topic-label">Quick topics</span>
+  <div class="topic-rail-shell">
+    <div class="topic-bar" id="dl-topic-bar" style="display:none" aria-label="Slide topics; scroll horizontally for more topics">
+      <span class="topic-label">Quick topics</span>
+    </div>
+    <span class="topic-rail-hint" aria-hidden="true">Swipe for more →</span>
   </div>
   <div class="dl-meta" id="dl-meta"></div>
   <div class="dl-grid" id="dl-grid"><div class="dl-empty">Search for a hymn above, pick a topic, or click <strong>Show All</strong>.</div></div>
@@ -1648,6 +2044,19 @@
       const target = document.getElementById(focusId)
       if (target) target.focus()
     })
+  }
+
+  function toggleHomeActivity(button) {
+    const activity = document.getElementById('home-activity')
+    if (!activity || !button) return
+    const willExpand = activity.classList.contains('activity-collapsed')
+    activity.classList.toggle('activity-collapsed', !willExpand)
+    button.setAttribute('aria-expanded', String(willExpand))
+    const label = button.querySelector('span:first-child')
+    const arrow = button.querySelector('span:last-child')
+    if (label) label.textContent = willExpand ? 'Hide recent activity' : 'View recent activity'
+    if (arrow) arrow.textContent = willExpand ? '↑' : '↓'
+    if (willExpand && typeof topChart !== 'undefined' && topChart) requestAnimationFrame(() => topChart.resize())
   }
 
   /* ── Auth state check ── */
@@ -2480,8 +2889,18 @@
     if (overview && hero && hero.parentElement !== overview) overview.prepend(hero)
   }
 
+  function setNextServiceDate() {
+    const serviceDate = document.getElementById('next-service-date')
+    if (!serviceDate) return
+    const nextSunday = new Date()
+    const daysUntilSunday = (7 - nextSunday.getDay()) % 7
+    nextSunday.setDate(nextSunday.getDate() + daysUntilSunday)
+    serviceDate.textContent = nextSunday.toLocaleDateString('en-US', { month: 'long', day: 'numeric' })
+  }
+
   /* ── Boot ── */
   stabilizeHomeWorkspace()
+  setNextServiceDate()
   loadWelcomeStats()
   checkAuth()
 </script>
@@ -2529,7 +2948,7 @@
         var tu = document.getElementById('tracker-last-updated')
         var gs = document.getElementById('greeting-sub')
         if (tu && gs && tu.textContent.trim()) {
-          gs.textContent = 'Choose a task below and get straight to work · data ' +
+          gs.textContent = 'Review history, collect slides, then assemble the deck · data ' +
             tu.textContent.replace(/^Updated\s+/i, 'updated ') + '.'
           clearInterval(iv)
         }
