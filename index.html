@@ -815,6 +815,19 @@
       height: 100dvh; overflow: hidden; background: var(--app-canvas);
       color: var(--app-ink); font-family: var(--bodyfont);
     }
+    #view-app.home-flow {
+      height: auto; min-height: 100dvh; overflow: visible;
+    }
+    #view-app.home-flow header { position: sticky; top: 0; }
+    #view-app.home-flow .dashboard {
+      flex: none; min-height: 0; overflow: visible;
+    }
+    #view-app.home-flow #page-overview.workspace-active {
+      height: auto; min-height: 0; overflow: visible;
+    }
+    #view-app.home-flow #page-overview .panel-scroll {
+      flex: none; min-height: 0; overflow: visible;
+    }
     #view-app header {
       flex: 0 0 auto; z-index: 20; background: var(--app-night);
       border: 0; box-shadow: 0 1px 0 rgba(255,255,255,.08);
@@ -1611,6 +1624,10 @@
     })
     const homeHero = document.getElementById('home-hero')
     if (homeHero) homeHero.hidden = validWorkspace !== 'overview'
+    const appView = document.getElementById('view-app')
+    const isHome = validWorkspace === 'overview'
+    appView.classList.toggle('home-flow', isHome)
+    if (!isHome && window.scrollY) window.scrollTo(0, 0)
     if (typeof updateBulkBar === 'function') updateBulkBar()
     if (validWorkspace !== 'downloads') {
       const notice = document.getElementById('download-notice')
