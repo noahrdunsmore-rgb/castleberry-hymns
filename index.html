@@ -934,12 +934,13 @@
       flex-direction: column; align-items: flex-start; gap: 10px; padding: 20px;
       text-align: left; text-decoration: none; color: var(--app-ink); cursor: pointer;
       background: var(--app-surface); border: 1px solid var(--app-line); border-radius: 14px;
-      transition: transform .18s ease, border-color .18s ease, box-shadow .18s ease;
+      transition: border-color .18s ease, box-shadow .18s ease, background-color .18s ease;
     }
     .home-action:hover {
-      transform: translateY(-2px); border-color: #C8C9D0;
+      border-color: #C8C9D0;
       box-shadow: 0 12px 30px rgba(23,21,27,.08);
     }
+    .home-action:active { transform: none; }
     .home-action-kicker {
       color: var(--app-red); font: 700 10px/1 var(--bodyfont); letter-spacing: .11em;
       text-transform: uppercase;
@@ -2424,7 +2425,14 @@
     }
   }
 
+  function stabilizeHomeWorkspace() {
+    const overview = document.getElementById('page-overview')
+    const hero = document.getElementById('home-hero')
+    if (overview && hero && hero.parentElement !== overview) overview.prepend(hero)
+  }
+
   /* ── Boot ── */
+  stabilizeHomeWorkspace()
   loadWelcomeStats()
   checkAuth()
 </script>
