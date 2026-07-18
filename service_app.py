@@ -37,7 +37,7 @@ except Exception:
 ROOT = Path(__file__).parent
 app = Flask(__name__)
 
-PAGE = """<!doctype html><html lang="en"><head><meta charset="utf-8">
+LEGACY_PAGE = """<!doctype html><html lang="en"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Castleberry Service Deck Builder</title>
 <style>
@@ -156,6 +156,11 @@ $('buildBtn').onclick = async () => {
 </script>
 </body></html>"""
 
+# The current interface lives in a standalone template so UX changes do not
+# require editing Python source. Keep the legacy string above as a fallback
+# reference while the guided workflow is being rolled out.
+PAGE = (ROOT / "service_builder.html").read_text(encoding="utf-8")
+
 
 @app.route("/")
 def index():
@@ -166,6 +171,11 @@ def index():
         .replace("__EMAILNOTE__", "" if notify.is_configured()
                  else "<span class='note'>(set up email_config.json to enable)</span>"))
     return Response(html, mimetype="text/html")
+
+
+@app.route("/favicon.ico")
+def favicon():
+    return send_file(str(ROOT / "logo.png"), mimetype="image/png")
 
 
 @app.route("/example")
