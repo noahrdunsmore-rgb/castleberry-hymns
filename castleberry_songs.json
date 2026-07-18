@@ -1,19 +1,68 @@
 [
   {
-    "name": "All Hail the Power of Jesus' Name",
+    "name": "10,000 Reasons",
     "occurrences": [
       {
-        "date": "2026-03-23",
-        "leader": "Jack"
+        "date": "2025-10-04",
+        "service": "Gospel Meeting",
+        "leader": "Noah Dunsmore",
+        "source": "email"
+      },
+      {
+        "date": "2026-03-07",
+        "service": "Gospel Meeting",
+        "leader": "Thomas Holder",
+        "source": "email"
       }
     ]
   },
   {
-    "name": "All Things Praise Thee",
+    "name": "A Common Love",
     "occurrences": [
       {
-        "date": "2025-07-28",
-        "leader": ""
+        "date": "2026-05-31",
+        "service": "Sunday 11:00 AM",
+        "leader": "Thomas Holder",
+        "source": "email"
+      }
+    ]
+  },
+  {
+    "name": "A Passion for My God",
+    "occurrences": [
+      {
+        "date": "2026-03-07",
+        "service": "Gospel Meeting",
+        "leader": "Noah Dunsmore",
+        "source": "email"
+      }
+    ]
+  },
+  {
+    "name": "A Shield About Me",
+    "occurrences": [
+      {
+        "date": "2025-10-04",
+        "service": "Gospel Meeting",
+        "leader": "Noah Dunsmore",
+        "source": "email"
+      },
+      {
+        "date": "2026-03-01",
+        "service": "Sunday 11:00 AM",
+        "leader": "Noah Dunsmore",
+        "source": "email"
+      }
+    ]
+  },
+  {
+    "name": "All Hail the Power of Jesus' Name",
+    "occurrences": [
+      {
+        "date": "2026-03-23",
+        "leader": "Jack",
+        "service": "Sunday 11:00 AM",
+        "source": "youtube"
       }
     ]
   },
@@ -22,7 +71,20 @@
     "occurrences": [
       {
         "date": "2026-05-11",
-        "leader": ""
+        "leader": "Larry Watkins",
+        "service": "Sunday 11:00 AM",
+        "source": "youtube"
+      }
+    ]
+  },
+  {
+    "name": "All Things Praise Thee",
+    "occurrences": [
+      {
+        "date": "2025-07-28",
+        "leader": "Jason Brackeen",
+        "service": "Sunday 11:00 AM",
+        "source": "youtube"
       }
     ]
   },
@@ -31,7 +93,54 @@
     "occurrences": [
       {
         "date": "2026-04-06",
-        "leader": "Thomas"
+        "leader": "Thomas Holder",
+        "service": "Sunday 11:00 AM",
+        "source": "youtube"
+      },
+      {
+        "date": "2026-04-26",
+        "service": "Sunday 11:00 AM",
+        "leader": "Thomas Holder",
+        "source": "email"
+      }
+    ]
+  },
+  {
+    "name": "Ancient Words",
+    "occurrences": [
+      {
+        "date": "2025-10-04",
+        "service": "Gospel Meeting",
+        "leader": "Noah Dunsmore",
+        "source": "email"
+      }
+    ]
+  },
+  {
+    "name": "Are You Washed in the Blood",
+    "occurrences": [
+      {
+        "date": "2026-04-26",
+        "service": "Sunday 11:00 AM",
+        "leader": "Thomas Holder",
+        "source": "email"
+      },
+      {
+        "date": "2026-06-07",
+        "service": "Sunday 11:00 AM",
+        "leader": "Sawyer Gann",
+        "source": "email"
+      }
+    ]
+  },
+  {
+    "name": "At the Cross (Love Ran Red)",
+    "occurrences": [
+      {
+        "date": "2025-10-04",
+        "service": "Gospel Meeting",
+        "leader": "Noah Dunsmore",
+        "source": "email"
       }
     ]
   },
@@ -40,7 +149,31 @@
     "occurrences": [
       {
         "date": "2025-07-14",
-        "leader": "Cody"
+        "leader": "Cody Slone",
+        "service": "Sunday 11:00 AM",
+        "source": "youtube"
+      }
+    ]
+  },
+  {
+    "name": "Be Strong and Courageous",
+    "occurrences": [
+      {
+        "date": "2026-05-31",
+        "service": "Sunday 11:00 AM",
+        "leader": "Thomas Holder",
+        "source": "email"
+      }
+    ]
+  },
+  {
+    "name": "Be Thou My Vision",
+    "occurrences": [
+      {
+        "date": "2025-10-04",
+        "service": "Gospel Meeting",
+        "leader": "Thomas Holder",
+        "source": "email"
       }
     ]
   },
@@ -49,7 +182,9 @@
     "occurrences": [
       {
         "date": "2025-11-17",
-        "leader": ""
+        "leader": "Larry Watkins",
+        "service": "Sunday 11:00 AM",
+        "source": "youtube"
       }
     ]
   },
@@ -57,8 +192,33 @@
     "name": "Be Unto Your Name",
     "occurrences": [
       {
+        "date": "2025-11-30",
+        "service": "5th Sunday PM",
+        "leader": "Noah Dunsmore",
+        "source": "email"
+      },
+      {
         "date": "2025-12-01",
-        "leader": "Dunmore"
+        "leader": "Noah Dunsmore",
+        "service": "Sunday 11:00 AM",
+        "source": "youtube"
+      }
+    ]
+  },
+  {
+    "name": "Beautiful Lamb of God",
+    "occurrences": [
+      {
+        "date": "2026-04-26",
+        "service": "Sunday 11:00 AM",
+        "leader": "Thomas Holder",
+        "source": "email"
+      },
+      {
+        "date": "2026-06-07",
+        "service": "Sunday 11:00 AM",
+        "leader": "Sawyer Gann",
+        "source": "email"
       }
     ]
   },
@@ -67,11 +227,77 @@
     "occurrences": [
       {
         "date": "2025-09-09",
-        "leader": ""
+        "leader": "Sawyer Gann",
+        "service": "Sunday 11:00 AM",
+        "source": "youtube"
       },
       {
         "date": "2025-11-24",
-        "leader": ""
+        "leader": "Sawyer Gann",
+        "service": "Sunday 11:00 AM",
+        "source": "youtube"
+      }
+    ]
+  },
+  {
+    "name": "Burdens Are Lifted at Calvary",
+    "occurrences": [
+      {
+        "date": "2025-12-07",
+        "service": "Sunday 11:00 AM",
+        "leader": "Noah Dunsmore",
+        "source": "email"
+      }
+    ]
+  },
+  {
+    "name": "Calvary",
+    "occurrences": [
+      {
+        "date": "2025-08-10",
+        "service": "Sunday 11:00 AM",
+        "leader": "Noah Dunsmore",
+        "source": "email"
+      },
+      {
+        "date": "2025-09-07",
+        "service": "Sunday 11:00 AM",
+        "leader": "Noah Dunsmore",
+        "source": "email"
+      },
+      {
+        "date": "2025-10-05",
+        "service": "Sunday 11:00 AM",
+        "leader": "Noah Dunsmore",
+        "source": "email"
+      },
+      {
+        "date": "2026-03-01",
+        "service": "Sunday 11:00 AM",
+        "leader": "Noah Dunsmore",
+        "source": "email"
+      }
+    ]
+  },
+  {
+    "name": "Christ for the World We Sing",
+    "occurrences": [
+      {
+        "date": "2026-05-24",
+        "service": "Sunday 9:15 AM",
+        "leader": "Shawn Abraham",
+        "source": "email"
+      }
+    ]
+  },
+  {
+    "name": "Christian, Remember Who You Are",
+    "occurrences": [
+      {
+        "date": "2025-10-05",
+        "service": "Sunday 11:00 AM",
+        "leader": "Noah Dunsmore",
+        "source": "email"
       }
     ]
   },
@@ -80,15 +306,61 @@
     "occurrences": [
       {
         "date": "2025-08-04",
-        "leader": "Larry"
+        "leader": "Larry Watkins",
+        "service": "Sunday 11:00 AM",
+        "source": "youtube"
       },
       {
         "date": "2025-08-18",
-        "leader": ""
+        "leader": "Noah Dunsmore",
+        "service": "Sunday 11:00 AM",
+        "source": "youtube"
       },
       {
         "date": "2025-08-25",
-        "leader": ""
+        "leader": "Thomas Holder",
+        "service": "Sunday 11:00 AM",
+        "source": "youtube"
+      },
+      {
+        "date": "2026-01-11",
+        "service": "Sunday 11:00 AM",
+        "leader": "Noah Dunsmore",
+        "source": "email"
+      },
+      {
+        "date": "2026-03-01",
+        "service": "Sunday 11:00 AM",
+        "leader": "Noah Dunsmore",
+        "source": "email"
+      },
+      {
+        "date": "2026-05-18",
+        "service": "Sunday 11:00 AM",
+        "leader": "Noah Dunsmore",
+        "source": "email"
+      }
+    ]
+  },
+  {
+    "name": "Come Thou Almighty King",
+    "occurrences": [
+      {
+        "date": "2026-04-29",
+        "service": "Wednesday Evening",
+        "leader": "Nathan Hersey",
+        "source": "email"
+      }
+    ]
+  },
+  {
+    "name": "Come to Jesus Today",
+    "occurrences": [
+      {
+        "date": "2026-03-07",
+        "service": "Gospel Meeting",
+        "leader": "Noah Dunsmore",
+        "source": "email"
       }
     ]
   },
@@ -97,7 +369,20 @@
     "occurrences": [
       {
         "date": "2025-09-15",
-        "leader": ""
+        "leader": "Larry Watkins",
+        "service": "Sunday 11:00 AM",
+        "source": "youtube"
+      }
+    ]
+  },
+  {
+    "name": "Coming Home",
+    "occurrences": [
+      {
+        "date": "2025-10-05",
+        "service": "Sunday 11:00 AM",
+        "leader": "Noah Dunsmore",
+        "source": "email"
       }
     ]
   },
@@ -106,7 +391,9 @@
     "occurrences": [
       {
         "date": "2025-09-29",
-        "leader": "Josh"
+        "leader": "Josh Jackson",
+        "service": "Sunday 11:00 AM",
+        "source": "youtube"
       }
     ]
   },
@@ -115,19 +402,33 @@
     "occurrences": [
       {
         "date": "2025-08-04",
-        "leader": "Larry"
+        "leader": "Larry Watkins",
+        "service": "Sunday 11:00 AM",
+        "source": "youtube"
       },
       {
         "date": "2025-08-25",
-        "leader": ""
+        "leader": "Thomas Holder",
+        "service": "Sunday 11:00 AM",
+        "source": "youtube"
       },
       {
         "date": "2026-04-06",
-        "leader": "Chad"
+        "leader": "Chad Slone",
+        "service": "Sunday 11:00 AM",
+        "source": "youtube"
       },
       {
         "date": "2026-04-20",
-        "leader": ""
+        "leader": "Noah Dunsmore",
+        "service": "Sunday 11:00 AM",
+        "source": "youtube"
+      },
+      {
+        "date": "2026-04-26",
+        "service": "Sunday 11:00 AM",
+        "leader": "Thomas Holder",
+        "source": "email"
       }
     ]
   },
@@ -136,7 +437,9 @@
     "occurrences": [
       {
         "date": "2026-01-26",
-        "leader": ""
+        "leader": "Thomas Holder",
+        "service": "Sunday 11:00 AM",
+        "source": "youtube"
       }
     ]
   },
@@ -145,11 +448,59 @@
     "occurrences": [
       {
         "date": "2025-06-02",
-        "leader": "Larry"
+        "leader": "Larry Watkins",
+        "service": "Sunday 11:00 AM",
+        "source": "youtube"
       },
       {
         "date": "2025-06-09",
-        "leader": ""
+        "leader": "Sawyer Gann",
+        "service": "Sunday 11:00 AM",
+        "source": "youtube"
+      }
+    ]
+  },
+  {
+    "name": "Do You Know My Jesus",
+    "occurrences": [
+      {
+        "date": "2026-04-08",
+        "service": "Wednesday Evening",
+        "leader": "Josh Jackson",
+        "source": "email"
+      }
+    ]
+  },
+  {
+    "name": "Each Step I Take",
+    "occurrences": [
+      {
+        "date": "2025-11-09",
+        "service": "Sunday 11:00 AM",
+        "leader": "Noah Dunsmore",
+        "source": "email"
+      }
+    ]
+  },
+  {
+    "name": "Exalted",
+    "occurrences": [
+      {
+        "date": "2025-11-09",
+        "service": "Sunday 11:00 AM",
+        "leader": "Noah Dunsmore",
+        "source": "email"
+      }
+    ]
+  },
+  {
+    "name": "Give Me the Bible",
+    "occurrences": [
+      {
+        "date": "2025-06-22",
+        "service": "Sunday 11:00 AM",
+        "leader": "Noah Dunsmore",
+        "source": "email"
       }
     ]
   },
@@ -158,7 +509,9 @@
     "occurrences": [
       {
         "date": "2025-09-01",
-        "leader": "Larry"
+        "leader": "Larry Watkins",
+        "service": "Sunday 11:00 AM",
+        "source": "youtube"
       }
     ]
   },
@@ -167,7 +520,9 @@
     "occurrences": [
       {
         "date": "2026-02-23",
-        "leader": "Jim"
+        "leader": "Jim Colby",
+        "service": "Sunday 11:00 AM",
+        "source": "youtube"
       }
     ]
   },
@@ -176,7 +531,9 @@
     "occurrences": [
       {
         "date": "2025-09-01",
-        "leader": ""
+        "leader": "Jason Brackeen",
+        "service": "Sunday 11:00 AM",
+        "source": "youtube"
       }
     ]
   },
@@ -185,7 +542,9 @@
     "occurrences": [
       {
         "date": "2026-02-16",
-        "leader": ""
+        "leader": "Larry Watkins",
+        "service": "Sunday 11:00 AM",
+        "source": "youtube"
       }
     ]
   },
@@ -194,15 +553,43 @@
     "occurrences": [
       {
         "date": "2026-01-05",
-        "leader": "Sawyer"
+        "leader": "Sawyer Gann",
+        "service": "Sunday 11:00 AM",
+        "source": "youtube"
       },
       {
         "date": "2026-01-12",
-        "leader": "Sawyer"
+        "leader": "Sawyer Gann",
+        "service": "Sunday 11:00 AM",
+        "source": "youtube"
       },
       {
         "date": "2026-01-19",
-        "leader": "Sawyer"
+        "leader": "Sawyer Gann",
+        "service": "Sunday 11:00 AM",
+        "source": "youtube"
+      }
+    ]
+  },
+  {
+    "name": "Guide Me, O Thou Great Jehovah",
+    "occurrences": [
+      {
+        "date": "2025-09-07",
+        "service": "Sunday 11:00 AM",
+        "leader": "Noah Dunsmore",
+        "source": "email"
+      }
+    ]
+  },
+  {
+    "name": "Hand in Hand With Jesus",
+    "occurrences": [
+      {
+        "date": "2025-11-09",
+        "service": "Sunday 11:00 AM",
+        "leader": "Noah Dunsmore",
+        "source": "email"
       }
     ]
   },
@@ -211,7 +598,15 @@
     "occurrences": [
       {
         "date": "2025-09-01",
-        "leader": ""
+        "leader": "Jason Brackeen",
+        "service": "Sunday 11:00 AM",
+        "source": "youtube"
+      },
+      {
+        "date": "2026-05-03",
+        "service": "Sunday 11:00 AM",
+        "leader": "Sawyer Gann",
+        "source": "email"
       }
     ]
   },
@@ -219,8 +614,27 @@
     "name": "He Carried My Sorrows",
     "occurrences": [
       {
+        "date": "2025-07-13",
+        "service": "Sunday 11:00 AM",
+        "leader": "Noah Dunsmore",
+        "source": "email"
+      },
+      {
         "date": "2026-05-11",
-        "leader": ""
+        "leader": "Larry Watkins",
+        "service": "Sunday 11:00 AM",
+        "source": "youtube"
+      }
+    ]
+  },
+  {
+    "name": "He Gave Me a Song",
+    "occurrences": [
+      {
+        "date": "2025-07-13",
+        "service": "Sunday 11:00 AM",
+        "leader": "Noah Dunsmore",
+        "source": "email"
       }
     ]
   },
@@ -229,11 +643,15 @@
     "occurrences": [
       {
         "date": "2025-08-11",
-        "leader": ""
+        "leader": "Larry Watkins",
+        "service": "Sunday 11:00 AM",
+        "source": "youtube"
       },
       {
         "date": "2026-02-16",
-        "leader": ""
+        "leader": "Larry Watkins",
+        "service": "Sunday 11:00 AM",
+        "source": "youtube"
       }
     ]
   },
@@ -242,7 +660,20 @@
     "occurrences": [
       {
         "date": "2026-05-11",
-        "leader": ""
+        "leader": "Larry Watkins",
+        "service": "Sunday 11:00 AM",
+        "source": "youtube"
+      }
+    ]
+  },
+  {
+    "name": "He Lives",
+    "occurrences": [
+      {
+        "date": "2026-04-05",
+        "service": "Sunday 11:00 AM",
+        "leader": "Sawyer Gann",
+        "source": "email"
       }
     ]
   },
@@ -251,7 +682,20 @@
     "occurrences": [
       {
         "date": "2025-06-02",
-        "leader": ""
+        "leader": "Thomas Holder",
+        "service": "Sunday 11:00 AM",
+        "source": "youtube"
+      }
+    ]
+  },
+  {
+    "name": "He's My King",
+    "occurrences": [
+      {
+        "date": "2025-09-07",
+        "service": "Sunday 11:00 AM",
+        "leader": "Noah Dunsmore",
+        "source": "email"
       }
     ]
   },
@@ -260,7 +704,9 @@
     "occurrences": [
       {
         "date": "2025-10-27",
-        "leader": "Nathan Hershey"
+        "leader": "Nathan Hershey",
+        "service": "Sunday 11:00 AM",
+        "source": "youtube"
       }
     ]
   },
@@ -269,7 +715,9 @@
     "occurrences": [
       {
         "date": "2026-02-02",
-        "leader": "Sawyer"
+        "leader": "Sawyer Gann",
+        "service": "Sunday 11:00 AM",
+        "source": "youtube"
       }
     ]
   },
@@ -278,7 +726,9 @@
     "occurrences": [
       {
         "date": "2025-12-29",
-        "leader": ""
+        "leader": "Larry Watkins",
+        "service": "Sunday 11:00 AM",
+        "source": "youtube"
       }
     ]
   },
@@ -287,7 +737,20 @@
     "occurrences": [
       {
         "date": "2026-05-11",
-        "leader": ""
+        "leader": "Larry Watkins",
+        "service": "Sunday 11:00 AM",
+        "source": "youtube"
+      }
+    ]
+  },
+  {
+    "name": "Highest Place",
+    "occurrences": [
+      {
+        "date": "2026-04-26",
+        "service": "Sunday 11:00 AM",
+        "leader": "Thomas Holder",
+        "source": "email"
       }
     ]
   },
@@ -296,7 +759,31 @@
     "occurrences": [
       {
         "date": "2025-08-04",
-        "leader": "Larry"
+        "leader": "Larry Watkins",
+        "service": "Sunday 11:00 AM",
+        "source": "youtube"
+      }
+    ]
+  },
+  {
+    "name": "His Grace Reaches Me",
+    "occurrences": [
+      {
+        "date": "2025-12-07",
+        "service": "Sunday 11:00 AM",
+        "leader": "Noah Dunsmore",
+        "source": "email"
+      }
+    ]
+  },
+  {
+    "name": "How Can I Keep From Singing",
+    "occurrences": [
+      {
+        "date": "2025-08-10",
+        "service": "Sunday 11:00 AM",
+        "leader": "Noah Dunsmore",
+        "source": "email"
       }
     ]
   },
@@ -305,7 +792,9 @@
     "occurrences": [
       {
         "date": "2026-02-02",
-        "leader": ""
+        "leader": "Sawyer Gann",
+        "service": "Sunday 11:00 AM",
+        "source": "youtube"
       }
     ]
   },
@@ -314,7 +803,9 @@
     "occurrences": [
       {
         "date": "2025-07-21",
-        "leader": ""
+        "leader": "Thomas Holder",
+        "service": "Sunday 11:00 AM",
+        "source": "youtube"
       }
     ]
   },
@@ -323,7 +814,9 @@
     "occurrences": [
       {
         "date": "2026-05-11",
-        "leader": ""
+        "leader": "Larry Watkins",
+        "service": "Sunday 11:00 AM",
+        "source": "youtube"
       }
     ]
   },
@@ -332,7 +825,77 @@
     "occurrences": [
       {
         "date": "2026-03-30",
-        "leader": ""
+        "leader": "Jason Brackeen",
+        "service": "Sunday 11:00 AM",
+        "source": "youtube"
+      }
+    ]
+  },
+  {
+    "name": "I Have Decided to Follow Jesus",
+    "occurrences": [
+      {
+        "date": "2025-06-29",
+        "service": "5th Sunday PM",
+        "leader": "Noah Dunsmore",
+        "source": "email"
+      },
+      {
+        "date": "2026-05-17",
+        "service": "Sunday 9:15 AM",
+        "leader": "Brett Billingsley",
+        "source": "email"
+      }
+    ]
+  },
+  {
+    "name": "I Know That My Redeemer Lives",
+    "occurrences": [
+      {
+        "date": "2026-04-08",
+        "service": "Wednesday Evening",
+        "leader": "Josh Jackson",
+        "source": "email"
+      },
+      {
+        "date": "2026-06-03",
+        "service": "Wednesday Evening",
+        "leader": "Coyte Greer",
+        "source": "email"
+      }
+    ]
+  },
+  {
+    "name": "I Surrender All",
+    "occurrences": [
+      {
+        "date": "2026-01-11",
+        "service": "Sunday 11:00 AM",
+        "leader": "Noah Dunsmore",
+        "source": "email"
+      }
+    ]
+  },
+  {
+    "name": "I Want to Be a Worker",
+    "occurrences": [
+      {
+        "date": "2025-08-10",
+        "service": "Sunday 11:00 AM",
+        "leader": "Noah Dunsmore",
+        "source": "email"
+      },
+      {
+        "date": "2026-05-31",
+        "service": "Sunday 11:00 AM",
+        "leader": "Thomas Holder",
+        "source": "email"
+      },
+      {
+        "date": "2026-06-10",
+        "service": "Wednesday Evening",
+        "leader": "Josh Jackson",
+        "source": "email"
       }
     ]
   },
@@ -341,7 +904,20 @@
     "occurrences": [
       {
         "date": "2025-09-09",
-        "leader": ""
+        "leader": "Sawyer Gann",
+        "service": "Sunday 11:00 AM",
+        "source": "youtube"
+      }
+    ]
+  },
+  {
+    "name": "I Will Call Upon the Lord",
+    "occurrences": [
+      {
+        "date": "2025-08-10",
+        "service": "Sunday 11:00 AM",
+        "leader": "Noah Dunsmore",
+        "source": "email"
       }
     ]
   },
@@ -350,7 +926,9 @@
     "occurrences": [
       {
         "date": "2026-04-20",
-        "leader": ""
+        "leader": "Noah Dunsmore",
+        "service": "Sunday 11:00 AM",
+        "source": "youtube"
       }
     ]
   },
@@ -359,7 +937,65 @@
     "occurrences": [
       {
         "date": "2026-05-11",
-        "leader": ""
+        "leader": "Larry Watkins",
+        "service": "Sunday 11:00 AM",
+        "source": "youtube"
+      },
+      {
+        "date": "2026-05-24",
+        "service": "Sunday 9:15 AM",
+        "leader": "Shawn Abraham",
+        "source": "email"
+      }
+    ]
+  },
+  {
+    "name": "In His Presence",
+    "occurrences": [
+      {
+        "date": "2026-05-13",
+        "service": "Wednesday Evening",
+        "leader": "Coyte Greer",
+        "source": "email"
+      }
+    ]
+  },
+  {
+    "name": "In His Time",
+    "occurrences": [
+      {
+        "date": "2025-06-29",
+        "service": "5th Sunday PM",
+        "leader": "Noah Dunsmore",
+        "source": "email"
+      }
+    ]
+  },
+  {
+    "name": "In Need",
+    "occurrences": [
+      {
+        "date": "2025-08-10",
+        "service": "Sunday 11:00 AM",
+        "leader": "Noah Dunsmore",
+        "source": "email"
+      },
+      {
+        "date": "2025-11-09",
+        "service": "Sunday 11:00 AM",
+        "leader": "Noah Dunsmore",
+        "source": "email"
+      }
+    ]
+  },
+  {
+    "name": "In the Service of My King",
+    "occurrences": [
+      {
+        "date": "2025-10-04",
+        "service": "Gospel Meeting",
+        "leader": "Sawyer Gann",
+        "source": "email"
       }
     ]
   },
@@ -368,15 +1004,44 @@
     "occurrences": [
       {
         "date": "2026-01-05",
-        "leader": ""
+        "leader": "Sawyer Gann",
+        "service": "Sunday 11:00 AM",
+        "source": "youtube"
       },
       {
         "date": "2026-01-12",
-        "leader": "Sawyer"
+        "leader": "Sawyer Gann",
+        "service": "Sunday 11:00 AM",
+        "source": "youtube"
       },
       {
         "date": "2026-01-19",
-        "leader": "Sawyer"
+        "leader": "Sawyer Gann",
+        "service": "Sunday 11:00 AM",
+        "source": "youtube"
+      },
+      {
+        "date": "2026-02-08",
+        "service": "Sunday 11:00 AM",
+        "leader": "Noah Dunsmore",
+        "source": "email"
+      }
+    ]
+  },
+  {
+    "name": "Jesus Draw Me Ever Nearer",
+    "occurrences": [
+      {
+        "date": "2025-10-05",
+        "service": "Sunday 11:00 AM",
+        "leader": "Noah Dunsmore",
+        "source": "email"
+      },
+      {
+        "date": "2026-01-11",
+        "service": "Sunday 11:00 AM",
+        "leader": "Noah Dunsmore",
+        "source": "email"
       }
     ]
   },
@@ -385,7 +1050,20 @@
     "occurrences": [
       {
         "date": "2025-11-24",
-        "leader": ""
+        "leader": "Sawyer Gann",
+        "service": "Sunday 11:00 AM",
+        "source": "youtube"
+      }
+    ]
+  },
+  {
+    "name": "Jesus Paid It All",
+    "occurrences": [
+      {
+        "date": "2025-09-07",
+        "service": "Sunday 11:00 AM",
+        "leader": "Noah Dunsmore",
+        "source": "email"
       }
     ]
   },
@@ -394,15 +1072,27 @@
     "occurrences": [
       {
         "date": "2025-06-02",
-        "leader": "Thomas Holder"
+        "leader": "Thomas Holder",
+        "service": "Sunday 11:00 AM",
+        "source": "youtube"
       },
       {
         "date": "2025-06-09",
-        "leader": ""
+        "leader": "Sawyer Gann",
+        "service": "Sunday 11:00 AM",
+        "source": "youtube"
       },
       {
         "date": "2025-06-16",
-        "leader": ""
+        "leader": "Jason Brackeen",
+        "service": "Sunday 11:00 AM",
+        "source": "youtube"
+      },
+      {
+        "date": "2025-10-04",
+        "service": "Gospel Meeting",
+        "leader": "Sawyer Gann",
+        "source": "email"
       }
     ]
   },
@@ -411,7 +1101,9 @@
     "occurrences": [
       {
         "date": "2025-09-15",
-        "leader": ""
+        "leader": "Larry Watkins",
+        "service": "Sunday 11:00 AM",
+        "source": "youtube"
       }
     ]
   },
@@ -420,7 +1112,9 @@
     "occurrences": [
       {
         "date": "2026-04-20",
-        "leader": "Thomas"
+        "leader": "Thomas Holder",
+        "service": "Sunday 11:00 AM",
+        "source": "youtube"
       }
     ]
   },
@@ -429,7 +1123,9 @@
     "occurrences": [
       {
         "date": "2025-06-30",
-        "leader": ""
+        "leader": "Larry Watkins",
+        "service": "Sunday 11:00 AM",
+        "source": "youtube"
       }
     ]
   },
@@ -438,7 +1134,37 @@
     "occurrences": [
       {
         "date": "2025-12-01",
-        "leader": ""
+        "leader": "Thomas Holder",
+        "service": "Sunday 11:00 AM",
+        "source": "youtube"
+      }
+    ]
+  },
+  {
+    "name": "Just a Closer Walk With Thee",
+    "occurrences": [
+      {
+        "date": "2025-11-09",
+        "service": "Sunday 11:00 AM",
+        "leader": "Noah Dunsmore",
+        "source": "email"
+      },
+      {
+        "date": "2026-05-18",
+        "service": "Sunday 11:00 AM",
+        "leader": "Noah Dunsmore",
+        "source": "email"
+      }
+    ]
+  },
+  {
+    "name": "Just As I Am, Without One Plea",
+    "occurrences": [
+      {
+        "date": "2026-05-27",
+        "service": "Wednesday Evening",
+        "leader": "Josh Jackson",
+        "source": "email"
       }
     ]
   },
@@ -446,8 +1172,38 @@
     "name": "King of Kings",
     "occurrences": [
       {
+        "date": "2025-07-13",
+        "service": "Sunday 11:00 AM",
+        "leader": "Noah Dunsmore",
+        "source": "email"
+      },
+      {
         "date": "2025-09-01",
-        "leader": "Larry"
+        "leader": "Larry Watkins",
+        "service": "Sunday 11:00 AM",
+        "source": "youtube"
+      }
+    ]
+  },
+  {
+    "name": "Lamb of God",
+    "occurrences": [
+      {
+        "date": "2026-06-07",
+        "service": "Sunday 11:00 AM",
+        "leader": "Sawyer Gann",
+        "source": "email"
+      }
+    ]
+  },
+  {
+    "name": "Lift Your Voice in Praise",
+    "occurrences": [
+      {
+        "date": "2026-04-29",
+        "service": "Wednesday Evening",
+        "leader": "Nathan Hersey",
+        "source": "email"
       }
     ]
   },
@@ -456,7 +1212,9 @@
     "occurrences": [
       {
         "date": "2026-03-09",
-        "leader": ""
+        "leader": "Larry Watkins",
+        "service": "Sunday 11:00 AM",
+        "source": "youtube"
       }
     ]
   },
@@ -465,7 +1223,15 @@
     "occurrences": [
       {
         "date": "2025-10-13",
-        "leader": ""
+        "leader": "Larry Watkins",
+        "service": "Sunday 11:00 AM",
+        "source": "youtube"
+      },
+      {
+        "date": "2026-05-03",
+        "service": "Sunday 11:00 AM",
+        "leader": "Sawyer Gann",
+        "source": "email"
       }
     ]
   },
@@ -474,15 +1240,21 @@
     "occurrences": [
       {
         "date": "2025-09-01",
-        "leader": ""
+        "leader": "Jason Brackeen",
+        "service": "Sunday 11:00 AM",
+        "source": "youtube"
       },
       {
         "date": "2025-09-09",
-        "leader": ""
+        "leader": "Sawyer Gann",
+        "service": "Sunday 11:00 AM",
+        "source": "youtube"
       },
       {
         "date": "2026-02-02",
-        "leader": ""
+        "leader": "Sawyer Gann",
+        "service": "Sunday 11:00 AM",
+        "source": "youtube"
       }
     ]
   },
@@ -491,7 +1263,9 @@
     "occurrences": [
       {
         "date": "2025-11-24",
-        "leader": ""
+        "leader": "Sawyer Gann",
+        "service": "Sunday 11:00 AM",
+        "source": "youtube"
       }
     ]
   },
@@ -500,7 +1274,9 @@
     "occurrences": [
       {
         "date": "2025-12-22",
-        "leader": "Noah"
+        "leader": "Noah Dunsmore",
+        "service": "Sunday 11:00 AM",
+        "source": "youtube"
       }
     ]
   },
@@ -509,11 +1285,26 @@
     "occurrences": [
       {
         "date": "2025-12-08",
-        "leader": "Chad"
+        "leader": "Chad Slone",
+        "service": "Sunday 11:00 AM",
+        "source": "youtube"
       },
       {
         "date": "2025-12-15",
-        "leader": "Noah"
+        "leader": "Noah Dunsmore",
+        "service": "Sunday 11:00 AM",
+        "source": "youtube"
+      }
+    ]
+  },
+  {
+    "name": "Mended and Whole",
+    "occurrences": [
+      {
+        "date": "2026-06-07",
+        "service": "Sunday 11:00 AM",
+        "leader": "Sawyer Gann",
+        "source": "email"
       }
     ]
   },
@@ -522,7 +1313,59 @@
     "occurrences": [
       {
         "date": "2025-11-24",
-        "leader": ""
+        "leader": "Sawyer Gann",
+        "service": "Sunday 11:00 AM",
+        "source": "youtube"
+      }
+    ]
+  },
+  {
+    "name": "Near the Cross",
+    "occurrences": [
+      {
+        "date": "2025-06-22",
+        "service": "Sunday 11:00 AM",
+        "leader": "Noah Dunsmore",
+        "source": "email"
+      }
+    ]
+  },
+  {
+    "name": "None of Self and All of Thee",
+    "occurrences": [
+      {
+        "date": "2026-05-03",
+        "service": "Sunday 11:00 AM",
+        "leader": "Sawyer Gann",
+        "source": "email"
+      }
+    ]
+  },
+  {
+    "name": "Nothing But the Blood",
+    "occurrences": [
+      {
+        "date": "2026-04-05",
+        "service": "Sunday 11:00 AM",
+        "leader": "Sawyer Gann",
+        "source": "email"
+      },
+      {
+        "date": "2026-05-06",
+        "service": "Wednesday Evening",
+        "leader": "Jim Colby",
+        "source": "email"
+      }
+    ]
+  },
+  {
+    "name": "O Magnify My Master",
+    "occurrences": [
+      {
+        "date": "2026-05-13",
+        "service": "Wednesday Evening",
+        "leader": "Coyte Greer",
+        "source": "email"
       }
     ]
   },
@@ -531,7 +1374,9 @@
     "occurrences": [
       {
         "date": "2025-08-18",
-        "leader": ""
+        "leader": "Noah Dunsmore",
+        "service": "Sunday 11:00 AM",
+        "source": "youtube"
       }
     ]
   },
@@ -540,7 +1385,31 @@
     "occurrences": [
       {
         "date": "2026-02-09",
-        "leader": "Josh Jackson"
+        "leader": "Josh Jackson",
+        "service": "Sunday 11:00 AM",
+        "source": "youtube"
+      }
+    ]
+  },
+  {
+    "name": "Oh How Good It Is",
+    "occurrences": [
+      {
+        "date": "2026-03-07",
+        "service": "Gospel Meeting",
+        "leader": "Noah Dunsmore",
+        "source": "email"
+      }
+    ]
+  },
+  {
+    "name": "Oh to Be Like Thee",
+    "occurrences": [
+      {
+        "date": "2026-05-18",
+        "service": "Sunday 11:00 AM",
+        "leader": "Noah Dunsmore",
+        "source": "email"
       }
     ]
   },
@@ -549,7 +1418,70 @@
     "occurrences": [
       {
         "date": "2025-08-25",
-        "leader": ""
+        "leader": "Thomas Holder",
+        "service": "Sunday 11:00 AM",
+        "source": "youtube"
+      },
+      {
+        "date": "2025-12-07",
+        "service": "Sunday 11:00 AM",
+        "leader": "Noah Dunsmore",
+        "source": "email"
+      }
+    ]
+  },
+  {
+    "name": "Oh, The Things We May Do",
+    "occurrences": [
+      {
+        "date": "2026-05-20",
+        "service": "Wednesday Evening",
+        "leader": "Larry Watkins",
+        "source": "email"
+      }
+    ]
+  },
+  {
+    "name": "On Bended Knee I Come",
+    "occurrences": [
+      {
+        "date": "2025-11-30",
+        "service": "5th Sunday PM",
+        "leader": "Noah Dunsmore",
+        "source": "email"
+      }
+    ]
+  },
+  {
+    "name": "On Jordan's Stormy Banks",
+    "occurrences": [
+      {
+        "date": "2026-02-08",
+        "service": "Sunday 11:00 AM",
+        "leader": "Noah Dunsmore",
+        "source": "email"
+      }
+    ]
+  },
+  {
+    "name": "One Day",
+    "occurrences": [
+      {
+        "date": "2026-04-05",
+        "service": "Sunday 11:00 AM",
+        "leader": "Sawyer Gann",
+        "source": "email"
+      }
+    ]
+  },
+  {
+    "name": "Praise the Lord",
+    "occurrences": [
+      {
+        "date": "2025-10-04",
+        "service": "Gospel Meeting",
+        "leader": "Thomas Holder",
+        "source": "email"
       }
     ]
   },
@@ -558,7 +1490,9 @@
     "occurrences": [
       {
         "date": "2025-09-09",
-        "leader": ""
+        "leader": "Sawyer Gann",
+        "service": "Sunday 11:00 AM",
+        "source": "youtube"
       }
     ]
   },
@@ -567,7 +1501,9 @@
     "occurrences": [
       {
         "date": "2025-08-04",
-        "leader": ""
+        "leader": "Sawyer Gann",
+        "service": "Sunday 11:00 AM",
+        "source": "youtube"
       }
     ]
   },
@@ -576,7 +1512,64 @@
     "occurrences": [
       {
         "date": "2025-11-24",
-        "leader": ""
+        "leader": "Sawyer Gann",
+        "service": "Sunday 11:00 AM",
+        "source": "youtube"
+      }
+    ]
+  },
+  {
+    "name": "Remember Who You Are",
+    "occurrences": [
+      {
+        "date": "2026-02-08",
+        "service": "Sunday 11:00 AM",
+        "leader": "Noah Dunsmore",
+        "source": "email"
+      }
+    ]
+  },
+  {
+    "name": "Resurrection",
+    "occurrences": [
+      {
+        "date": "2026-04-05",
+        "service": "Sunday 11:00 AM",
+        "leader": "Sawyer Gann",
+        "source": "email"
+      }
+    ]
+  },
+  {
+    "name": "Rise Up Again",
+    "occurrences": [
+      {
+        "date": "2025-06-22",
+        "service": "Sunday 11:00 AM",
+        "leader": "Noah Dunsmore",
+        "source": "email"
+      }
+    ]
+  },
+  {
+    "name": "Rock of Ages",
+    "occurrences": [
+      {
+        "date": "2026-01-11",
+        "service": "Sunday 11:00 AM",
+        "leader": "Noah Dunsmore",
+        "source": "email"
+      }
+    ]
+  },
+  {
+    "name": "Salvation Has Been Brought Down",
+    "occurrences": [
+      {
+        "date": "2025-07-13",
+        "service": "Sunday 11:00 AM",
+        "leader": "Noah Dunsmore",
+        "source": "email"
       }
     ]
   },
@@ -585,7 +1578,20 @@
     "occurrences": [
       {
         "date": "2026-03-16",
-        "leader": ""
+        "leader": "Sawyer Gann",
+        "service": "Sunday 11:00 AM",
+        "source": "youtube"
+      }
+    ]
+  },
+  {
+    "name": "Savior Grant Me Rest and Peace",
+    "occurrences": [
+      {
+        "date": "2026-05-03",
+        "service": "Sunday 11:00 AM",
+        "leader": "Sawyer Gann",
+        "source": "email"
       }
     ]
   },
@@ -594,7 +1600,9 @@
     "occurrences": [
       {
         "date": "2026-03-30",
-        "leader": ""
+        "leader": "Jason Brackeen",
+        "service": "Sunday 11:00 AM",
+        "source": "youtube"
       }
     ]
   },
@@ -603,23 +1611,39 @@
     "occurrences": [
       {
         "date": "2025-06-02",
-        "leader": ""
+        "leader": "Thomas Holder",
+        "service": "Sunday 11:00 AM",
+        "source": "youtube"
       },
       {
         "date": "2025-06-09",
-        "leader": ""
+        "leader": "Sawyer Gann",
+        "service": "Sunday 11:00 AM",
+        "source": "youtube"
       },
       {
         "date": "2025-06-16",
-        "leader": ""
+        "leader": "Jason Brackeen",
+        "service": "Sunday 11:00 AM",
+        "source": "youtube"
+      },
+      {
+        "date": "2025-06-22",
+        "service": "Sunday 11:00 AM",
+        "leader": "Noah Dunsmore",
+        "source": "email"
+      },
+      {
+        "date": "2025-11-30",
+        "service": "5th Sunday PM",
+        "leader": "Noah Dunsmore",
+        "source": "email"
       },
       {
         "date": "2025-12-01",
-        "leader": ""
-      },
-      {
-        "date": "2025-12-01",
-        "leader": ""
+        "leader": "Thomas Holder",
+        "service": "Sunday 11:00 AM",
+        "source": "youtube"
       }
     ]
   },
@@ -627,8 +1651,22 @@
     "name": "Shout Hallelujah",
     "occurrences": [
       {
+        "date": "2025-06-29",
+        "service": "5th Sunday PM",
+        "leader": "Noah Dunsmore",
+        "source": "email"
+      },
+      {
         "date": "2025-06-30",
-        "leader": "Noah Dunmore"
+        "leader": "Noah Dunsmore",
+        "service": "Sunday 11:00 AM",
+        "source": "youtube"
+      },
+      {
+        "date": "2025-10-04",
+        "service": "Gospel Meeting",
+        "leader": "Thomas Holder",
+        "source": "email"
       }
     ]
   },
@@ -637,7 +1675,31 @@
     "occurrences": [
       {
         "date": "2026-01-26",
-        "leader": ""
+        "leader": "Thomas Holder",
+        "service": "Sunday 11:00 AM",
+        "source": "youtube"
+      }
+    ]
+  },
+  {
+    "name": "Soliloquy and Prayer",
+    "occurrences": [
+      {
+        "date": "2026-03-01",
+        "service": "Sunday 11:00 AM",
+        "leader": "Noah Dunsmore",
+        "source": "email"
+      }
+    ]
+  },
+  {
+    "name": "Soul, a Savior Thou Art Needing",
+    "occurrences": [
+      {
+        "date": "2026-05-20",
+        "service": "Wednesday Evening",
+        "leader": "Larry Watkins",
+        "source": "email"
       }
     ]
   },
@@ -646,7 +1708,9 @@
     "occurrences": [
       {
         "date": "2025-09-09",
-        "leader": ""
+        "leader": "Sawyer Gann",
+        "service": "Sunday 11:00 AM",
+        "source": "youtube"
       }
     ]
   },
@@ -655,7 +1719,31 @@
     "occurrences": [
       {
         "date": "2026-05-04",
-        "leader": "Sean"
+        "leader": "Shawn Abraham",
+        "service": "Sunday 11:00 AM",
+        "source": "youtube"
+      }
+    ]
+  },
+  {
+    "name": "Sweet Hour of Prayer",
+    "occurrences": [
+      {
+        "date": "2025-12-07",
+        "service": "Sunday 11:00 AM",
+        "leader": "Noah Dunsmore",
+        "source": "email"
+      }
+    ]
+  },
+  {
+    "name": "Take Time to Be Holy",
+    "occurrences": [
+      {
+        "date": "2026-05-27",
+        "service": "Wednesday Evening",
+        "leader": "Josh Jackson",
+        "source": "email"
       }
     ]
   },
@@ -664,7 +1752,31 @@
     "occurrences": [
       {
         "date": "2026-01-26",
-        "leader": ""
+        "leader": "Thomas Holder",
+        "service": "Sunday 11:00 AM",
+        "source": "youtube"
+      }
+    ]
+  },
+  {
+    "name": "The Great Redeemer",
+    "occurrences": [
+      {
+        "date": "2025-10-04",
+        "service": "Gospel Meeting",
+        "leader": "Sawyer Gann",
+        "source": "email"
+      }
+    ]
+  },
+  {
+    "name": "The Kingdoms of Earth Pass Away",
+    "occurrences": [
+      {
+        "date": "2026-03-07",
+        "service": "Gospel Meeting",
+        "leader": "Sawyer Gann",
+        "source": "email"
       }
     ]
   },
@@ -673,7 +1785,31 @@
     "occurrences": [
       {
         "date": "2025-11-24",
-        "leader": ""
+        "leader": "Sawyer Gann",
+        "service": "Sunday 11:00 AM",
+        "source": "youtube"
+      }
+    ]
+  },
+  {
+    "name": "The Lord Is in His Holy Temple",
+    "occurrences": [
+      {
+        "date": "2025-07-13",
+        "service": "Sunday 11:00 AM",
+        "leader": "Noah Dunsmore",
+        "source": "email"
+      }
+    ]
+  },
+  {
+    "name": "The Lord Is My Light",
+    "occurrences": [
+      {
+        "date": "2026-04-26",
+        "service": "Sunday 11:00 AM",
+        "leader": "Thomas Holder",
+        "source": "email"
       }
     ]
   },
@@ -682,7 +1818,31 @@
     "occurrences": [
       {
         "date": "2026-05-11",
-        "leader": ""
+        "leader": "Larry Watkins",
+        "service": "Sunday 11:00 AM",
+        "source": "youtube"
+      }
+    ]
+  },
+  {
+    "name": "The Unclouded Day",
+    "occurrences": [
+      {
+        "date": "2025-06-22",
+        "service": "Sunday 11:00 AM",
+        "leader": "Noah Dunsmore",
+        "source": "email"
+      }
+    ]
+  },
+  {
+    "name": "The Walls Came Tumbling Down",
+    "occurrences": [
+      {
+        "date": "2025-06-29",
+        "service": "5th Sunday PM",
+        "leader": "Noah Dunsmore",
+        "source": "email"
       }
     ]
   },
@@ -691,7 +1851,37 @@
     "occurrences": [
       {
         "date": "2026-03-16",
-        "leader": ""
+        "leader": "Sawyer Gann",
+        "service": "Sunday 11:00 AM",
+        "source": "youtube"
+      }
+    ]
+  },
+  {
+    "name": "There Is a Green Hill Far Away",
+    "occurrences": [
+      {
+        "date": "2026-01-11",
+        "service": "Sunday 11:00 AM",
+        "leader": "Noah Dunsmore",
+        "source": "email"
+      },
+      {
+        "date": "2026-05-18",
+        "service": "Sunday 11:00 AM",
+        "leader": "Noah Dunsmore",
+        "source": "email"
+      }
+    ]
+  },
+  {
+    "name": "There Is a Habitation",
+    "occurrences": [
+      {
+        "date": "2026-05-18",
+        "service": "Sunday 11:00 AM",
+        "leader": "Noah Dunsmore",
+        "source": "email"
       }
     ]
   },
@@ -700,11 +1890,26 @@
     "occurrences": [
       {
         "date": "2025-09-01",
-        "leader": ""
+        "leader": "Jason Brackeen",
+        "service": "Sunday 11:00 AM",
+        "source": "youtube"
       },
       {
         "date": "2026-01-26",
-        "leader": ""
+        "leader": "Thomas Holder",
+        "service": "Sunday 11:00 AM",
+        "source": "youtube"
+      }
+    ]
+  },
+  {
+    "name": "There's a Fountain Free",
+    "occurrences": [
+      {
+        "date": "2026-02-08",
+        "service": "Sunday 11:00 AM",
+        "leader": "Noah Dunsmore",
+        "source": "email"
       }
     ]
   },
@@ -713,7 +1918,9 @@
     "occurrences": [
       {
         "date": "2026-05-11",
-        "leader": ""
+        "leader": "Larry Watkins",
+        "service": "Sunday 11:00 AM",
+        "source": "youtube"
       }
     ]
   },
@@ -722,7 +1929,42 @@
     "occurrences": [
       {
         "date": "2026-03-09",
-        "leader": "Larry"
+        "leader": "Larry Watkins",
+        "service": "Sunday 11:00 AM",
+        "source": "youtube"
+      }
+    ]
+  },
+  {
+    "name": "There's Something About That Name",
+    "occurrences": [
+      {
+        "date": "2025-11-30",
+        "service": "5th Sunday PM",
+        "leader": "Noah Dunsmore",
+        "source": "email"
+      }
+    ]
+  },
+  {
+    "name": "This World Is Not My Home",
+    "occurrences": [
+      {
+        "date": "2026-05-06",
+        "service": "Wednesday Evening",
+        "leader": "Jim Colby",
+        "source": "email"
+      }
+    ]
+  },
+  {
+    "name": "Thus Remember Me",
+    "occurrences": [
+      {
+        "date": "2026-05-03",
+        "service": "Sunday 11:00 AM",
+        "leader": "Sawyer Gann",
+        "source": "email"
       }
     ]
   },
@@ -731,7 +1973,15 @@
     "occurrences": [
       {
         "date": "2025-11-17",
-        "leader": "Chad"
+        "leader": "Chad Slone",
+        "service": "Sunday 11:00 AM",
+        "source": "youtube"
+      },
+      {
+        "date": "2026-04-26",
+        "service": "Sunday 11:00 AM",
+        "leader": "Thomas Holder",
+        "source": "email"
       }
     ]
   },
@@ -740,11 +1990,21 @@
     "occurrences": [
       {
         "date": "2025-09-09",
-        "leader": ""
+        "leader": "Sawyer Gann",
+        "service": "Sunday 11:00 AM",
+        "source": "youtube"
+      },
+      {
+        "date": "2026-01-11",
+        "service": "Sunday 11:00 AM",
+        "leader": "Noah Dunsmore",
+        "source": "email"
       },
       {
         "date": "2026-03-23",
-        "leader": "Jack"
+        "leader": "Jack",
+        "service": "Sunday 11:00 AM",
+        "source": "youtube"
       }
     ]
   },
@@ -752,8 +2012,16 @@
     "name": "Today Is the Day",
     "occurrences": [
       {
+        "date": "2025-06-29",
+        "service": "5th Sunday PM",
+        "leader": "Noah Dunsmore",
+        "source": "email"
+      },
+      {
         "date": "2025-06-30",
-        "leader": ""
+        "leader": "Larry Watkins",
+        "service": "Sunday 11:00 AM",
+        "source": "youtube"
       }
     ]
   },
@@ -762,7 +2030,87 @@
     "occurrences": [
       {
         "date": "2025-09-09",
-        "leader": ""
+        "leader": "Sawyer Gann",
+        "service": "Sunday 11:00 AM",
+        "source": "youtube"
+      }
+    ]
+  },
+  {
+    "name": "Walk Beside Me",
+    "occurrences": [
+      {
+        "date": "2025-07-13",
+        "service": "Sunday 11:00 AM",
+        "leader": "Noah Dunsmore",
+        "source": "email"
+      },
+      {
+        "date": "2025-12-07",
+        "service": "Sunday 11:00 AM",
+        "leader": "Noah Dunsmore",
+        "source": "email"
+      }
+    ]
+  },
+  {
+    "name": "We Are One",
+    "occurrences": [
+      {
+        "date": "2026-03-01",
+        "service": "Sunday 11:00 AM",
+        "leader": "Noah Dunsmore",
+        "source": "email"
+      },
+      {
+        "date": "2026-05-31",
+        "service": "Sunday 11:00 AM",
+        "leader": "Thomas Holder",
+        "source": "email"
+      }
+    ]
+  },
+  {
+    "name": "We Saw Thee Not",
+    "occurrences": [
+      {
+        "date": "2026-04-05",
+        "service": "Sunday 11:00 AM",
+        "leader": "Sawyer Gann",
+        "source": "email"
+      }
+    ]
+  },
+  {
+    "name": "We Will Glorify the King of Kings",
+    "occurrences": [
+      {
+        "date": "2026-06-07",
+        "service": "Sunday 11:00 AM",
+        "leader": "Sawyer Gann",
+        "source": "email"
+      }
+    ]
+  },
+  {
+    "name": "What Will Your Answer Be?",
+    "occurrences": [
+      {
+        "date": "2026-06-10",
+        "service": "Wednesday Evening",
+        "leader": "Josh Jackson",
+        "source": "email"
+      }
+    ]
+  },
+  {
+    "name": "When All of God's Singers Get Home",
+    "occurrences": [
+      {
+        "date": "2025-09-07",
+        "service": "Sunday 11:00 AM",
+        "leader": "Noah Dunsmore",
+        "source": "email"
       }
     ]
   },
@@ -771,15 +2119,32 @@
     "occurrences": [
       {
         "date": "2025-12-08",
-        "leader": ""
+        "leader": "Sawyer Gann",
+        "service": "Sunday 11:00 AM",
+        "source": "youtube"
       },
       {
         "date": "2025-12-15",
-        "leader": ""
+        "leader": "Thomas Holder",
+        "service": "Sunday 11:00 AM",
+        "source": "youtube"
       },
       {
         "date": "2025-12-22",
-        "leader": ""
+        "leader": "Noah Dunsmore",
+        "service": "Sunday 11:00 AM",
+        "source": "youtube"
+      }
+    ]
+  },
+  {
+    "name": "When I Survey the Wondrous Cross",
+    "occurrences": [
+      {
+        "date": "2026-05-31",
+        "service": "Sunday 11:00 AM",
+        "leader": "Thomas Holder",
+        "source": "email"
       }
     ]
   },
@@ -788,11 +2153,32 @@
     "occurrences": [
       {
         "date": "2026-05-04",
-        "leader": "Sean"
+        "leader": "Shawn Abraham",
+        "service": "Sunday 11:00 AM",
+        "source": "youtube"
       },
       {
-        "date": "2026-05-18",
-        "leader": ""
+        "date": "2026-05-17",
+        "service": "Sunday 9:15 AM",
+        "leader": "Brett Billingsley",
+        "source": "email"
+      }
+    ]
+  },
+  {
+    "name": "Where No One Stands Alone",
+    "occurrences": [
+      {
+        "date": "2025-10-04",
+        "service": "Gospel Meeting",
+        "leader": "Sawyer Gann",
+        "source": "email"
+      },
+      {
+        "date": "2026-03-01",
+        "service": "Sunday 11:00 AM",
+        "leader": "Noah Dunsmore",
+        "source": "email"
       }
     ]
   },
@@ -801,11 +2187,37 @@
     "occurrences": [
       {
         "date": "2025-08-04",
-        "leader": "Larry"
+        "leader": "Larry Watkins",
+        "service": "Sunday 11:00 AM",
+        "source": "youtube"
       },
       {
         "date": "2025-08-25",
-        "leader": ""
+        "leader": "Thomas Holder",
+        "service": "Sunday 11:00 AM",
+        "source": "youtube"
+      }
+    ]
+  },
+  {
+    "name": "Why Do You Wait",
+    "occurrences": [
+      {
+        "date": "2026-06-03",
+        "service": "Wednesday Evening",
+        "leader": "Coyte Greer",
+        "source": "email"
+      }
+    ]
+  },
+  {
+    "name": "Wonderful City of God",
+    "occurrences": [
+      {
+        "date": "2026-03-07",
+        "service": "Gospel Meeting",
+        "leader": "Sawyer Gann",
+        "source": "email"
       }
     ]
   },
@@ -814,7 +2226,9 @@
     "occurrences": [
       {
         "date": "2026-05-04",
-        "leader": "Sean"
+        "leader": "Shawn Abraham",
+        "service": "Sunday 11:00 AM",
+        "source": "youtube"
       }
     ]
   },
@@ -823,7 +2237,9 @@
     "occurrences": [
       {
         "date": "2026-03-30",
-        "leader": "Jim Colby"
+        "leader": "Jim Colby",
+        "service": "Sunday 11:00 AM",
+        "source": "youtube"
       }
     ]
   },
@@ -832,7 +2248,31 @@
     "occurrences": [
       {
         "date": "2026-03-30",
-        "leader": ""
+        "leader": "Jason Brackeen",
+        "service": "Sunday 11:00 AM",
+        "source": "youtube"
+      }
+    ]
+  },
+  {
+    "name": "Yet Not I But Through Christ in Me",
+    "occurrences": [
+      {
+        "date": "2026-02-08",
+        "service": "Sunday 11:00 AM",
+        "leader": "Noah Dunsmore",
+        "source": "email"
+      }
+    ]
+  },
+  {
+    "name": "You Are the Song That I Sing",
+    "occurrences": [
+      {
+        "date": "2025-10-05",
+        "service": "Sunday 11:00 AM",
+        "leader": "Noah Dunsmore",
+        "source": "email"
       }
     ]
   },
@@ -841,11 +2281,21 @@
     "occurrences": [
       {
         "date": "2025-10-13",
-        "leader": ""
+        "leader": "Larry Watkins",
+        "service": "Sunday 11:00 AM",
+        "source": "youtube"
       },
       {
         "date": "2025-10-27",
-        "leader": "Nathan Hershey"
+        "leader": "Nathan Hershey",
+        "service": "Sunday 11:00 AM",
+        "source": "youtube"
+      },
+      {
+        "date": "2026-03-07",
+        "service": "Gospel Meeting",
+        "leader": "Thomas Holder",
+        "source": "email"
       }
     ]
   }

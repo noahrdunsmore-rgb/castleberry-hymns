@@ -1,0 +1,361 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Castleberry Service Deck Builder</title>
+  <link rel="icon" href="/favicon.ico" type="image/png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:wght@500;600;700&family=Instrument+Sans:wght@400;500;600;700&family=Oswald:wght@600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --red: #c41839;
+      --red-dark: #99112c;
+      --red-soft: #f9e7ec;
+      --ink: #17151b;
+      --muted: #686570;
+      --canvas: #f2f3f6;
+      --surface: #fff;
+      --surface-2: #f8f8fa;
+      --line: #dfe0e6;
+      --green: #176b45;
+      --green-soft: #eaf7f0;
+      --display: "Bricolage Grotesque", sans-serif;
+      --body: "Instrument Sans", system-ui, sans-serif;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      min-height: 100vh; background: var(--canvas); color: var(--ink);
+      font-family: var(--body); line-height: 1.45; -webkit-font-smoothing: antialiased;
+    }
+    button, input, textarea { font: inherit; }
+    :where(button, a, input, textarea, summary):focus-visible {
+      outline: 3px solid rgba(196, 24, 57, .28); outline-offset: 2px;
+    }
+
+    .app-header { background: var(--ink); color: #fff; }
+    .header-inner {
+      display: flex; align-items: center; gap: 16px; max-width: 1200px;
+      min-height: 68px; margin: auto; padding: 10px 24px;
+    }
+    .brand { display: flex; align-items: center; gap: 10px; min-width: 0; }
+    .brand svg { width: 32px; height: 32px; flex: 0 0 auto; }
+    .brand-copy { font-family: Oswald, sans-serif; line-height: 1; text-transform: uppercase; }
+    .brand-copy strong { display: block; font-size: 15px; }
+    .brand-copy span { display: block; margin-top: 3px; color: #aaa4ae; font-size: 11px; }
+    .header-status { display: flex; align-items: center; gap: 8px; margin-left: auto; }
+    .status-chip {
+      padding: 7px 10px; border: 1px solid rgba(255,255,255,.13);
+      border-radius: 999px; color: #c8c3cb; font-size: 11px;
+    }
+    .back-link {
+      padding: 8px 11px; border: 1px solid rgba(255,255,255,.16); border-radius: 9px;
+      color: #fff; font-size: 12px; font-weight: 600; text-decoration: none;
+    }
+
+    main { max-width: 1200px; margin: auto; padding: 36px 24px 56px; }
+    .intro {
+      display: grid; grid-template-columns: 1fr auto; align-items: end;
+      gap: 28px; margin-bottom: 26px;
+    }
+    .eyebrow {
+      margin-bottom: 8px; color: var(--red); font-size: 11px; font-weight: 700;
+      letter-spacing: .13em; text-transform: uppercase;
+    }
+    .intro h1 { font: 600 clamp(32px, 4vw, 50px)/1 var(--display); letter-spacing: -.045em; }
+    .intro p { max-width: 610px; margin-top: 10px; color: var(--muted); font-size: 14px; }
+    .privacy-note {
+      max-width: 300px; padding: 13px 15px; border: 1px solid var(--line);
+      border-radius: 12px; background: var(--surface); color: var(--muted); font-size: 12px;
+    }
+    .privacy-note strong { display: block; margin-bottom: 3px; color: var(--ink); }
+
+    .progress { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; margin-bottom: 18px; }
+    .progress-step {
+      display: flex; align-items: center; gap: 9px; padding: 10px 12px;
+      border: 1px solid var(--line); border-radius: 11px; background: var(--surface);
+      color: var(--muted); font-size: 12px; font-weight: 600;
+    }
+    .progress-step b {
+      display: grid; place-items: center; width: 23px; height: 23px;
+      border-radius: 7px; background: var(--red-soft); color: var(--red); font-size: 11px;
+    }
+
+    .builder-layout { display: grid; grid-template-columns: minmax(0, 1fr) 340px; gap: 16px; align-items: start; }
+    .workflow { display: flex; flex-direction: column; gap: 16px; }
+    .step-card, .build-card {
+      border: 1px solid var(--line); border-radius: 16px; background: var(--surface);
+      box-shadow: 0 8px 28px rgba(23,21,27,.04);
+    }
+    .step-card, .build-card { padding: 22px; }
+    .step-heading { display: flex; align-items: flex-start; gap: 12px; margin-bottom: 18px; }
+    .step-number {
+      display: grid; place-items: center; width: 30px; height: 30px; flex: 0 0 auto;
+      border-radius: 9px; background: var(--red-soft); color: var(--red); font-size: 12px; font-weight: 700;
+    }
+    .step-heading h2 { font: 600 21px/1.1 var(--display); letter-spacing: -.025em; }
+    .step-heading p { margin-top: 5px; color: var(--muted); font-size: 13px; }
+
+    label { display: block; margin-bottom: 7px; color: var(--ink); font-size: 12px; font-weight: 700; }
+    textarea, input[type="text"] {
+      width: 100%; padding: 12px 13px; border: 1px solid var(--line); border-radius: 11px;
+      background: var(--surface-2); color: var(--ink);
+    }
+    textarea:focus, input[type="text"]:focus {
+      border-color: var(--red); outline: 3px solid rgba(196,24,57,.12);
+    }
+    textarea { resize: vertical; }
+    #order { min-height: 170px; line-height: 1.5; }
+    #lineup { min-height: 270px; font: 12px/1.5 ui-monospace, SFMono-Regular, Consolas, monospace; }
+    .button-row { display: flex; flex-wrap: wrap; gap: 9px; margin-top: 12px; }
+    button {
+      min-height: 42px; padding: 0 15px; border: 0; border-radius: 10px;
+      background: var(--red); color: #fff; font-weight: 700; cursor: pointer; transition: .15s ease;
+    }
+    button:hover:not(:disabled) { background: var(--red-dark); transform: translateY(-1px); }
+    button.secondary { border: 1px solid var(--line); background: var(--surface); color: var(--ink); }
+    button.secondary:hover:not(:disabled) { background: var(--surface-2); }
+    button:disabled { opacity: .5; cursor: not-allowed; transform: none; }
+
+    .field-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 16px; }
+    .lineup-preview {
+      display: flex; flex-direction: column; gap: 7px; padding: 10px;
+      border: 1px solid var(--line); border-radius: 12px; background: var(--surface-2);
+    }
+    .lineup-preview.empty { display: block; padding: 26px; text-align: center; color: var(--muted); font-size: 13px; }
+    .lineup-item {
+      display: grid; grid-template-columns: 82px minmax(0,1fr); gap: 12px; align-items: center;
+      padding: 10px 11px; border: 1px solid var(--line); border-radius: 10px; background: var(--surface);
+    }
+    .item-type { color: var(--red); font-size: 10px; font-weight: 700; letter-spacing: .09em; text-transform: uppercase; }
+    .item-title { font-size: 13px; font-weight: 600; }
+    .item-meta { margin-top: 2px; color: var(--muted); font-size: 11px; }
+    details { margin-top: 14px; padding-top: 13px; border-top: 1px solid var(--line); }
+    summary { color: var(--muted); font-size: 12px; font-weight: 700; cursor: pointer; }
+    details label { margin-top: 12px; }
+
+    .build-card { position: sticky; top: 16px; }
+    .ready-state {
+      display: flex; align-items: center; gap: 9px; margin: 16px 0; padding: 11px 12px;
+      border-radius: 10px; background: var(--surface-2); color: var(--muted); font-size: 12px; font-weight: 600;
+    }
+    .ready-dot { width: 8px; height: 8px; border-radius: 50%; background: #aaa6b0; }
+    .ready-state.ready { color: var(--green); background: var(--green-soft); }
+    .ready-state.ready .ready-dot { background: var(--green); }
+    .check { display: flex; align-items: flex-start; gap: 8px; margin: 13px 0; font-size: 12px; font-weight: 600; }
+    .check input { width: 16px; height: 16px; margin-top: 1px; accent-color: var(--red); }
+    .note { color: var(--muted); font-size: 11px; font-weight: 400; }
+    #buildBtn { width: 100%; min-height: 48px; margin-top: 8px; }
+    .build-note { margin-top: 10px; color: var(--muted); font-size: 11px; text-align: center; }
+    .warn, .ok { margin-top: 11px; padding: 11px 12px; border-radius: 10px; font-size: 12px; white-space: pre-wrap; }
+    .warn { border: 1px solid #e5b9c2; background: var(--red-soft); color: var(--red-dark); }
+    .ok { border: 1px solid #b8dec9; background: var(--green-soft); color: var(--green); }
+    .spin { display: none; }
+    .busy .spin { display: inline; }
+    a.dl {
+      display: block; margin-top: 10px; padding: 12px; border-radius: 10px;
+      background: var(--red); color: #fff; text-align: center; text-decoration: none; font-size: 13px; font-weight: 700;
+    }
+
+    @media (max-width: 850px) {
+      .intro { grid-template-columns: 1fr; }
+      .builder-layout { grid-template-columns: 1fr; }
+      .build-card { position: static; }
+      .progress { grid-template-columns: 1fr; }
+      .privacy-note { max-width: none; }
+    }
+    @media (max-width: 560px) {
+      .header-inner { padding: 10px 14px; }
+      .status-chip { display: none; }
+      .brand-copy span { display: none; }
+      .back-link { padding: 8px 10px; font-size: 0; }
+      .back-link::after { content: "Back"; font-size: 12px; }
+      main { padding: 24px 12px 40px; }
+      .intro h1 { font-size: 36px; }
+      .step-card, .build-card { padding: 17px; }
+      .field-grid { grid-template-columns: 1fr; }
+      .lineup-item { grid-template-columns: 66px 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <header class="app-header">
+    <div class="header-inner">
+      <div class="brand">
+        <svg viewBox="0 0 100 96" aria-hidden="true">
+          <path d="M50 92C30 74 6 58 6 34C6 18 18 8 32 8C41 8 47 13 50 19C53 11 61 4 72 4C88 4 96 16 96 31C96 56 70 74 50 92Z" fill="#c41839"/>
+          <g fill="#17151b"><circle cx="40" cy="49" r="6.6"/><path d="M37.8 57C31 60 30 74 30 84H50C50 74 49 60 42.2 57Z"/><circle cx="54" cy="55" r="5.6"/><path d="M52.2 62C46.4 64.5 45.6 76 45.6 84H62.4C62.4 76 61.6 64.5 55.8 62Z"/></g>
+        </svg>
+        <div class="brand-copy"><strong>Castleberry</strong><span>Service deck builder</span></div>
+      </div>
+      <div class="header-status">
+        <span class="status-chip">Local only</span>
+        <span class="status-chip">__PARSER__</span>
+        <a class="back-link" href="https://noahrdunsmore-rgb.github.io/castleberry-hymns/">Back to hymn tools</a>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section class="intro">
+      <div>
+        <div class="eyebrow">Sunday presentation workflow</div>
+        <h1>Build the service deck</h1>
+        <p>Paste the worship order, confirm the lineup, then create one complete presentation. Original song slides remain unchanged.</p>
+      </div>
+      <div class="privacy-note"><strong>Runs on this computer</strong>The builder uses hymn assets stored on the presentation PC. Nothing is uploaded to the public website.</div>
+    </section>
+
+    <div class="progress" aria-label="Three-step workflow">
+      <div class="progress-step"><b>1</b> Paste the order</div>
+      <div class="progress-step"><b>2</b> Review the lineup</div>
+      <div class="progress-step"><b>3</b> Build and download</div>
+    </div>
+
+    <div class="builder-layout">
+      <div class="workflow">
+        <section class="step-card">
+          <div class="step-heading"><span class="step-number">1</span><div><h2>Paste the worship order</h2><p>Copy the lineup from the leader&rsquo;s email or PDF. Include songs, verses, scripture and service moments.</p></div></div>
+          <label for="order">Worship order</label>
+          <textarea id="order" placeholder="Opening prayer&#10;Holy, Holy, Holy — verses 1, 3 and 4&#10;Scripture reading — Psalm 96:1-4&#10;..."></textarea>
+          <div class="button-row">
+            <button id="parseBtn" __PARSEDISABLED__>Read the order <span class="spin">…</span></button>
+            <button type="button" class="secondary" id="exampleBtn">Try an example</button>
+          </div>
+          <div id="parseMsg" aria-live="polite"></div>
+        </section>
+
+        <section class="step-card">
+          <div class="step-heading"><span class="step-number">2</span><div><h2>Review the lineup</h2><p>Confirm the service details and make sure every item is in the right order.</p></div></div>
+          <div class="field-grid">
+            <div><label for="service">Service name</label><input type="text" id="service" value="Sunday 11:00 AM"></div>
+            <div><label for="date">Service date</label><input type="text" id="date" placeholder="June 7, 2026"></div>
+          </div>
+          <div class="lineup-preview empty" id="lineupPreview">Paste an order or try the example to preview the service here.</div>
+          <details>
+            <summary>Advanced: edit lineup data</summary>
+            <label for="lineup">Lineup JSON</label>
+            <textarea id="lineup" placeholder="Parsed lineup data appears here."></textarea>
+          </details>
+        </section>
+      </div>
+
+      <aside class="build-card">
+        <div class="step-heading"><span class="step-number">3</span><div><h2>Build and download</h2><p>The finished deck is saved locally and ready to download.</p></div></div>
+        <div class="ready-state" id="readyState"><span class="ready-dot"></span><span>Waiting for a lineup</span></div>
+        <label class="check"><input type="checkbox" id="email" __EMAILDISABLED__><span>Email me a copy __EMAILNOTE__</span></label>
+        <button id="buildBtn" disabled>Build service deck <span class="spin">…</span></button>
+        <div class="build-note">Building may take a minute when the service contains many songs.</div>
+        <div id="buildMsg" aria-live="polite"></div>
+      </aside>
+    </div>
+  </main>
+
+  <script>
+    const $ = id => document.getElementById(id);
+    function busy(btn, on) { btn.classList.toggle('busy', on); btn.disabled = on; }
+    function esc(value) {
+      return String(value || '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+    }
+    function itemName(item) {
+      if (item.type === 'song') return item.title || 'Untitled song';
+      if (item.type === 'scripture') return item.title || item.reference || 'Scripture reading';
+      if (item.type === 'frame') return (item.frame || 'Service moment').replace(/_/g, ' ').replace(/\b\w/g, c => c.toUpperCase());
+      return item.title || item.type || 'Service item';
+    }
+    function itemMeta(item) {
+      if (item.type === 'song') {
+        const bits = [];
+        if (item.source) bits.push(item.source);
+        if (item.number) bits.push('#' + item.number);
+        if (item.verses && item.verses !== 'all') bits.push('Verses ' + (Array.isArray(item.verses) ? item.verses.join(', ') : item.verses));
+        return bits.join(' · ');
+      }
+      return item.type === 'scripture' ? (item.reference || '') : '';
+    }
+    function renderPreview(lineup) {
+      const items = lineup && Array.isArray(lineup.items) ? lineup.items : [];
+      const preview = $('lineupPreview');
+      if (!items.length) {
+        preview.className = 'lineup-preview empty';
+        preview.textContent = 'Paste an order or try the example to preview the service here.';
+        $('readyState').className = 'ready-state';
+        $('readyState').innerHTML = '<span class="ready-dot"></span><span>Waiting for a lineup</span>';
+        $('buildBtn').disabled = true;
+        return;
+      }
+      preview.className = 'lineup-preview';
+      preview.innerHTML = items.map((item, index) =>
+        '<div class="lineup-item"><span class="item-type">' + (index + 1) + ' · ' + esc(item.type || 'item') + '</span><div><div class="item-title">' + esc(itemName(item)) + '</div>' +
+        (itemMeta(item) ? '<div class="item-meta">' + esc(itemMeta(item)) + '</div>' : '') + '</div></div>'
+      ).join('');
+      $('readyState').className = 'ready-state ready';
+      $('readyState').innerHTML = '<span class="ready-dot"></span><span>' + items.length + ' service items ready</span>';
+      $('buildBtn').disabled = false;
+    }
+    function setLineup(lineup) {
+      $('lineup').value = JSON.stringify(lineup, null, 2);
+      if (lineup.service) $('service').value = lineup.service;
+      if (lineup.date) $('date').value = lineup.date;
+      renderPreview(lineup);
+    }
+
+    $('lineup').addEventListener('input', () => {
+      try { renderPreview(JSON.parse($('lineup').value)); }
+      catch (_) {
+        $('readyState').className = 'ready-state';
+        $('readyState').innerHTML = '<span class="ready-dot"></span><span>Lineup data needs attention</span>';
+        $('buildBtn').disabled = true;
+      }
+    });
+    $('exampleBtn').onclick = async () => {
+      const response = await fetch('/example');
+      const result = await response.json();
+      setLineup(result.lineup);
+    };
+    $('parseBtn').onclick = async () => {
+      $('parseMsg').innerHTML = '';
+      busy($('parseBtn'), true);
+      try {
+        const response = await fetch('/parse', {
+          method: 'POST', headers: {'Content-Type': 'application/json'},
+          body: JSON.stringify({order: $('order').value, date: $('date').value, service: $('service').value})
+        });
+        const result = await response.json();
+        if (!result.ok) { $('parseMsg').innerHTML = '<div class="warn">' + esc(result.error) + '</div>'; return; }
+        setLineup(result.lineup);
+        $('parseMsg').innerHTML = result.notes && result.notes.length
+          ? '<div class="warn">Review these songs:\n• ' + result.notes.map(esc).join('\n• ') + '</div>'
+          : '<div class="ok">Every song matched a prepared deck.</div>';
+      } catch (error) {
+        $('parseMsg').innerHTML = '<div class="warn">' + esc(error) + '</div>';
+      } finally { busy($('parseBtn'), false); }
+    };
+    $('buildBtn').onclick = async () => {
+      $('buildMsg').innerHTML = '';
+      let lineup;
+      try { lineup = JSON.parse($('lineup').value); }
+      catch (_) { $('buildMsg').innerHTML = '<div class="warn">The lineup data needs attention. Open the advanced editor to correct it.</div>'; return; }
+      lineup.service = $('service').value || lineup.service;
+      lineup.date = $('date').value || lineup.date;
+      busy($('buildBtn'), true);
+      try {
+        const response = await fetch('/build', {
+          method: 'POST', headers: {'Content-Type': 'application/json'},
+          body: JSON.stringify({lineup, email: $('email').checked})
+        });
+        const result = await response.json();
+        if (!result.ok) { $('buildMsg').innerHTML = '<div class="warn">' + esc(result.error) + '</div>'; return; }
+        let html = '<div class="ok">' + esc(result.summary) + '</div><a class="dl" href="' + encodeURI(result.download) + '">Download ' + esc(result.filename) + '</a>';
+        if (result.warnings && result.warnings.length) html += '<div class="warn">Warnings:\n• ' + result.warnings.map(esc).join('\n• ') + '</div>';
+        if (result.email_status) html += '<div class="' + (result.email_ok ? 'ok' : 'warn') + '">' + esc(result.email_status) + '</div>';
+        $('buildMsg').innerHTML = html;
+      } catch (error) {
+        $('buildMsg').innerHTML = '<div class="warn">' + esc(error) + '</div>';
+      } finally { busy($('buildBtn'), false); }
+    };
+  </script>
+</body>
+</html>

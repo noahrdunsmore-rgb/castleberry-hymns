@@ -1,0 +1,17 @@
+{
+  "version": "0.0.1",
+  "configurations": [
+    {
+      "name": "hymn-tracker",
+      "runtimeExecutable": "python3",
+      "runtimeArgs": ["-m", "http.server", "3400"],
+      "port": 3400
+    },
+    {
+      "name": "service-app",
+      "runtimeExecutable": "python",
+      "runtimeArgs": ["service_app.py"],
+      "port": 5000
+    }
+  ]
+}

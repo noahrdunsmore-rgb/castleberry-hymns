@@ -358,17 +358,17 @@
   },
   {
     "name": "Awesome God",
-    "number": "",
-    "source": "eChoice",
-    "pptx": "hymn-slides/eChoice Output/Awesome God/Awesome God.pptx",
-    "pdf": "hymn-slides/eChoice Output/Awesome God/Awesome God - Print.pdf"
-  },
-  {
-    "name": "Awesome God",
     "number": "1014",
     "source": "HFWS",
     "pptx": "hymn-slides/HFWS Output/Awesome God/Awesome God.pptx",
     "pdf": "hymn-slides/HFWS Output/Awesome God/Awesome God - Print.pdf"
+  },
+  {
+    "name": "Awesome God",
+    "number": "",
+    "source": "eChoice",
+    "pptx": "hymn-slides/eChoice Output/Awesome God/Awesome God.pptx",
+    "pdf": "hymn-slides/eChoice Output/Awesome God/Awesome God - Print.pdf"
   },
   {
     "name": "Be Exalted, O God",

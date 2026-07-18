@@ -3,31 +3,58 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Castleberry Church of Christ — Hymn Tracker</title>
+  <title>Castleberry Church of Christ — Worship Tools</title>
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
   <script src="https://cdn.jsdelivr.net/npm/jszip@3.10.1/dist/jszip.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+  <link rel="icon" href="logo.png" type="image/png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@500;600&family=Manrope:wght@400;500;600;700;800&family=Oswald:wght@500;600;700&family=Petrona:ital,opsz,wght@0,8..144,500;0,8..144,600;1,8..144,500&display=swap" rel="stylesheet">
   <style>
     :root {
-      --red:      #C31832;
-      --red-dark: #9B1226;
-      --red-pale: #FDEEF1;
-      --dark:     #1C1C1C;
-      --dark2:    #2E2E2E;
-      --bg:       #F8F8F8;
-      --white:    #FFFFFF;
-      --text:     #1C1C1C;
-      --muted:    #6B6B6B;
-      --border:   #E0E0E0;
+      /* Heritage Bulletin palette */
+      --red:        #C31832;  /* Castleberry logo red */
+      --red-dark:   #9B1226;  /* logo red, darkened */
+      --red-bright: #E11E3C;  /* logo red, brightened */
+      --red-pale:   #F3E2DC;  /* brandSoft */
+      --dark:       #2A1416;  /* headerBg (dark crimson) */
+      --dark2:      #43282A;  /* headerLine / dark count badge */
+      --bg:         #F6F2EA;  /* warm paper */
+      --bg2:        #EDE7DB;
+      --white:      #FFFFFF;  /* card */
+      --card-alt:   #F8F4EC;
+      --text:       #211C17;  /* ink */
+      --muted:      #6E6456;  /* sub */
+      --faint:      #9C9180;
+      --border:     #E1D9C9;  /* line */
+      --line-soft:  #ECE5D8;
+      --gold:       #C19A45;
+      --gold-soft:  #E7D6A8;
+      --on-brand:   #FFF7EC;
+      --header-ink: #F8F0E3;
+      --header-sub: #C9A98A;
+      --header-line:#43282A;
+      --word-top:   #C9B59A;
+      --word-ink:   #F8F0E3;
+      --word-mid:   #A8806A;
+      --shadow:     0 1px 2px rgba(33,28,23,.06);
+      --shadow-lg:  0 12px 32px -14px rgba(33,28,23,.26);
+      --stat-grad:  linear-gradient(180deg,#C31832,#9B1226);
+      --display:    'Libre Baskerville', Georgia, serif;
+      --bodyfont:   'Source Serif 4', Georgia, serif;
     }
 
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     body {
-      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Arial, sans-serif;
+      font-family: var(--bodyfont);
       background: var(--bg);
       color: var(--text);
       min-height: 100vh;
+      -webkit-font-smoothing: antialiased;
     }
+    h1, h2, h3 { font-family: var(--display); font-weight: 700; }
 
     /* ── Views (auth / pending / app) ── */
     #view-auth, #view-pending, #view-app { display: none; }
@@ -156,57 +183,132 @@
       border-bottom: 4px solid var(--red);
     }
     .header-inner {
-      max-width: 860px;
+      max-width: 1000px;
       margin: 0 auto;
-      padding: 1.1rem 1.2rem;
+      padding: 1rem 1.2rem;
       display: flex;
       align-items: center;
-      gap: 1.2rem;
+      gap: 1rem;
     }
-    .header-logo { height: 52px; width: auto; flex-shrink: 0; }
+    .header-logo { height: 48px; width: auto; flex-shrink: 0; }
     .header-text { flex: 1; }
     .header-text h1 {
-      font-size: 1.35rem; font-weight: 700;
+      font-size: 1.2rem; font-weight: 700;
       color: var(--white); letter-spacing: 0.01em; line-height: 1.2;
     }
-    .header-text p { font-size: 0.8rem; color: rgba(255,255,255,0.55); margin-top: 0.2rem; }
+    .header-text p { font-size: 0.75rem; color: rgba(255,255,255,0.5); margin-top: 0.15rem; }
+    .header-actions { display: flex; align-items: center; gap: 0.6rem; flex-shrink: 0; }
+    .btn-service-deck {
+      background: var(--red);
+      color: var(--white);
+      border: none;
+      border-radius: 7px;
+      padding: 0.5rem 1rem;
+      font-size: 0.82rem;
+      font-weight: 700;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: background 0.15s;
+      display: flex; align-items: center; gap: 0.35rem;
+      text-decoration: none;
+    }
+    .btn-service-deck:hover { background: var(--red-dark); }
     .header-signout {
       background: none;
       border: 1px solid rgba(255,255,255,0.3);
       color: rgba(255,255,255,0.65);
       border-radius: 6px;
-      padding: 0.4rem 0.9rem;
-      font-size: 0.8rem;
+      padding: 0.4rem 0.75rem;
+      font-size: 0.78rem;
       cursor: pointer;
       white-space: nowrap;
-      flex-shrink: 0;
       transition: all 0.15s;
     }
     .header-signout:hover { border-color: var(--white); color: var(--white); }
 
-    /* ── Nav tabs ── */
-    .nav-tabs {
-      background: var(--dark2);
-      display: flex;
-      overflow-x: auto;
+    /* ── Side-by-side dashboard layout ── */
+    #view-app { display: flex; flex-direction: column; height: 100vh; overflow: hidden; }
+    .dashboard {
+      flex: 1; display: flex; overflow: hidden; min-height: 0;
     }
-    .nav-tab {
-      padding: 0.75rem 1.8rem;
-      color: rgba(255,255,255,0.55);
-      font-size: 0.88rem; font-weight: 600;
-      cursor: pointer;
-      border-bottom: 3px solid transparent;
-      white-space: nowrap;
-      transition: color 0.15s, border-color 0.15s;
-      letter-spacing: 0.03em; text-transform: uppercase;
+    .tracker-panel {
+      flex: 0 0 56%; display: flex; flex-direction: column; overflow: hidden;
+      border-right: 2px solid var(--border);
     }
-    .nav-tab:hover { color: rgba(255,255,255,0.85); }
-    .nav-tab.active { color: var(--white); border-bottom-color: var(--red); }
+    .dl-panel {
+      flex: 1; display: flex; flex-direction: column; overflow: hidden;
+    }
+    .panel-header {
+      flex-shrink: 0; padding: 0.7rem 1.1rem 0.5rem;
+      border-bottom: 1.5px solid var(--border); background: var(--white);
+      display: flex; align-items: baseline; gap: 0.6rem;
+    }
+    .panel-header h2 { font-size: 0.9rem; font-weight: 700; color: var(--dark); }
+    .panel-header p { font-size: 0.75rem; color: var(--muted); }
+    .panel-header-updated { font-size: 0.72rem; color: var(--muted); margin-left: auto; white-space: nowrap; flex-shrink: 0; }
+    .panel-scroll { flex: 1; overflow-y: auto; }
+
+    /* Strip max-width / auto-margin constraints inside panels */
+    .tracker-panel .stats-bar,
+    .tracker-panel .period-bar,
+    .tracker-panel .chart-section,
+    .tracker-panel .controls,
+    .tracker-panel .topic-bar,
+    .tracker-panel .results-meta,
+    .tracker-panel .hymn-list,
+    .dl-panel .dl-controls,
+    .dl-panel .dl-meta,
+    .dl-panel .dl-grid,
+    .dl-panel .topic-bar,
+    .dl-panel .sermon-section {
+      max-width: none; margin-left: 0; margin-right: 0;
+    }
+    .tracker-panel .recent-services,
+    .tracker-panel .period-bar,
+    .tracker-panel .chart-section,
+    .tracker-panel .controls,
+    .tracker-panel .topic-bar,
+    .tracker-panel .results-meta,
+    .tracker-panel .hymn-list { padding-left: 0.9rem; padding-right: 0.9rem; }
+    .dl-panel .dl-controls,
+    .dl-panel .dl-meta,
+    .dl-panel .dl-grid,
+    .dl-panel .topic-bar,
+    .dl-panel .sermon-section { padding-left: 0.9rem; padding-right: 0.9rem; }
+    .tracker-panel .chart-wrap { height: 160px; }
+    .tracker-panel .hymn-list { padding-bottom: 1rem; }
+    .dl-panel .dl-grid {
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      padding-bottom: 1rem;
+    }
+
+    /* ── Lookup bar (slim, full-width above dashboard) ── */
+    .lookup-bar {
+      flex-shrink: 0; background: var(--white);
+      border-bottom: 1.5px solid var(--border);
+      padding: 0.55rem 1.2rem; display: flex; align-items: center; gap: 0.7rem;
+    }
+    .lookup-label {
+      font-size: 0.72rem; font-weight: 700; text-transform: uppercase;
+      letter-spacing: 0.07em; color: var(--muted); white-space: nowrap; flex-shrink: 0;
+    }
+    .lookup-input {
+      flex: 0 0 260px; padding: 0.38rem 0.75rem;
+      border: 1.5px solid var(--border); border-radius: 7px;
+      font-size: 0.88rem; background: var(--bg); color: var(--text);
+      transition: border-color 0.15s;
+    }
+    .lookup-input:focus { outline: none; border-color: var(--red); }
+    .lookup-result { flex: 1; font-size: 0.85rem; color: var(--muted); min-width: 0; }
+    .lookup-result.found .lr-name { font-weight: 700; color: var(--dark); }
+    .lookup-result.found .lr-date { color: var(--red); font-weight: 600; }
+    .lookup-result.found .lr-meta { color: var(--muted); font-size: 0.78rem; }
+    .lookup-result.empty { font-style: italic; }
 
     /* ── Stats bar ── */
     .stats-bar { background: var(--red); display: flex; justify-content: center; }
     .stat {
-      flex: 1; max-width: 180px; text-align: center;
+      flex: 1; max-width: 200px; text-align: center;
       padding: 0.75rem 0.5rem;
       border-right: 1px solid rgba(255,255,255,0.25);
     }
@@ -214,13 +316,9 @@
     .stat-number { font-size: 1.65rem; font-weight: 700; color: var(--white); line-height: 1; }
     .stat-label { font-size: 0.63rem; text-transform: uppercase; letter-spacing: 0.08em; color: rgba(255,255,255,0.75); margin-top: 0.2rem; }
 
-    /* ── Page sections ── */
-    .page { display: none; }
-    .page.active { display: block; }
-
     /* ── Controls ── */
     .controls {
-      max-width: 860px; margin: 1.4rem auto 0;
+      max-width: 1000px; margin: 1.4rem auto 0;
       padding: 0 1.2rem; display: flex; gap: 0.6rem; flex-wrap: wrap; align-items: center;
     }
     .search-wrap { flex: 1; min-width: 180px; position: relative; }
@@ -243,11 +341,58 @@
     select:focus { outline: none; border-color: var(--red); }
     .leader-wrap { min-width: 160px; position: relative; }
 
+    /* ── Recent services ── */
+    .recent-services { margin-top: 1.1rem; }
+    .recent-title {
+      font-size: 0.78rem; font-weight: 700; text-transform: uppercase;
+      letter-spacing: 0.07em; color: var(--muted); margin-bottom: 0.6rem;
+    }
+    .svc-card {
+      background: var(--white); border: 1.5px solid var(--border); border-radius: 10px;
+      border-left: 4px solid var(--red);
+      padding: 0.75rem 1rem 0.85rem; margin-bottom: 0.6rem;
+    }
+    .svc-card-head {
+      display: flex; align-items: center; gap: 0.5rem; flex-wrap: wrap;
+      margin-bottom: 0.5rem;
+    }
+    .svc-date { font-size: 0.92rem; font-weight: 700; color: var(--dark); }
+    .svc-card-songs { list-style: none; display: flex; flex-direction: column; gap: 0.2rem; }
+    .svc-card-songs li {
+      font-size: 0.86rem; color: var(--text); padding-left: 0.9rem; position: relative;
+    }
+    .svc-card-songs li::before {
+      content: '♪'; position: absolute; left: 0; color: var(--red); font-size: 0.8rem;
+    }
+
+    /* ── Period tabs ── */
+    .period-bar { max-width: 1000px; margin: 1.1rem auto 0; padding: 0 1.2rem; display: flex; align-items: center; gap: 0.4rem; }
+    .period-label { font-size: 0.75rem; color: var(--muted); margin-right: 0.4rem; text-transform: uppercase; letter-spacing: 0.06em; }
+    .period-btn {
+      padding: 0.3rem 0.85rem; border-radius: 20px; border: 1.5px solid var(--border);
+      background: var(--white); color: var(--muted); font-size: 0.8rem; cursor: pointer;
+      font-weight: 500; transition: all 0.15s;
+    }
+    .period-btn.active { background: var(--red); color: #fff; border-color: var(--red); }
+    .period-btn:hover:not(.active) { border-color: var(--red); color: var(--red); }
+
+    /* ── Top songs chart ── */
+    .chart-section { max-width: 1000px; margin: 1.1rem auto 0; padding: 0 1.2rem; }
+    .chart-card {
+      background: var(--white); border: 1.5px solid var(--border); border-radius: 10px;
+      padding: 1.2rem 1.4rem 1rem;
+    }
+    .chart-title { font-size: 0.78rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.07em; color: var(--muted); margin-bottom: 0.9rem; }
+    .chart-wrap { position: relative; height: 220px; }
+
+    /* ── Last sung chip on card ── */
+    .last-sung { font-size: 0.72rem; color: var(--muted); margin-left: auto; margin-right: 0.5rem; white-space: nowrap; }
+
     /* ── Results meta ── */
-    .results-meta { max-width: 860px; margin: 0.75rem auto 0.4rem; padding: 0 1.2rem; font-size: 0.8rem; color: var(--muted); }
+    .results-meta { max-width: 1000px; margin: 0.75rem auto 0.4rem; padding: 0 1.2rem; font-size: 0.8rem; color: var(--muted); }
 
     /* ── Hymn list ── */
-    .hymn-list { max-width: 860px; margin: 0 auto; padding: 0 1.2rem 3rem; }
+    .hymn-list { max-width: 1000px; margin: 0 auto; padding: 0 1.2rem 3rem; }
     .hymn-card {
       background: var(--white); border: 1.5px solid var(--border);
       border-radius: 10px; margin-bottom: 0.55rem; overflow: hidden;
@@ -282,11 +427,28 @@
       font-size: 0.75rem; font-weight: 500;
     }
     .leader-chip.unknown { background: #F0F0F0; color: var(--muted); font-style: italic; font-weight: 400; }
+    .svc-chip { display: inline-block; background: #EEF3FF; color: #3B5BDB; font-size: 0.72rem; font-weight: 600; border-radius: 5px; padding: 1px 7px; letter-spacing: 0.01em; white-space: nowrap; }
+
+    /* ── Topic chips ── */
+    .topic-bar {
+      max-width: 1000px; margin: 0.9rem auto 0; padding: 0 1.2rem;
+      display: flex; align-items: center; gap: 0.4rem; flex-wrap: wrap;
+    }
+    .topic-label { font-size: 0.72rem; color: var(--muted); text-transform: uppercase; letter-spacing: 0.06em; margin-right: 0.3rem; white-space: nowrap; }
+    .topic-chip {
+      padding: 0.28rem 0.75rem; border-radius: 20px; border: 1.5px solid var(--border);
+      background: var(--white); color: #555; font-size: 0.78rem; cursor: pointer;
+      font-weight: 500; transition: all 0.15s; white-space: nowrap;
+    }
+    .topic-chip.active { background: var(--red); color: #fff; border-color: var(--red); }
+    .topic-chip:hover:not(.active) { border-color: var(--red); color: var(--red); }
+    .topic-chip.clear-chip { background: #f5f5f5; border-color: #ddd; color: var(--muted); font-size: 0.72rem; }
+    .topic-chip.clear-chip:hover { background: #eee; border-color: #ccc; color: #444; }
 
     /* ── Downloads ── */
-    .dl-controls { max-width: 860px; margin: 1.4rem auto 0; padding: 0 1.2rem; display: flex; gap: 0.6rem; flex-wrap: wrap; align-items: center; }
-    .dl-meta { max-width: 860px; margin: 0.75rem auto 0.4rem; padding: 0 1.2rem; font-size: 0.8rem; color: var(--muted); }
-    .dl-grid { max-width: 860px; margin: 0 auto; padding: 0 1.2rem 3rem; display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 1rem; }
+    .dl-controls { max-width: 1000px; margin: 1.4rem auto 0; padding: 0 1.2rem; display: flex; gap: 0.6rem; flex-wrap: wrap; align-items: center; }
+    .dl-meta { max-width: 1000px; margin: 0.75rem auto 0.4rem; padding: 0 1.2rem; font-size: 0.8rem; color: var(--muted); }
+    .dl-grid { max-width: 1000px; margin: 0 auto; padding: 0 1.2rem 3rem; display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 1rem; }
     .dl-card {
       background: var(--white); border: 1.5px solid var(--border); border-radius: 10px;
       padding: 1.2rem 1.2rem 1rem; display: flex; flex-direction: column; gap: 0.6rem;
@@ -296,12 +458,14 @@
     .dl-card.selected { border-color: var(--red); background: var(--red-pale); box-shadow: 0 0 0 2px var(--red); }
     .dl-card-check {
       position: absolute; top: 0.7rem; right: 0.7rem;
-      width: 20px; height: 20px; border-radius: 50%;
-      border: 2px solid var(--border); background: var(--white);
+      width: 22px; height: 22px; border-radius: 50%;
+      border: 2px solid #bbb; background: var(--white);
       display: flex; align-items: center; justify-content: center;
-      font-size: 0.7rem; color: var(--white); transition: all 0.15s; flex-shrink: 0;
+      font-size: 0.75rem; font-weight: 700; color: transparent;
+      transition: all 0.15s; flex-shrink: 0;
     }
-    .dl-card.selected .dl-card-check { background: var(--red); border-color: var(--red); }
+    .dl-card:hover .dl-card-check { border-color: var(--red); }
+    .dl-card.selected .dl-card-check { background: var(--red); border-color: var(--red); color: white; }
     .dl-card-icon { font-size: 1.8rem; line-height: 1; }
     .dl-card-name { font-size: 1rem; font-weight: 600; line-height: 1.3; padding-right: 1.5rem; }
     .dl-card-name mark { background: #FFEDC0; color: inherit; border-radius: 3px; padding: 0 2px; }
@@ -347,6 +511,35 @@
     }
     .bulk-clear-btn:hover { border-color: white; color: white; }
 
+    /* ── Sermon matcher ── */
+    .sermon-toggle {
+      display: flex; align-items: center; gap: 0.5rem;
+      padding: 0.55rem 0.9rem; border-radius: 7px;
+      border: 1.5px solid var(--border); background: var(--white);
+      color: var(--text); font-size: 0.82rem; font-weight: 600;
+      cursor: pointer; transition: all 0.15s; white-space: nowrap;
+    }
+    .sermon-toggle.active { background: var(--red); color: var(--white); border-color: var(--red); }
+    .sermon-toggle:hover:not(.active) { border-color: var(--red); color: var(--red); }
+    .sermon-section {
+      display: none; flex-direction: column; gap: 0.6rem;
+      border-top: 1.5px solid var(--border);
+      padding-top: 0.8rem; padding-bottom: 0.8rem;
+      background: #FAFAFA;
+    }
+    .sermon-section.open { display: flex; }
+    .sermon-label { font-size: 0.78rem; font-weight: 700; color: var(--dark); }
+    .sermon-hint { font-size: 0.73rem; color: var(--muted); }
+    .sermon-textarea {
+      width: 100%; min-height: 100px; max-height: 200px;
+      padding: 0.6rem 0.8rem; border: 1.5px solid var(--border); border-radius: 8px;
+      font-size: 0.85rem; font-family: inherit; color: var(--text);
+      background: var(--white); resize: vertical; transition: border-color 0.15s;
+    }
+    .sermon-textarea:focus { outline: none; border-color: var(--red); }
+    .sermon-meta { font-size: 0.78rem; color: var(--muted); }
+    .sermon-meta strong { color: var(--red); }
+
     /* ── Misc ── */
     .state-msg { text-align: center; padding: 3rem 1rem; color: var(--muted); }
     footer { text-align: center; padding: 1.1rem; color: var(--muted); font-size: 0.76rem; border-top: 1px solid var(--border); }
@@ -356,43 +549,1186 @@
       .header-text h1 { font-size: 1.05rem; }
       .stat-number { font-size: 1.35rem; }
     }
+
+    /* ════════════════════════════════════════════════════
+       HERITAGE BULLETIN — visual layer (overrides above)
+       ════════════════════════════════════════════════════ */
+
+    /* —— Sign-in: two-column welcome —— */
+    #view-auth {
+      min-height: 100vh; display: grid; grid-template-columns: 1.05fr 0.95fr;
+      background: var(--bg); padding: 0; align-items: stretch;
+    }
+    .welcome-left {
+      position: relative; overflow: hidden; background: var(--dark);
+      color: var(--on-brand); display: flex; flex-direction: column;
+      justify-content: space-between; padding: 52px 56px; gap: 32px;
+    }
+    .welcome-left .staff-lines {
+      position: absolute; inset: 0; opacity: .07; pointer-events: none;
+      background: repeating-linear-gradient(0deg, transparent 0 22px, #FFF7EC 22px 23px);
+    }
+    .welcome-brand { position: relative; display: flex; align-items: center; gap: 13px; }
+    .welcome-brand .wm-lines { font-family: 'Oswald', sans-serif; line-height: 1.05; }
+    .welcome-brand .wm-top { font-weight: 700; font-size: 21px; letter-spacing: .02em; text-transform: uppercase; }
+    .welcome-brand .wm-bot { font-weight: 600; font-size: 21px; letter-spacing: .01em; text-transform: uppercase; opacity: .82; }
+    .welcome-mid { position: relative; }
+    .welcome-eyebrow { font-family: var(--bodyfont); font-size: 13px; letter-spacing: .22em; text-transform: uppercase; opacity: .8; margin-bottom: 18px; }
+    .welcome-h1 { font-family: var(--display); font-weight: 700; font-size: 48px; line-height: 1.04; margin-bottom: 18px; color: var(--on-brand); }
+    .welcome-p { font-family: var(--bodyfont); font-size: 17px; line-height: 1.6; max-width: 420px; opacity: .9; }
+    .welcome-stats { position: relative; display: flex; gap: 30px; opacity: .92; }
+    .welcome-stats .ws-num { font-family: var(--display); font-weight: 700; font-size: 30px; }
+    .welcome-stats .ws-lbl { font-family: var(--bodyfont); font-size: 12.5px; letter-spacing: .08em; text-transform: uppercase; opacity: .8; }
+    .welcome-right { display: flex; align-items: center; justify-content: center; padding: 40px; background: var(--bg); }
+
+    .welcome-right .auth-card {
+      background: transparent; box-shadow: none; padding: 0; max-width: 380px; border-radius: 0;
+    }
+    .welcome-right .auth-logo,
+    .welcome-right .auth-church-name,
+    .welcome-right .auth-subtitle { display: none; }
+    .auth-heading { font-family: var(--display); font-weight: 700; font-size: 30px; color: var(--text); margin-bottom: 6px; }
+    .auth-subhead { font-family: var(--bodyfont); font-size: 14.5px; color: var(--muted); line-height: 1.5; margin-bottom: 24px; }
+    .auth-tabs {
+      display: inline-flex; gap: 4px; width: fit-content; background: var(--bg2);
+      padding: 4px; border-radius: 999px; border: none; margin-bottom: 26px;
+    }
+    .auth-tab {
+      flex: none; border: none; border-bottom: none; margin-bottom: 0;
+      border-radius: 999px; padding: 7px 18px; font-size: 13.5px; font-weight: 600;
+      color: var(--muted);
+    }
+    .auth-tab.active { background: var(--white); color: var(--red); border: none; box-shadow: var(--shadow); }
+    .auth-input { border: 1px solid var(--border); border-radius: 5px; padding: 12px 14px; font-size: 15px; }
+    .auth-btn { background: var(--red); border-radius: 5px; padding: 13px; font-weight: 600; font-size: 15.5px; box-shadow: var(--shadow-lg); }
+    .auth-btn:hover { background: var(--red); filter: brightness(.95); }
+    .auth-scripture { font-family: var(--bodyfont); font-size: 13px; color: var(--faint); text-align: center; margin-top: 26px; font-style: italic; }
+
+    #view-pending { background: var(--dark); }
+    .pending-card { border-radius: 8px; }
+    #view-pending .pending-title, #view-pending .pending-email { font-family: var(--display); }
+
+    /* —— Masthead —— */
+    header { position: relative; background: var(--dark); border-bottom: none; }
+    header::before {
+      content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px;
+      background: linear-gradient(90deg, #9B1226, #E11E3C, #9B1226);
+    }
+    .header-inner { max-width: 1280px; padding: 14px 26px; flex-wrap: wrap; }
+    .cb-wordmark { display: flex; align-items: center; gap: 12px; flex: 1; min-width: 0; }
+    .cb-wordmark .wm-lines { font-family: 'Oswald', sans-serif; line-height: 1.02; }
+    .cb-wordmark .wm-top { font-weight: 700; font-size: 19px; letter-spacing: .02em; text-transform: uppercase; color: var(--word-top); }
+    .cb-wordmark .wm-bot { font-weight: 600; font-size: 19px; letter-spacing: .01em; text-transform: uppercase; color: var(--word-ink); }
+    .cb-wordmark .wm-bot .of { color: var(--word-mid); }
+    .btn-service-deck { background: var(--red); border-radius: 5px; font-weight: 600; box-shadow: var(--shadow); transition: all .15s; }
+    .btn-service-deck:hover { background: var(--red); filter: brightness(.94); transform: translateY(-1px); }
+    .header-signout { color: var(--header-ink); border: 1px solid var(--header-line); border-radius: 5px; }
+    .header-signout:hover { border-color: var(--header-ink); color: var(--header-ink); background: rgba(255,255,255,.05); }
+
+    /* —— Greeting + lookup row —— */
+    .lookup-bar {
+      background: var(--bg); border-bottom: 1px solid var(--border);
+      padding: 18px 26px; gap: 18px 28px; align-items: flex-start; flex-wrap: wrap;
+    }
+    .greeting-block { flex: 1; min-width: 240px; }
+    .greeting-eyebrow { font-family: var(--bodyfont); font-weight: 600; font-size: 11.5px; letter-spacing: .16em; text-transform: uppercase; color: var(--gold); margin-bottom: 6px; }
+    .greeting-h1 { font-family: var(--display); font-weight: 700; font-size: 28px; line-height: 1.1; color: var(--text); }
+    .greeting-sub { font-family: var(--bodyfont); font-style: italic; font-size: 15px; color: var(--muted); margin-top: 5px; }
+    .lookup-cluster { display: flex; flex-direction: column; gap: 6px; min-width: 260px; }
+    .lookup-bar .lookup-label { letter-spacing: .12em; }
+    .lookup-bar .lookup-input { flex: none; width: 100%; background: var(--white); border: 1px solid var(--border); border-radius: 5px; }
+
+    /* —— Stat bar → crimson gradient pill —— */
+    .tracker-panel .stats-bar {
+      background: var(--stat-grad); border-radius: 8px; box-shadow: var(--shadow-lg);
+      margin: 16px 0.9rem; overflow: hidden; justify-content: stretch;
+    }
+    .stat { max-width: none; padding: 18px 14px; border-right: 1px solid rgba(255,255,255,.16); }
+    .stat-number { font-family: var(--display); font-weight: 700; font-size: 2rem; }
+    .stat-label { font-size: 0.66rem; letter-spacing: .13em; color: rgba(255,247,236,.85); }
+
+    /* —— Panels / headers —— */
+    .panel-header { padding: 16px 1.1rem 11px; border-bottom: 1px solid var(--border); }
+    .panel-header h2 { font-family: var(--display); font-size: 1.18rem; font-weight: 700; color: var(--text); }
+    .panel-header p { color: var(--muted); }
+    .tracker-panel { border-right: 1px solid var(--border); }
+
+    .recent-title, .chart-title, .topic-label, .period-label, .results-meta, .dl-meta { color: var(--muted); }
+
+    /* —— Recent service cards —— */
+    .svc-card { border: 1px solid var(--border); border-left: 3px solid var(--red); border-radius: 8px; box-shadow: var(--shadow); }
+    .svc-date { font-family: var(--display); font-weight: 700; font-size: 1.12rem; color: var(--text); }
+    .svc-card-songs li { font-family: var(--display); font-weight: 600; color: var(--text); }
+    .svc-card-songs li::before { content: '♪'; color: var(--gold); }
+
+    /* —— Chips (period + topic) → pills —— */
+    .period-btn, .topic-chip { border: 1px solid var(--border); background: var(--white); color: var(--muted); border-radius: 999px; font-family: var(--bodyfont); }
+    .period-btn.active, .topic-chip.active { background: var(--red); color: var(--on-brand); border-color: transparent; }
+    .period-btn:hover:not(.active), .topic-chip:hover:not(.active) { border-color: var(--red); color: var(--red); }
+
+    /* —— Hymn cards —— */
+    .hymn-card { border: 1px solid var(--border); border-radius: 8px; }
+    .hymn-card:hover { box-shadow: var(--shadow-lg); border-color: var(--gold-soft); }
+    .hymn-name { font-family: var(--display); font-weight: 600; font-size: 1rem; }
+    .hymn-name mark, .dl-card-name mark { background: var(--gold-soft); }
+    .badge-count { background: var(--dark2); color: var(--on-brand); }
+    .badge-count.hot { background: var(--red); color: var(--on-brand); }
+    .leader-chip { background: var(--red-pale); color: var(--red-dark); }
+    .leader-chip.unknown { background: var(--line-soft); color: var(--muted); }
+    .svc-chip { background: var(--gold-soft); color: #6B5418; }
+
+    /* —— Downloader cards —— */
+    .dl-card { border: 1px solid var(--border); border-radius: 8px; }
+    .dl-card:hover { box-shadow: var(--shadow-lg); border-color: var(--gold-soft); }
+    .dl-card.selected { border-color: var(--red); background: var(--red-pale); box-shadow: 0 0 0 2px var(--red); }
+    .dl-card-name { font-family: var(--display); font-weight: 600; }
+    .dl-card-check { border-radius: 5px; }
+    .dl-card:hover .dl-card-check { border-color: var(--red); }
+    .dl-card.selected .dl-card-check { background: var(--red); border-color: var(--red); }
+    .dl-btn { border-radius: 5px; }
+    .dl-btn-primary { background: var(--red); border-color: var(--red); }
+    .dl-btn-primary:hover { background: var(--red-dark); border-color: var(--red-dark); }
+    .dl-btn-outline { color: var(--red); border-color: var(--red); }
+    .dl-btn-outline:hover { background: var(--red-pale); }
+
+    /* —— Match Sermon → gold ghost —— */
+    .sermon-toggle { border: 1px solid var(--gold-soft); color: var(--gold); background: transparent; border-radius: 5px; }
+    .sermon-toggle.active { background: var(--red); color: var(--on-brand); border-color: var(--red); }
+    .sermon-toggle:hover:not(.active) { border-color: var(--gold); color: var(--gold); }
+    .sermon-section { background: var(--card-alt); }
+    .sermon-label { font-family: var(--display); }
+    .sermon-meta strong { color: var(--red); }
+
+    /* —— Inputs —— */
+    input[type="text"], select { border: 1px solid var(--border); border-radius: 5px; }
+    .sermon-textarea { border: 1px solid var(--border); border-radius: 5px; }
+
+    /* —— Bulk bar —— */
+    .bulk-bar { background: var(--dark); border-top: 3px solid var(--red); }
+    .bulk-bar-info strong { color: var(--gold); }
+    .bulk-dl-btn { background: var(--red); border-radius: 5px; }
+    .bulk-dl-btn:hover { background: var(--red-dark); }
+
+    /* —— Scripture footer —— */
+    footer { border-top: 1px solid var(--border); color: var(--faint); }
+    .scripture-footer {
+      display: flex; align-items: center; justify-content: center; gap: 10px;
+      padding: 18px 1.1rem 28px; color: var(--faint); font-style: italic;
+      font-family: var(--bodyfont); font-size: 0.86rem; text-align: center;
+    }
+    .scripture-footer .ref { font-style: normal; color: var(--gold); font-weight: 600; }
+
+    /* —— Responsive —— */
+    @media (max-width: 880px) {
+      #view-auth { grid-template-columns: 1fr; }
+      .welcome-left { padding: 36px 28px; gap: 24px; }
+      .welcome-h1 { font-size: 34px; }
+      .welcome-stats { gap: 20px; }
+      .dashboard { flex-direction: column; }
+      .tracker-panel { flex: none; border-right: none; border-bottom: 1px solid var(--border); }
+      .dl-panel { flex: none; }
+      #view-app { height: auto; overflow: visible; }
+      .panel-scroll { overflow: visible; }
+    }
+
+    /* ================================================================
+       MODERN WORSHIP WORKSPACE
+       A focused app shell: one tool at a time, clear rhythm, fewer layers.
+       ================================================================ */
+    :root {
+      --app-ink: #17151B;
+      --app-muted: #686570;
+      --app-faint: #85818C;
+      --app-canvas: #F2F3F6;
+      --app-surface: #FFFFFF;
+      --app-surface-2: #F8F8FA;
+      --app-line: #DFE0E6;
+      --app-red: #C41839;
+      --app-red-dark: #99112C;
+      --app-red-soft: #F9E7EC;
+      --app-night: #1A171D;
+      --app-gold: #806126;
+      --app-radius: 14px;
+      --app-shadow: 0 12px 40px rgba(23, 21, 27, .08);
+      --display: 'Bricolage Grotesque', 'Arial Narrow', sans-serif;
+      --bodyfont: 'Instrument Sans', system-ui, sans-serif;
+    }
+
+    body { background: var(--app-canvas); color: var(--app-ink); }
+    button, input, select, textarea { font: inherit; }
+    button, a, input, select, textarea { -webkit-tap-highlight-color: transparent; }
+    :where(button, a, input, select, textarea):focus-visible {
+      outline: 3px solid rgba(196, 24, 57, .28);
+      outline-offset: 2px;
+    }
+
+    /* Modern authentication */
+    #view-auth { background: var(--app-canvas); }
+    .welcome-left {
+      background: var(--app-night); padding: clamp(36px, 5vw, 72px);
+    }
+    .welcome-left .staff-lines {
+      opacity: .055;
+      background: repeating-linear-gradient(0deg, transparent 0 27px, #fff 27px 28px);
+    }
+    .welcome-brand .wm-lines { font-family: 'Oswald', sans-serif; }
+    .welcome-mid { max-width: 620px; }
+    .welcome-eyebrow {
+      font: 600 12px/1 var(--bodyfont); color: #F5B7C3; opacity: 1;
+      letter-spacing: .16em; margin-bottom: 20px;
+    }
+    .welcome-h1 {
+      font: 600 clamp(42px, 5.2vw, 72px)/.98 var(--display);
+      letter-spacing: -.045em; max-width: 650px; margin-bottom: 24px;
+    }
+    .welcome-p { font: 400 17px/1.65 var(--bodyfont); color: #D8D3DA; opacity: 1; }
+    .welcome-stats { gap: clamp(22px, 4vw, 48px); }
+    .welcome-stats .ws-num { font: 600 28px/1 var(--display); letter-spacing: -.03em; }
+    .welcome-stats .ws-lbl { font: 600 11px/1.2 var(--bodyfont); color: #B9B3BD; }
+    .welcome-right { background: var(--app-canvas); padding: clamp(28px, 5vw, 72px); }
+    .welcome-right .auth-card {
+      max-width: 430px; padding: 34px; border-radius: 20px;
+      background: var(--app-surface); border: 1px solid var(--app-line);
+      box-shadow: var(--app-shadow);
+    }
+    .auth-heading { font: 600 34px/1.05 var(--display); letter-spacing: -.035em; }
+    .auth-subhead { font: 400 15px/1.5 var(--bodyfont); color: var(--app-muted); }
+    .auth-tabs { background: #ECECF0; width: 100%; }
+    .auth-tab {
+      appearance: none; flex: 1; background: transparent; cursor: pointer;
+      font: 600 13px/1 var(--bodyfont);
+    }
+    .auth-tab.active { background: var(--app-surface); color: var(--app-red); }
+    .field-label {
+      display: block; margin: 4px 0 -2px; color: var(--app-ink);
+      font: 600 12px/1.2 var(--bodyfont);
+    }
+    .auth-input {
+      border: 1px solid var(--app-line); border-radius: 10px; padding: 12px 14px;
+      background: var(--app-surface-2); font-family: var(--bodyfont);
+    }
+    .auth-btn { border-radius: 10px; background: var(--app-red); box-shadow: none; }
+    .auth-scripture { color: var(--app-muted); }
+
+    /* App shell */
+    #view-app {
+      height: 100dvh; overflow: hidden; background: var(--app-canvas);
+      color: var(--app-ink); font-family: var(--bodyfont);
+    }
+    #view-app.home-flow {
+      height: auto; min-height: 100dvh; overflow: visible;
+    }
+    #view-app.home-flow header { position: sticky; top: 0; }
+    #view-app.home-flow .dashboard {
+      flex: none; min-height: 0; overflow: visible;
+    }
+    #view-app.home-flow #page-overview.workspace-active {
+      height: auto; min-height: 0; overflow: visible;
+    }
+    #view-app.home-flow #page-overview .panel-scroll {
+      flex: none; min-height: 0; overflow: visible;
+    }
+    #view-app header {
+      flex: 0 0 auto; z-index: 20; background: var(--app-night);
+      border: 0; box-shadow: 0 1px 0 rgba(255,255,255,.08);
+    }
+    #view-app header::before { display: none; }
+    #view-app .header-inner {
+      display: grid; grid-template-columns: minmax(220px, 1fr) auto minmax(220px, 1fr);
+      align-items: center; gap: 24px; max-width: 1320px; min-height: 72px;
+      margin: 0 auto; padding: 10px 24px;
+    }
+    .cb-wordmark { gap: 10px; }
+    .cb-wordmark svg { width: 34px; height: 34px; }
+    .cb-wordmark .wm-top { color: #FFFFFF; font-size: 16px; }
+    .cb-wordmark .wm-bot { color: #AAA4AE; font-size: 13px; margin-top: 2px; }
+    .cb-wordmark .wm-bot .of { color: inherit; }
+    .workspace-nav {
+      display: flex; align-items: center; justify-content: center; gap: 4px;
+      padding: 4px; background: rgba(255,255,255,.07); border: 1px solid rgba(255,255,255,.08);
+      border-radius: 12px;
+    }
+    .workspace-tab {
+      position: relative; min-width: 126px; padding: 10px 16px; border: 0;
+      border-radius: 8px; color: #AAA5AF; background: transparent;
+      font: 600 13px/1 var(--bodyfont); cursor: pointer; transition: .18s ease;
+    }
+    .workspace-tab:hover { color: #FFFFFF; background: rgba(255,255,255,.06); }
+    .workspace-tab.active { color: #FFFFFF; background: rgba(255,255,255,.1); }
+    .workspace-tab.active::after {
+      content: ''; position: absolute; left: 18px; right: 18px; bottom: 4px; height: 2px;
+      background: var(--app-red); border-radius: 2px;
+    }
+    #view-app .header-actions { justify-self: end; gap: 8px; }
+    .btn-service-deck, .header-signout {
+      min-height: 38px; border-radius: 9px; font: 600 12px/1 var(--bodyfont);
+    }
+    .btn-service-deck { background: var(--app-red); padding: 0 15px; }
+    .header-signout { padding: 0 13px; border-color: rgba(255,255,255,.16); color: #CDC9D0; }
+
+    /* Compact utility hero */
+    #view-app .lookup-bar {
+      position: relative; isolation: isolate; overflow: hidden;
+      display: grid; grid-template-columns: minmax(0, 1fr) minmax(320px, 430px);
+      align-items: center; gap: 44px; width: 100%; max-width: none; min-height: 218px; margin: 0;
+      padding: 36px 38px; background: linear-gradient(118deg, #17151B 0%, #231820 58%, #311922 100%);
+      border: 0; border-bottom: 1px solid rgba(255,255,255,.08);
+    }
+    #view-app .lookup-bar::before {
+      content: ''; position: absolute; z-index: -2; inset: 0; opacity: .13;
+      background: repeating-linear-gradient(0deg, transparent 0 27px, rgba(255,255,255,.38) 27px 28px);
+      transform: skewY(-2deg) scale(1.04);
+    }
+    #view-app .lookup-bar::after {
+      content: ''; position: absolute; z-index: -1; width: 520px; height: 520px; right: -170px; top: -280px;
+      border-radius: 50%; background: radial-gradient(circle, rgba(196,24,57,.38), rgba(196,24,57,0) 68%);
+    }
+    .greeting-block { min-width: 0; }
+    .greeting-eyebrow {
+      display: inline-flex; align-items: center; gap: 8px; width: fit-content; margin-bottom: 15px;
+      padding: 8px 11px; border: 1px solid rgba(255,255,255,.13); border-radius: 999px;
+      color: #F7CED7; background: rgba(255,255,255,.07);
+      font: 700 10px/1 var(--bodyfont); letter-spacing: .13em; text-transform: uppercase;
+    }
+    .greeting-eyebrow::before {
+      content: ''; width: 7px; height: 7px; border-radius: 50%; background: #F33C61;
+      box-shadow: 0 0 0 4px rgba(243,60,97,.14);
+    }
+    .greeting-h1 {
+      max-width: 720px; color: #FFFFFF; font: 600 clamp(42px, 4.8vw, 68px)/.95 var(--display);
+      letter-spacing: -.055em; text-wrap: balance;
+    }
+    .greeting-sub { margin-top: 14px; color: #CFC9D1; font: 500 14px/1.45 var(--bodyfont); }
+    .lookup-cluster {
+      display: grid; grid-template-columns: auto 1fr; align-items: center; gap: 6px 12px;
+      min-width: 0; padding: 12px 14px; background: var(--app-surface);
+      border: 1px solid var(--app-line); border-radius: var(--app-radius);
+      box-shadow: 0 6px 22px rgba(23,21,27,.04);
+    }
+    .lookup-bar .lookup-label {
+      grid-row: 1; color: var(--app-ink); font: 700 11px/1 var(--bodyfont); letter-spacing: .1em;
+    }
+    .lookup-bar .lookup-input {
+      grid-column: 2; grid-row: 1 / span 2; width: 100%; min-width: 0;
+      padding: 10px 12px; border: 0; border-radius: 9px; background: var(--app-surface-2);
+      font: 500 14px/1 var(--bodyfont);
+    }
+    .lookup-result { grid-column: 1; grid-row: 2; color: var(--app-muted); font-size: 11px; white-space: nowrap; }
+    .lookup-result.found { grid-column: 1 / -1; grid-row: 3; margin-top: 2px; white-space: normal; }
+    #view-app .lookup-bar[hidden] { display: none; }
+    .home-deadline {
+      display: flex; flex-direction: column; align-items: flex-start; gap: 5px;
+      padding: 21px 22px; border: 1px solid rgba(255,255,255,.15); border-radius: 15px;
+      background: rgba(255,255,255,.08); box-shadow: 0 18px 44px rgba(0,0,0,.18);
+      backdrop-filter: blur(12px);
+    }
+    .home-deadline-label {
+      color: #FF9AAF; font: 700 10px/1 var(--bodyfont); letter-spacing: .12em;
+      text-transform: uppercase;
+    }
+    .home-deadline strong { color: #FFFFFF; font: 600 22px/1.2 var(--display); letter-spacing: -.025em; }
+    .home-deadline > span:last-child { color: #CFC9D1; font-size: 12px; }
+
+    /* One focused workspace at a time */
+    #view-app .dashboard {
+      display: block; flex: 1; min-height: 0; width: 100%; max-width: 1248px;
+      margin: 0 auto; padding: 0 24px 24px; overflow: hidden;
+    }
+    #page-overview, #page-history, #page-downloads { display: none; }
+    #page-overview.workspace-active, #page-history.workspace-active, #page-downloads.workspace-active {
+      display: flex; width: 100%; height: 100%; flex-direction: column;
+      overflow: hidden; border: 1px solid var(--app-line); border-radius: 18px;
+      background: var(--app-surface); box-shadow: 0 10px 32px rgba(23,21,27,.05);
+    }
+    #view-app .panel-header {
+      flex: 0 0 auto; display: flex; align-items: center; gap: 10px;
+      padding: 18px 22px; background: var(--app-surface); border-bottom: 1px solid var(--app-line);
+    }
+    #view-app .panel-header::before {
+      content: ''; width: 28px; height: 18px; flex: 0 0 auto; opacity: .9;
+      background: repeating-linear-gradient(0deg, transparent 0 3px, var(--app-red) 3px 4px);
+    }
+    #view-app .panel-header h2 {
+      color: var(--app-ink); font: 600 20px/1 var(--display); letter-spacing: -.025em;
+    }
+    #view-app .panel-header p { color: var(--app-muted); font: 500 12px/1 var(--bodyfont); }
+    #view-app .panel-header-updated { color: var(--app-muted); font-size: 11px; }
+    #view-app .panel-scroll { flex: 1; min-height: 0; overflow-y: auto; background: var(--app-surface-2); }
+
+    /* Home: actions before analytics */
+    .home-actions {
+      display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px;
+      padding: 22px 18px 0;
+    }
+    .home-action {
+      appearance: none; position: relative; overflow: hidden; display: flex; min-width: 0; min-height: 202px;
+      flex-direction: column; align-items: flex-start; gap: 10px; padding: 20px;
+      text-align: left; text-decoration: none; color: var(--app-ink); cursor: pointer;
+      background: var(--app-surface); border: 1px solid #D9DAE1; border-radius: 15px;
+      box-shadow: 0 10px 26px rgba(23,21,27,.045);
+      transition: border-color .18s ease, box-shadow .18s ease, background-color .18s ease;
+    }
+    .home-action:hover {
+      border-color: #C3C4CC; background: #FFFFFF;
+      box-shadow: 0 16px 34px rgba(23,21,27,.09);
+    }
+    .home-action:active { transform: none; }
+    .home-action-kicker {
+      color: var(--app-red); font: 700 10px/1 var(--bodyfont); letter-spacing: .11em;
+      text-transform: uppercase;
+    }
+    .home-action strong { max-width: 270px; font: 600 23px/1.08 var(--display); letter-spacing: -.035em; }
+    .home-action > span:nth-child(3) { max-width: 310px; color: var(--app-muted); font: 450 13px/1.5 var(--bodyfont); }
+    .home-action-link {
+      margin-top: auto; padding: 8px 10px; border-radius: 8px; color: var(--app-red-dark);
+      background: var(--app-red-soft); font: 700 11px/1 var(--bodyfont); text-transform: uppercase; letter-spacing: .05em;
+    }
+    .home-action-primary {
+      color: #FFFFFF; background: linear-gradient(145deg, #19161C, #2B1820); border-color: #2B1820;
+      box-shadow: 0 16px 36px rgba(23,21,27,.18);
+    }
+    .home-action-primary::after {
+      content: ''; position: absolute; width: 210px; height: 210px; right: -100px; top: -125px;
+      border-radius: 50%; background: radial-gradient(circle, rgba(196,24,57,.5), rgba(196,24,57,0) 68%);
+    }
+    .home-action-primary .home-action-kicker { color: #FF9BAE; }
+    .home-action-primary > span:nth-child(3) { color: #C8C3CB; }
+    .home-action-primary .home-action-link { color: #FFFFFF; background: rgba(255,255,255,.1); }
+    .home-action-primary:hover { border-color: var(--app-red); }
+    .home-section-label {
+      display: flex; align-items: flex-end; justify-content: space-between; gap: 18px;
+      padding: 24px 18px 0;
+    }
+    .home-section-label > div { display: flex; align-items: baseline; gap: 10px; }
+    .home-section-label strong { font: 600 17px/1 var(--display); }
+    .home-section-label span { color: var(--app-muted); font-size: 11px; }
+    .history-answer {
+      display: block; margin: 10px 18px 0; padding: 11px 13px; white-space: normal;
+      color: var(--app-muted); font: 500 12px/1.4 var(--bodyfont);
+      background: var(--app-surface); border: 1px dashed #D4D5DB; border-radius: 10px;
+    }
+    .history-answer.found { color: var(--app-ink); border-style: solid; border-color: #E5B9C2; background: var(--app-red-soft); }
+    .history-answer.empty { color: var(--app-red-dark); border-color: #E5B9C2; background: var(--app-red-soft); }
+
+    /* Tracker */
+    .tracker-panel .stats-bar {
+      display: grid; grid-template-columns: repeat(4, minmax(0,1fr));
+      margin: 18px 18px 0; border: 1px solid var(--app-line); border-radius: 14px;
+      background: var(--app-surface); box-shadow: none;
+    }
+    #view-app .stat { max-width: none; padding: 18px 20px; text-align: left; border-color: var(--app-line); }
+    #view-app .stat-number {
+      color: var(--app-ink); font: 600 26px/1 var(--display); letter-spacing: -.035em;
+    }
+    #view-app .stat-label {
+      color: var(--app-muted); font: 700 10px/1.2 var(--bodyfont); letter-spacing: .1em;
+      margin-top: 7px;
+    }
+    .tracker-panel .recent-services {
+      display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px;
+      margin: 18px 0 0; padding: 0 18px;
+    }
+    .recent-title { grid-column: 1 / -1; margin: 0 0 2px; color: var(--app-muted); font-size: 10px; }
+    #view-app .svc-card {
+      min-width: 0; margin: 0; padding: 15px 16px; border: 1px solid var(--app-line);
+      border-left: 3px solid var(--app-red); border-radius: 12px; box-shadow: none;
+    }
+    #view-app .svc-date { font: 600 16px/1.2 var(--display); letter-spacing: -.02em; }
+    #view-app .svc-card-songs li { font: 500 13px/1.35 var(--bodyfont); }
+    #view-app .svc-card-songs li::before { color: var(--app-red); }
+    .tracker-panel .period-bar,
+    .tracker-panel .chart-section,
+    .tracker-panel .controls,
+    .tracker-panel .topic-bar,
+    .tracker-panel .results-meta,
+    .tracker-panel .hymn-list { padding-left: 18px; padding-right: 18px; }
+    #view-app .period-bar { margin-top: 20px; gap: 6px; }
+    #view-app .period-label, #view-app .topic-label { color: var(--app-muted); font: 700 10px/1 var(--bodyfont); }
+    #view-app .period-btn, #view-app .topic-chip {
+      border: 1px solid var(--app-line); border-radius: 9px; background: var(--app-surface);
+      color: var(--app-muted); font: 600 12px/1 var(--bodyfont); transition: .15s ease;
+    }
+    #view-app .period-btn.active, #view-app .topic-chip.active {
+      color: #fff; background: var(--app-ink); border-color: var(--app-ink);
+    }
+    #view-app .chart-card {
+      border: 1px solid var(--app-line); border-radius: 14px; box-shadow: none;
+      background: var(--app-surface);
+    }
+    #view-app .chart-title { color: var(--app-muted); font: 700 10px/1 var(--bodyfont); }
+    #view-app .controls, #view-app .dl-controls {
+      display: grid; grid-template-columns: minmax(220px,1fr) minmax(220px,1fr) auto;
+      gap: 10px; margin-top: 18px;
+    }
+    #view-app .history-controls {
+      grid-template-columns: minmax(220px,1fr) minmax(220px,1fr) 150px 150px;
+    }
+    #view-app .search-wrap { min-width: 0; }
+    #view-app .search-icon { font-size: 0; left: 14px; width: 15px; height: 15px; }
+    #view-app .search-icon::before {
+      content: ''; position: absolute; inset: 0; border: 1.7px solid var(--app-muted); border-radius: 50%;
+    }
+    #view-app .search-icon::after {
+      content: ''; position: absolute; width: 6px; height: 1.7px; right: -4px; bottom: -2px;
+      background: var(--app-muted); transform: rotate(45deg); border-radius: 2px;
+    }
+    #view-app input[type="text"], #view-app select, #view-app .sermon-textarea {
+      border: 1px solid var(--app-line); border-radius: 10px; background: var(--app-surface);
+      color: var(--app-ink); font: 500 13px/1.2 var(--bodyfont);
+    }
+    #view-app input[type="text"] { min-height: 42px; }
+    #view-app select { min-height: 42px; }
+    #view-app .results-meta, #view-app .dl-meta { color: var(--app-muted); font-size: 12px; }
+    #view-app .hymn-card {
+      border: 1px solid var(--app-line); border-radius: 11px; box-shadow: none;
+      background: var(--app-surface);
+    }
+    #view-app .hymn-card:hover { border-color: #C6C7CE; box-shadow: 0 8px 24px rgba(23,21,27,.06); }
+    #view-app .hymn-header {
+      appearance: none; width: 100%; border: 0; background: transparent; color: var(--app-ink);
+      text-align: left; font-family: var(--bodyfont);
+    }
+    #view-app .hymn-name { font: 600 14px/1.25 var(--bodyfont); }
+    #view-app .badge-count { background: #ECECF0; color: var(--app-ink); }
+    #view-app .badge-count.hot { background: var(--app-red-soft); color: var(--app-red-dark); }
+    #view-app .leader-chip { background: var(--app-red-soft); color: var(--app-red-dark); }
+    #view-app .svc-chip { background: #EFEDF8; color: #514773; }
+
+    /* Slide library */
+    #view-app .dl-panel .dl-controls,
+    #view-app .dl-panel .dl-meta,
+    #view-app .dl-panel .dl-grid,
+    #view-app .dl-panel .topic-bar,
+    #view-app .dl-panel .sermon-section { padding-left: 18px; padding-right: 18px; }
+    #view-app .dl-controls {
+      grid-template-columns: minmax(220px, 1.2fr) minmax(220px, 1fr) 150px auto auto;
+    }
+    #view-app .sermon-toggle {
+      min-height: 42px; border: 1px solid var(--app-line); border-radius: 10px;
+      color: var(--app-ink); background: var(--app-surface); font: 600 12px/1 var(--bodyfont);
+    }
+    #view-app .sermon-toggle.active { color: #fff; background: var(--app-ink); border-color: var(--app-ink); }
+    #view-app .sermon-section { background: #F0EFF5; border-color: var(--app-line); }
+    #view-app .topic-bar { gap: 6px; }
+    #view-app .dl-grid {
+      grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; padding-bottom: 24px;
+    }
+    #view-app .dl-card {
+      gap: 10px; min-width: 0; padding: 16px; border: 1px solid var(--app-line);
+      border-radius: 13px; background: var(--app-surface); box-shadow: none;
+    }
+    #view-app .dl-card:hover { border-color: #C6C7CE; box-shadow: 0 10px 28px rgba(23,21,27,.07); }
+    #view-app .dl-card.selected { border-color: var(--app-red); background: var(--app-red-soft); box-shadow: 0 0 0 2px var(--app-red); }
+    #view-app .dl-card-icon {
+      display: grid; place-items: center; width: 38px; height: 38px; border-radius: 10px;
+      background: var(--app-red-soft); color: var(--app-red); font-size: 0;
+    }
+    #view-app .dl-card-icon::before { content: '♪'; font: 700 23px/1 var(--display); }
+    #view-app .dl-card-name { font: 600 15px/1.25 var(--bodyfont); }
+    #view-app .dl-card-meta { color: var(--app-muted); font: 500 11px/1.45 var(--bodyfont); }
+    #view-app .dl-card-check {
+      appearance: none; display: grid; place-items: center; width: 36px; height: 36px;
+      border: 0; border-radius: 8px; background: transparent; cursor: pointer;
+    }
+    #view-app .dl-card-check::before {
+      content: ''; position: absolute; width: 22px; height: 22px; border: 1.5px solid #B8B9C0;
+      border-radius: 7px; background: var(--app-surface);
+    }
+    #view-app .dl-card.selected .dl-card-check { background: transparent; color: #fff; }
+    #view-app .dl-card.selected .dl-card-check::before { background: var(--app-red); border-color: var(--app-red); }
+    #view-app .dl-btn { min-height: 42px; border-radius: 8px; font: 600 12px/1.2 var(--bodyfont); }
+    #view-app .dl-btn-primary { background: var(--app-red); border-color: var(--app-red); }
+    #view-app .dl-btn-outline { color: var(--app-red-dark); border-color: #E7AAB7; }
+    #view-app .bulk-bar { background: var(--app-night); border-top: 0; }
+    #view-app .dl-load-more {
+      grid-column: 1 / -1; min-height: 46px; border: 1px solid var(--app-line);
+      border-radius: 10px; background: var(--app-surface); color: var(--app-ink);
+      font: 600 13px/1 var(--bodyfont); cursor: pointer;
+    }
+    #view-app .dl-load-more:hover { border-color: var(--app-red); color: var(--app-red-dark); }
+    .download-notice {
+      position: fixed; right: 18px; bottom: 18px; z-index: 1001; max-width: min(390px, calc(100vw - 28px));
+      padding: 12px 15px; border-radius: 10px; background: var(--app-night); color: #fff;
+      box-shadow: 0 12px 34px rgba(23,21,27,.24); font: 600 13px/1.4 var(--bodyfont);
+      opacity: 0; transform: translateY(8px); pointer-events: none; transition: .18s ease;
+    }
+    .download-notice.visible { opacity: 1; transform: translateY(0); }
+    .download-notice.error { background: #8C1830; }
+    #view-app.bulk-active #page-downloads .panel-scroll { padding-bottom: 92px; }
+
+    @media (max-width: 1000px) {
+      #view-app .header-inner { grid-template-columns: 1fr auto; }
+      .workspace-nav { grid-column: 1 / -1; grid-row: 2; width: 100%; }
+      .workspace-tab { flex: 1; }
+      #view-app .dl-controls { grid-template-columns: 1fr 1fr 150px; }
+      #view-app .history-controls { grid-template-columns: 1fr 1fr; }
+      #view-app .dl-controls .period-btn, #view-app .dl-controls .sermon-toggle { justify-self: start; }
+      #view-app .dl-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      #view-app .lookup-bar { padding-top: 22px; }
+      .home-actions { grid-template-columns: 1fr; }
+      .home-action { min-height: 0; }
+    }
+
+    @media (max-width: 720px) {
+      #view-app .header-inner { gap: 10px; min-height: 0; padding: 10px 14px; }
+      .cb-wordmark .wm-top { font-size: 14px; }
+      .cb-wordmark .wm-bot { font-size: 11px; white-space: nowrap; }
+      .cb-wordmark svg { width: 30px; height: 30px; }
+      #view-app .header-actions .btn-service-deck { display: none; }
+      .header-signout { min-height: 34px; }
+      .workspace-nav { gap: 2px; padding: 3px; border-radius: 10px; }
+      .workspace-tab { min-width: 0; min-height: 48px; padding: 11px 10px; }
+      #view-app .lookup-bar {
+        grid-template-columns: 1fr; gap: 20px; min-height: 0; padding: 26px 18px 24px;
+      }
+      #view-app .lookup-bar::before { opacity: .1; }
+      #view-app .lookup-bar::after { width: 360px; height: 360px; right: -180px; top: -190px; }
+      .greeting-eyebrow { margin-bottom: 13px; }
+      .greeting-h1 { font-size: 40px; line-height: .98; }
+      .greeting-sub { margin-top: 12px; font-size: 13px; }
+      .lookup-cluster { grid-template-columns: 1fr; padding: 10px 12px; }
+      .lookup-bar .lookup-label, .lookup-bar .lookup-input, .lookup-result,
+      .lookup-result.found { grid-column: 1; grid-row: auto; }
+      .lookup-result { white-space: normal; }
+      .home-deadline { padding: 17px 18px; background: rgba(255,255,255,.085); }
+      .home-deadline strong { font-size: 20px; }
+      #view-app .dashboard { padding: 0 10px 10px; }
+      #page-overview.workspace-active, #page-history.workspace-active, #page-downloads.workspace-active { border-radius: 14px; }
+      #view-app .panel-header { align-items: flex-start; flex-wrap: wrap; padding: 15px 14px; }
+      #view-app .panel-header::before { width: 22px; }
+      #view-app .panel-header h2 { font-size: 18px; }
+      #view-app .panel-header h2 { flex: 0 0 auto; }
+      #view-app .panel-header p { flex: 0 0 calc(100% - 32px); min-width: 0; margin-left: 32px; }
+      #view-app .panel-header-updated { width: 100%; margin-left: 32px; }
+      .tracker-panel .stats-bar { grid-template-columns: repeat(2, minmax(0, 1fr)); margin: 12px 12px 0; }
+      #view-app .stat { padding: 15px; border-bottom: 1px solid var(--app-line); }
+      #view-app .stat:nth-child(2) { border-right: 0; }
+      #view-app .stat:nth-child(n+3) { border-bottom: 0; }
+      .tracker-panel .recent-services { grid-template-columns: 1fr; padding: 0 12px; margin-top: 16px; }
+      .tracker-panel .period-bar,
+      .tracker-panel .chart-section,
+      .tracker-panel .controls,
+      .tracker-panel .topic-bar,
+      .tracker-panel .results-meta,
+      .tracker-panel .hymn-list,
+      #view-app .dl-panel .dl-controls,
+      #view-app .dl-panel .dl-meta,
+      #view-app .dl-panel .dl-grid,
+      #view-app .dl-panel .topic-bar,
+      #view-app .dl-panel .sermon-section { padding-left: 12px; padding-right: 12px; }
+      #view-app .period-bar, #view-app .topic-bar {
+        overflow-x: auto; flex-wrap: nowrap; padding-bottom: 4px; scrollbar-width: none;
+      }
+      #view-app .period-bar::-webkit-scrollbar, #view-app .topic-bar::-webkit-scrollbar { display: none; }
+      #view-app .period-btn, #view-app .topic-chip { flex: 0 0 auto; min-height: 44px; }
+      #view-app .controls, #view-app .dl-controls { grid-template-columns: 1fr; gap: 8px; }
+      #view-app .history-controls { grid-template-columns: 1fr; }
+      #view-app .controls select, #view-app .dl-controls select { width: 100%; }
+      #view-app .history-controls input,
+      #view-app .history-controls select { min-height: 46px; }
+      #view-app .dl-controls .period-btn, #view-app .dl-controls .sermon-toggle { justify-self: stretch; }
+      #view-app .dl-grid { grid-template-columns: 1fr; }
+      #view-app .dl-controls input, #view-app .dl-controls select,
+      #view-app .dl-controls button, #view-app .dl-btn { min-height: 46px; }
+      #view-app .dl-card-check { width: 44px; height: 44px; }
+      #view-app .bulk-bar { padding: 10px 12px calc(10px + env(safe-area-inset-bottom)); }
+      #view-app .bulk-bar-actions { gap: 7px; }
+      #view-app .bulk-clear-btn, #view-app .bulk-dl-btn { min-height: 44px; }
+      .download-notice { left: 14px; right: 14px; bottom: calc(14px + env(safe-area-inset-bottom)); max-width: none; }
+      #view-app.bulk-active .download-notice { bottom: calc(82px + env(safe-area-inset-bottom)); }
+      #view-app .hymn-header { gap: 8px; padding: 14px; }
+      #view-app .last-sung { display: none; }
+      .home-actions { padding: 12px 12px 0; }
+      .home-action { padding: 19px; border-radius: 14px; }
+      .home-action strong { font-size: 22px; }
+      .home-section-label { align-items: flex-start; padding: 20px 12px 0; }
+      .home-section-label > div { align-items: flex-start; flex-direction: column; gap: 4px; }
+      .history-answer { margin-left: 12px; margin-right: 12px; }
+      .welcome-left { padding: 34px 24px; }
+      .welcome-h1 { font-size: 42px; }
+      .welcome-right { padding: 24px 16px; }
+      .welcome-right .auth-card { padding: 26px 22px; }
+    }
+
+    /* ================================================================
+       CONTEMPORARY HYMNAL — contestant B
+       Cool manuscript surfaces, score-like rhythm and crisp app utility.
+       ================================================================ */
+    :root {
+      --hymnal-ink: #151B2B;
+      --hymnal-navy: #202A43;
+      --hymnal-slate: #59657A;
+      --hymnal-canvas: #EEF1F5;
+      --hymnal-paper: #FFFFFF;
+      --hymnal-paper-2: #F7F8FA;
+      --hymnal-line: #D7DCE5;
+      --hymnal-line-dark: #BBC3D0;
+      --hymnal-red: #C92843;
+      --hymnal-red-dark: #9D1830;
+      --hymnal-red-soft: #FBE8EC;
+      --hymnal-brass: #B38A45;
+      --hymnal-display: 'Petrona', Georgia, serif;
+      --hymnal-body: 'Manrope', system-ui, sans-serif;
+      --hymnal-utility: 'IBM Plex Mono', ui-monospace, monospace;
+    }
+
+    body {
+      color: var(--hymnal-ink);
+      background:
+        linear-gradient(rgba(21,27,43,.025) 1px, transparent 1px),
+        var(--hymnal-canvas);
+      background-size: 100% 28px;
+      font-family: var(--hymnal-body);
+    }
+    h1, h2, h3 { font-family: var(--hymnal-display); }
+    :where(button, a, input, select, textarea):focus-visible {
+      outline: 3px solid rgba(201,40,67,.3);
+      outline-offset: 3px;
+    }
+
+    /* Authentication reads like the opening leaf of the same product. */
+    #view-auth { background: var(--hymnal-canvas); }
+    #view-auth .welcome-left {
+      position: relative;
+      background: var(--hymnal-navy);
+      border-right: 8px solid var(--hymnal-red);
+    }
+    #view-auth .welcome-left::after {
+      content: 'CASTLEBERRY  /  WORSHIP PREPARATION';
+      position: absolute; right: 24px; bottom: 26px;
+      color: rgba(255,255,255,.38);
+      font: 600 10px/1 var(--hymnal-utility);
+      letter-spacing: .12em; writing-mode: vertical-rl;
+    }
+    #view-auth .welcome-left .staff-lines {
+      opacity: .09;
+      background: repeating-linear-gradient(0deg, transparent 0 22px, #fff 22px 23px);
+      mask-image: linear-gradient(90deg, transparent, #000 18%, #000 74%, transparent);
+    }
+    #view-auth .welcome-brand .wm-lines { font-family: 'Oswald', sans-serif; }
+    #view-auth .welcome-eyebrow {
+      color: #F6AABA; font: 600 10px/1 var(--hymnal-utility); letter-spacing: .16em;
+    }
+    #view-auth .welcome-h1 {
+      max-width: 680px; color: white;
+      font: 500 clamp(46px, 5.7vw, 78px)/.98 var(--hymnal-display);
+      letter-spacing: -.045em;
+    }
+    #view-auth .welcome-h1::first-line { font-style: italic; }
+    #view-auth .welcome-p { color: #D9DEEA; font: 500 16px/1.65 var(--hymnal-body); }
+    #view-auth .welcome-stats { border-top-color: rgba(255,255,255,.16); }
+    #view-auth .welcome-stats .ws-num { font-family: var(--hymnal-display); font-weight: 500; }
+    #view-auth .welcome-stats .ws-lbl { font-family: var(--hymnal-utility); letter-spacing: .08em; }
+    #view-auth .welcome-right { background: var(--hymnal-canvas); }
+    #view-auth .welcome-right .auth-card {
+      border: 1px solid var(--hymnal-line); border-radius: 6px;
+      background: var(--hymnal-paper); box-shadow: 0 24px 60px rgba(32,42,67,.12);
+    }
+    #view-auth .auth-card::before {
+      content: 'MEMBERS’ WORKSPACE'; display: block; margin-bottom: 26px;
+      color: var(--hymnal-red); font: 600 10px/1 var(--hymnal-utility); letter-spacing: .13em;
+    }
+    #view-auth .auth-heading { font: 500 38px/1 var(--hymnal-display); letter-spacing: -.04em; }
+    #view-auth .auth-subhead { font-family: var(--hymnal-body); }
+    #view-auth .auth-tabs { padding: 3px; border-radius: 4px; background: #E9EDF3; }
+    #view-auth .auth-tab { border-radius: 2px; font-family: var(--hymnal-body); }
+    #view-auth .auth-tab { min-height: 44px; }
+    #view-auth .auth-input { border-radius: 3px; background: var(--hymnal-paper-2); }
+    #view-auth .auth-btn { min-height: 48px; border-radius: 3px; background: var(--hymnal-red); }
+
+    /* Navigation: quiet shell, unmistakable wordmark, no floating-pill chrome. */
+    #view-app { color: var(--hymnal-ink); background: var(--hymnal-canvas); font-family: var(--hymnal-body); }
+    #view-app header { background: var(--hymnal-paper); box-shadow: 0 1px 0 var(--hymnal-line); }
+    #view-app .header-inner { min-height: 76px; max-width: 1380px; }
+    .cb-wordmark svg { width: 36px; height: 36px; }
+    .cb-wordmark .wm-top { color: var(--hymnal-ink); font-size: 17px; }
+    .cb-wordmark .wm-bot { color: var(--hymnal-slate); }
+    .workspace-nav {
+      gap: 0; padding: 0; border: 1px solid var(--hymnal-line); border-radius: 4px;
+      background: var(--hymnal-paper-2);
+    }
+    .workspace-tab {
+      min-width: 118px; min-height: 42px; border-radius: 0;
+      color: var(--hymnal-slate); font: 700 12px/1 var(--hymnal-body); letter-spacing: .01em;
+    }
+    .workspace-tab + .workspace-tab { border-left: 1px solid var(--hymnal-line); }
+    .workspace-tab:hover { color: var(--hymnal-ink); background: white; }
+    .workspace-tab.active { color: var(--hymnal-ink); background: white; }
+    .workspace-tab.active::after {
+      left: 12px; right: 12px; bottom: -1px; height: 3px;
+      border-radius: 0; background: var(--hymnal-red);
+    }
+    .header-signout {
+      color: var(--hymnal-slate); border-color: var(--hymnal-line-dark); border-radius: 3px;
+      font-family: var(--hymnal-body);
+    }
+    .header-signout:hover { color: var(--hymnal-red-dark); border-color: var(--hymnal-red); }
+
+    /* Hero thesis: a working score, not a marketing banner. */
+    #view-app .lookup-bar {
+      min-height: 248px; grid-template-columns: minmax(0, 1.45fr) minmax(340px, .55fr);
+      gap: clamp(40px, 7vw, 110px); padding: 44px max(34px, calc((100vw - 1320px) / 2));
+      background: var(--hymnal-navy); border: 0;
+    }
+    #view-app .lookup-bar::before {
+      inset: 42px 0 auto; height: 116px; opacity: .12; transform: none;
+      background: repeating-linear-gradient(0deg, transparent 0 22px, white 22px 23px);
+      mask-image: linear-gradient(90deg, transparent 0, #000 12%, #000 85%, transparent 100%);
+    }
+    #view-app .lookup-bar::after {
+      width: 1px; height: 154px; right: 34%; top: 47px; border-radius: 0;
+      background: rgba(255,255,255,.2); box-shadow: 8px 0 0 rgba(255,255,255,.06);
+    }
+    .greeting-eyebrow {
+      margin-bottom: 18px; padding: 0; border: 0; border-radius: 0; background: transparent;
+      color: #F8B5C2; font: 600 10px/1 var(--hymnal-utility); letter-spacing: .16em;
+    }
+    .greeting-eyebrow::before {
+      width: 24px; height: 2px; border-radius: 0; background: var(--hymnal-red); box-shadow: none;
+    }
+    .greeting-h1 {
+      max-width: 760px; color: white;
+      font: 500 clamp(48px, 5.6vw, 78px)/.94 var(--hymnal-display);
+      letter-spacing: -.05em;
+    }
+    .greeting-h1::first-line { font-style: italic; }
+    .greeting-sub { max-width: 560px; color: #CCD3E0; font: 500 13px/1.6 var(--hymnal-body); }
+    .home-deadline {
+      position: relative; isolation: isolate; overflow: hidden; min-height: 154px;
+      justify-content: flex-end; padding: 24px 26px; border: 1px solid rgba(255,255,255,.24);
+      border-radius: 4px; background: rgba(255,255,255,.065); box-shadow: none; backdrop-filter: none;
+    }
+    .home-deadline::before {
+      content: ''; position: absolute; z-index: -1; inset: 18px 0 auto; height: 69px;
+      background: repeating-linear-gradient(0deg, transparent 0 13px, rgba(255,255,255,.28) 13px 14px);
+    }
+    .home-deadline::after {
+      content: ''; position: absolute; z-index: -1; top: 18px; bottom: 58px; left: 62%; width: 3px;
+      background: var(--hymnal-red); box-shadow: 0 0 0 5px rgba(201,40,67,.14);
+    }
+    .home-deadline-label { color: #F8B5C2; font: 600 9px/1 var(--hymnal-utility); }
+    .home-deadline strong { color: white; font: 500 24px/1.1 var(--hymnal-display); letter-spacing: -.03em; }
+    .home-deadline > span:last-child { color: #CCD3E0; font-family: var(--hymnal-body); }
+
+    /* App canvas and section framing. */
+    #view-app .dashboard { max-width: 1320px; padding: 22px 24px 30px; }
+    #page-overview.workspace-active,
+    #page-history.workspace-active,
+    #page-downloads.workspace-active {
+      border-color: var(--hymnal-line); border-radius: 5px; background: var(--hymnal-paper);
+      box-shadow: 0 16px 40px rgba(32,42,67,.07);
+    }
+    #view-app .panel-header {
+      min-height: 64px; padding: 17px 22px; border-color: var(--hymnal-line); background: white;
+    }
+    #view-app .panel-header::before {
+      width: 32px; height: 18px; opacity: 1;
+      background:
+        linear-gradient(90deg, var(--hymnal-red) 0 3px, transparent 3px 100%),
+        repeating-linear-gradient(0deg, transparent 0 3px, var(--hymnal-line-dark) 3px 4px);
+    }
+    #view-app .panel-header h2 { font: 500 22px/1 var(--hymnal-display); letter-spacing: -.035em; }
+    #view-app .panel-header p,
+    #view-app .panel-header-updated { color: var(--hymnal-slate); }
+    #view-app .panel-scroll { background: var(--hymnal-paper-2); }
+
+    /* The three measures form a real Sunday-preparation sequence. */
+    .home-actions { position: relative; gap: 0; padding: 24px 20px 0; }
+    .home-actions::before {
+      content: ''; position: absolute; z-index: 0; left: 76px; right: 76px; top: 65px; height: 1px;
+      background: var(--hymnal-line-dark);
+    }
+    .home-action {
+      min-height: 218px; gap: 11px; padding: 24px 25px 22px; border-radius: 0;
+      border-color: var(--hymnal-line); background: white; box-shadow: none;
+    }
+    .home-action + .home-action { border-left: 0; }
+    .home-action::before { display: none; }
+    .home-action-marker {
+      position: relative; z-index: 1; display: flex; align-items: center; gap: 10px;
+      width: fit-content; margin-bottom: 6px; background: white;
+    }
+    .flow-step {
+      display: grid; place-items: center; width: 38px; height: 38px; flex: 0 0 38px;
+      border: 1px solid var(--hymnal-line-dark); border-radius: 50%; color: var(--hymnal-navy);
+      background: var(--hymnal-paper); font: 600 10px/1 var(--hymnal-utility);
+    }
+    .home-action:last-child .flow-step { color: white; border-color: var(--hymnal-red); background: var(--hymnal-red); }
+    .home-action:hover { z-index: 1; border-color: var(--hymnal-red); background: white; box-shadow: 0 12px 30px rgba(32,42,67,.09); }
+    .home-action-kicker { color: var(--hymnal-red); font: 600 9px/1 var(--hymnal-utility); letter-spacing: .14em; }
+    .home-action strong { font: 500 25px/1.05 var(--hymnal-display); letter-spacing: -.035em; }
+    .home-action > span:nth-child(3) { color: var(--hymnal-slate); font: 500 13px/1.55 var(--hymnal-body); }
+    .home-action-link {
+      padding: 0; border-radius: 0; color: var(--hymnal-red-dark); background: transparent;
+      font: 700 11px/1 var(--hymnal-body); letter-spacing: 0; text-transform: none;
+    }
+    .home-action-primary {
+      color: var(--hymnal-ink); border-color: var(--hymnal-line); background: white; box-shadow: none;
+    }
+    .home-action-primary::after { display: none; }
+    .home-action-primary::before { display: none; }
+    .home-action-primary > span:nth-child(3) { color: var(--hymnal-slate); }
+    .home-action-primary .home-action-link { color: var(--hymnal-red-dark); background: transparent; }
+    .home-action-primary:hover { border-color: var(--hymnal-red); background: white; }
+    .home-section-label { padding: 28px 20px 0; }
+    .home-section-label strong { font: 500 20px/1 var(--hymnal-display); }
+    .home-activity-toggle { display: none; }
+    .home-activity.activity-collapsed { display: block; }
+
+    /* Topic rails disclose overflow instead of silently clipping it. */
+    .topic-rail-shell { position: relative; }
+    .topic-rail-hint { display: none; }
+
+    /* Information surfaces: spare, square, legible. */
+    .tracker-panel .stats-bar { margin: 18px 20px 0; border-color: var(--hymnal-line); border-radius: 3px; }
+    #view-app .stat { border-color: var(--hymnal-line); }
+    #view-app .stat-number { font: 500 29px/1 var(--hymnal-display); }
+    #view-app .stat-label { color: var(--hymnal-slate); font: 600 9px/1.2 var(--hymnal-utility); }
+    .tracker-panel .recent-services { padding: 0 20px; }
+    #view-app .svc-card { border-color: var(--hymnal-line); border-left-color: var(--hymnal-red); border-radius: 3px; }
+    #view-app .svc-date { font: 500 17px/1.2 var(--hymnal-display); }
+    #view-app .period-btn,
+    #view-app .topic-chip,
+    #view-app .sermon-toggle {
+      border-color: var(--hymnal-line); border-radius: 3px; color: var(--hymnal-slate); background: white;
+    }
+    #view-app .period-btn.active,
+    #view-app .topic-chip.active,
+    #view-app .sermon-toggle.active { color: white; border-color: var(--hymnal-navy); background: var(--hymnal-navy); }
+    #view-app .chart-card { border-color: var(--hymnal-line); border-radius: 3px; }
+    #view-app .controls,
+    #view-app .dl-controls { gap: 8px; }
+    #view-app input[type="text"],
+    #view-app select,
+    #view-app .sermon-textarea { border-color: var(--hymnal-line); border-radius: 3px; background: white; }
+    #view-app input[type="text"]:focus,
+    #view-app select:focus,
+    #view-app .sermon-textarea:focus { border-color: var(--hymnal-red); }
+    .history-answer { border-radius: 3px; border-color: var(--hymnal-line-dark); background: white; }
+    .history-answer.found,
+    .history-answer.empty { border-color: #E9A6B3; background: var(--hymnal-red-soft); }
+    #view-app .hymn-card { border-color: var(--hymnal-line); border-radius: 3px; }
+    #view-app .hymn-card:hover { border-color: var(--hymnal-red); box-shadow: 0 8px 24px rgba(32,42,67,.07); }
+    #view-app .hymn-name { font-weight: 700; }
+    #view-app .badge-count { color: var(--hymnal-navy); background: #E9EDF3; }
+    #view-app .badge-count.hot,
+    #view-app .leader-chip { color: var(--hymnal-red-dark); background: var(--hymnal-red-soft); }
+
+    /* Slide library is a catalogue, not a gallery. */
+    #view-app .dl-grid { gap: 8px; }
+    #view-app .dl-card { padding: 17px; border-color: var(--hymnal-line); border-radius: 3px; background: white; }
+    #view-app .dl-card:hover { border-color: var(--hymnal-red); box-shadow: 0 10px 26px rgba(32,42,67,.08); }
+    #view-app .dl-card.selected { border-color: var(--hymnal-red); background: var(--hymnal-red-soft); box-shadow: inset 4px 0 0 var(--hymnal-red); }
+    #view-app .dl-card-icon { border-radius: 2px; color: var(--hymnal-red); background: var(--hymnal-red-soft); }
+    #view-app .dl-card-icon::before { font-family: var(--hymnal-display); }
+    #view-app .dl-card-name { font-weight: 700; }
+    #view-app .dl-card-meta { color: var(--hymnal-slate); }
+    #view-app .dl-card-check::before { border-radius: 2px; }
+    #view-app .dl-btn { border-radius: 2px; }
+    #view-app .dl-btn-primary { border-color: var(--hymnal-red); background: var(--hymnal-red); }
+    #view-app .dl-btn-outline { color: var(--hymnal-red-dark); border-color: #E9A6B3; }
+    #view-app .bulk-bar { bottom: 0; background: var(--hymnal-navy); }
+    .download-notice { border-radius: 3px; background: var(--hymnal-navy); }
+
+    @media (max-width: 720px) {
+      #view-auth .welcome-left {
+        display: grid; grid-template-columns: 1fr; justify-content: start;
+        gap: 10px; min-height: 0; padding: 16px 20px 18px; border-right: 0; border-bottom: 5px solid var(--hymnal-red);
+      }
+      #view-auth .welcome-left::after { display: none; }
+      #view-auth .welcome-left .staff-lines { opacity: .075; }
+      #view-auth .welcome-brand { gap: 9px; }
+      #view-auth .welcome-brand svg { width: 34px; height: 33px; }
+      #view-auth .welcome-brand .wm-top,
+      #view-auth .welcome-brand .wm-bot { font-size: 14px; }
+      #view-auth .welcome-mid { margin-top: 2px; }
+      #view-auth .welcome-eyebrow { display: none; }
+      #view-auth .welcome-h1 {
+        max-width: 340px; margin: 0; font-size: 31px; line-height: .98; letter-spacing: -.035em;
+      }
+      #view-auth .welcome-p { display: none; }
+      #view-auth .welcome-stats { display: none; }
+      #view-auth .welcome-right { align-items: flex-start; padding: 12px; }
+      #view-auth .welcome-right .auth-card { max-width: 100%; padding: 18px 20px; }
+      #view-auth .auth-card::before { margin-bottom: 14px; }
+      #view-auth .auth-tabs { margin-bottom: 16px; }
+      #view-auth .auth-tab { min-height: 44px; padding: 10px 12px; }
+      #view-auth .auth-heading { font-size: 31px; }
+      #view-auth .auth-subhead { margin-bottom: 16px; font-size: 13px; }
+      #view-auth .auth-form { gap: 7px; }
+      #view-auth .auth-input { min-height: 46px; padding: 10px 12px; }
+      #view-auth .auth-btn { min-height: 48px; margin-top: 5px; }
+      #view-auth .auth-scripture { display: none; }
+      #view-app { padding-bottom: 70px; }
+      #view-app.home-flow { padding-bottom: 70px; }
+      #view-app .header-inner { display: flex; min-height: 62px; padding: 10px 14px; }
+      .cb-wordmark { flex: 1; }
+      .workspace-nav {
+        position: fixed; z-index: 1000; left: 0; right: 0; bottom: 0;
+        display: grid; grid-template-columns: repeat(3, 1fr); width: 100%; min-height: 70px;
+        padding: 6px 8px calc(6px + env(safe-area-inset-bottom));
+        border: 0; border-top: 1px solid var(--hymnal-line); border-radius: 0;
+        background: rgba(255,255,255,.97); box-shadow: 0 -8px 28px rgba(32,42,67,.08);
+        backdrop-filter: blur(16px);
+      }
+      .workspace-tab { min-height: 54px; padding: 23px 8px 7px; border: 0 !important; font-size: 11px; }
+      .workspace-tab::before {
+        position: absolute; top: 7px; left: 50%; transform: translateX(-50%);
+        color: var(--hymnal-slate); font: 500 15px/1 var(--hymnal-display);
+      }
+      .workspace-tab[data-workspace="overview"]::before { content: '⌂'; }
+      .workspace-tab[data-workspace="history"]::before { content: '◴'; }
+      .workspace-tab[data-workspace="downloads"]::before { content: '♫'; }
+      .workspace-tab.active::before { color: var(--hymnal-red); }
+      .workspace-tab.active::after { left: 30%; right: 30%; top: 0; bottom: auto; height: 3px; }
+      #view-app .lookup-bar {
+        grid-template-columns: 1fr; gap: 16px; min-height: 0; padding: 25px 18px 20px;
+      }
+      #view-app .lookup-bar::before { top: 22px; height: 82px; }
+      #view-app .lookup-bar::after { display: none; }
+      .greeting-eyebrow { margin-bottom: 12px; }
+      .greeting-h1 { font-size: clamp(40px, 12vw, 52px); }
+      .greeting-sub { margin-top: 9px; }
+      .home-deadline { min-height: 112px; padding: 18px 20px; }
+      .home-deadline::before { top: 13px; }
+      .home-deadline::after { top: 13px; bottom: 48px; }
+      #view-app .dashboard { padding: 12px 10px 14px; }
+      #page-overview.workspace-active,
+      #page-history.workspace-active,
+      #page-downloads.workspace-active { border-radius: 3px; }
+      #view-app .panel-header { padding: 14px; }
+      .home-actions { grid-template-columns: 1fr; gap: 8px; padding: 12px 12px 0; }
+      .home-actions::before { left: 42px; right: auto; top: 42px; bottom: 42px; width: 1px; height: auto; }
+      .home-action { min-height: 0; padding: 19px; border: 1px solid var(--hymnal-line) !important; }
+      .home-action-marker { padding-right: 8px; }
+      .flow-step { width: 34px; height: 34px; flex-basis: 34px; }
+      .home-action strong { max-width: 100%; font-size: 24px; }
+      .home-section-label { display: none; }
+      .home-activity-toggle {
+        display: flex; align-items: center; justify-content: space-between; width: calc(100% - 24px);
+        min-height: 50px; margin: 12px; padding: 0 16px; border: 1px solid var(--hymnal-line);
+        color: var(--hymnal-ink); background: white; font: 700 13px/1 var(--hymnal-body); cursor: pointer;
+      }
+      .home-activity-toggle[aria-expanded="true"] { border-color: var(--hymnal-red); color: var(--hymnal-red-dark); }
+      .home-activity.activity-collapsed { display: none; }
+      .home-section-label .panel-header-updated {
+        width: auto; max-width: 48%; margin-left: 0; white-space: normal; text-align: right;
+      }
+      .tracker-panel .stats-bar { margin-left: 12px; margin-right: 12px; }
+      .topic-rail-shell:has(.topic-bar[style*="flex"])::after {
+        content: ''; position: absolute; z-index: 2; top: 0; right: 12px; width: 38px; height: 48px;
+        background: linear-gradient(90deg, rgba(247,248,250,0), var(--hymnal-paper-2));
+        pointer-events: none; transition: opacity .15s ease;
+      }
+      .topic-rail-shell:focus-within::after { opacity: 0; }
+      .topic-rail-shell:has(.topic-bar[style*="flex"]) .topic-rail-hint {
+        display: block; margin: -1px 14px 5px; color: var(--hymnal-slate); text-align: right;
+        font: 600 9px/1 var(--hymnal-utility); letter-spacing: .04em;
+      }
+      #view-app .topic-bar { scroll-padding-inline: 14px; }
+      #view-app .topic-chip:focus-visible { outline-offset: -3px; }
+      .bulk-bar.visible { bottom: 70px !important; transform: none !important; }
+      #view-app.bulk-active #page-downloads .panel-scroll { padding-bottom: 96px; }
+      #view-app.bulk-active .download-notice { bottom: calc(152px + env(safe-area-inset-bottom)); }
+      .download-notice { bottom: calc(84px + env(safe-area-inset-bottom)); }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { scroll-behavior: auto !important; transition-duration: .01ms !important; }
+    }
   </style>
 </head>
 <body>
 
 <!-- ══════════ AUTH VIEW ══════════ -->
 <div id="view-auth">
-  <div class="auth-card">
-    <img src="logo.png" alt="Castleberry Church of Christ" class="auth-logo">
-    <div class="auth-church-name">Castleberry Church of Christ</div>
-    <div class="auth-subtitle">Hymn Tracker &amp; Downloads</div>
-
-    <div class="auth-tabs">
-      <div class="auth-tab active" onclick="switchAuthTab('signin', this)">Sign In</div>
-      <div class="auth-tab"        onclick="switchAuthTab('register', this)">Register Now</div>
+  <!-- Left: warm welcome panel -->
+  <div class="welcome-left">
+    <div class="staff-lines"></div>
+    <div class="welcome-brand">
+      <svg width="50" height="48" viewBox="0 0 100 96" role="img" aria-label="Castleberry Church of Christ">
+        <path d="M50 92 C 30 74, 6 58, 6 34 C 6 18, 18 8, 32 8 C 41 8, 47 13, 50 19 C 53 11, 61 4, 72 4 C 88 4, 96 16, 96 31 C 96 56, 70 74, 50 92 Z" fill="#FFF7EC"/>
+        <g fill="#2A1416">
+          <circle cx="40" cy="49" r="6.6"/><path d="M37.8 57 C 31 60, 30 74, 30 84 L 50 84 C 50 74, 49 60, 42.2 57 Z"/>
+          <circle cx="54" cy="55" r="5.6"/><path d="M52.2 62 C 46.4 64.5, 45.6 76, 45.6 84 L 62.4 84 C 62.4 76, 61.6 64.5, 55.8 62 Z"/>
+          <circle cx="66" cy="61" r="4.7"/><path d="M64.4 67 C 59.6 69, 59 78, 59 84 L 73 84 C 73 78, 72.4 69, 67.6 67 Z"/>
+        </g>
+      </svg>
+      <div class="wm-lines">
+        <div class="wm-top">Castleberry</div>
+        <div class="wm-bot">Church of Christ</div>
+      </div>
     </div>
+    <div class="welcome-mid">
+      <div class="welcome-eyebrow">Castleberry worship workspace</div>
+      <h1 class="welcome-h1">Plan the songs.<br>Keep the history.</h1>
+      <p class="welcome-p">Review what the congregation has sung, find the right hymn, and prepare service slides from one focused workspace.</p>
+    </div>
+    <div class="welcome-stats">
+      <div><div class="ws-num" id="welcome-hymns">172</div><div class="ws-lbl">hymns tracked</div></div>
+      <div><div class="ws-num" id="welcome-library">892</div><div class="ws-lbl">slide decks</div></div>
+      <div><div class="ws-num" id="welcome-occurrences">240</div><div class="ws-lbl">song uses recorded</div></div>
+    </div>
+  </div>
+
+  <!-- Right: form -->
+  <div class="welcome-right">
+  <div class="auth-card">
+    <div class="auth-tabs" role="tablist" aria-label="Account access">
+      <button type="button" class="auth-tab active" role="tab" aria-selected="true" onclick="switchAuthTab('signin', this)">Sign In</button>
+      <button type="button" class="auth-tab" role="tab" aria-selected="false" onclick="switchAuthTab('register', this)">Request Access</button>
+    </div>
+    <h2 class="auth-heading">Welcome back</h2>
+    <p class="auth-subhead">Sign in to plan worship and review what we&rsquo;ve sung together.</p>
 
     <!-- Sign In -->
     <div id="auth-signin">
       <div class="auth-form">
-        <input class="auth-input" type="email" id="signin-email" placeholder="Email address" onkeydown="if(event.key==='Enter')signIn()">
-        <input class="auth-input" type="password" id="signin-password" placeholder="Password" onkeydown="if(event.key==='Enter')signIn()">
+        <label class="field-label" for="signin-email">Email address</label>
+        <input class="auth-input" type="email" id="signin-email" autocomplete="email" placeholder="you@example.com" onkeydown="if(event.key==='Enter')signIn()">
+        <label class="field-label" for="signin-password">Password</label>
+        <input class="auth-input" type="password" id="signin-password" autocomplete="current-password" placeholder="Enter your password" onkeydown="if(event.key==='Enter')signIn()">
         <div class="auth-error" id="signin-error"></div>
         <button class="auth-btn" id="signin-btn" onclick="signIn()">Sign In</button>
+        <p style="text-align:center;margin-top:0.75rem;">
+          <a href="#" onclick="showForgotPassword();return false;"
+             style="color:#C31832;font-size:0.9rem;text-decoration:none;">Forgot password?</a>
+        </p>
+      </div>
+    </div>
+
+    <!-- Forgot Password -->
+    <div id="auth-forgot" style="display:none;">
+      <div class="auth-form">
+        <p style="color:#666;font-size:0.9rem;margin:0 0 1rem;">Enter your email and we'll send you a reset link.</p>
+        <label class="field-label" for="forgot-email">Email address</label>
+        <input class="auth-input" type="email" id="forgot-email" autocomplete="email" placeholder="you@example.com" onkeydown="if(event.key==='Enter')sendResetEmail()">
+        <div class="auth-error" id="forgot-error"></div>
+        <button class="auth-btn" id="forgot-btn" onclick="sendResetEmail()">Send Reset Link</button>
+        <p style="text-align:center;margin-top:0.75rem;">
+          <a href="#" onclick="hideForgotPassword();return false;"
+             style="color:#C31832;font-size:0.9rem;text-decoration:none;">Back to sign in</a>
+        </p>
       </div>
     </div>
 
     <!-- Register -->
     <div id="auth-register" style="display:none">
       <div class="auth-form">
-        <input class="auth-input" type="text"     id="reg-name"     placeholder="Full name">
-        <input class="auth-input" type="email"    id="reg-email"    placeholder="Email address">
-        <input class="auth-input" type="password" id="reg-password" placeholder="Password (min 8 characters)" onkeydown="if(event.key==='Enter')register()">
+        <label class="field-label" for="reg-name">Full name</label>
+        <input class="auth-input" type="text" id="reg-name" autocomplete="name" placeholder="Your name">
+        <label class="field-label" for="reg-email">Email address</label>
+        <input class="auth-input" type="email" id="reg-email" autocomplete="email" placeholder="you@example.com">
+        <label class="field-label" for="reg-password">Password</label>
+        <input class="auth-input" type="password" id="reg-password" autocomplete="new-password" placeholder="At least 8 characters" onkeydown="if(event.key==='Enter')register()">
         <div class="auth-error" id="reg-error"></div>
         <button class="auth-btn" id="reg-btn" onclick="register()">Request Access</button>
       </div>
     </div>
+
+    <p class="auth-scripture">&ldquo;Speaking to yourselves in psalms and hymns and spiritual songs.&rdquo; &mdash; Eph. 5:19</p>
   </div>
+  </div><!-- end welcome-right -->
 </div>
 
 <!-- ══════════ PENDING APPROVAL VIEW ══════════ -->
@@ -414,22 +1750,83 @@
 
 <header>
   <div class="header-inner">
-    <img src="logo.png" alt="Castleberry Church of Christ" class="header-logo">
-    <div class="header-text">
-      <h1>Hymn Tracker</h1>
-      <p>Every song sung in a cappella worship — searchable by title, date, and song leader</p>
+    <div class="cb-wordmark">
+      <svg width="42" height="40" viewBox="0 0 100 96" role="img" aria-label="Castleberry Church of Christ">
+        <path d="M50 92 C 30 74, 6 58, 6 34 C 6 18, 18 8, 32 8 C 41 8, 47 13, 50 19 C 53 11, 61 4, 72 4 C 88 4, 96 16, 96 31 C 96 56, 70 74, 50 92 Z" fill="#C31832"/>
+        <g fill="#2A1416">
+          <circle cx="40" cy="49" r="6.6"/><path d="M37.8 57 C 31 60, 30 74, 30 84 L 50 84 C 50 74, 49 60, 42.2 57 Z"/>
+          <circle cx="54" cy="55" r="5.6"/><path d="M52.2 62 C 46.4 64.5, 45.6 76, 45.6 84 L 62.4 84 C 62.4 76, 61.6 64.5, 55.8 62 Z"/>
+          <circle cx="66" cy="61" r="4.7"/><path d="M64.4 67 C 59.6 69, 59 78, 59 84 L 73 84 C 73 78, 72.4 69, 67.6 67 Z"/>
+        </g>
+      </svg>
+      <div class="wm-lines">
+        <div class="wm-top">Castleberry</div>
+        <div class="wm-bot">Church <span class="of">of</span> Christ</div>
+      </div>
     </div>
-    <button class="header-signout" onclick="signOut()">Sign Out</button>
+    <nav class="workspace-nav" aria-label="Worship tools">
+      <button type="button" class="workspace-tab active" data-workspace="overview" aria-controls="page-overview" aria-selected="true" onclick="switchWorkspace('overview')">Home</button>
+      <button type="button" class="workspace-tab" data-workspace="history" aria-controls="page-history" aria-selected="false" onclick="switchWorkspace('history')">History</button>
+      <button type="button" class="workspace-tab" data-workspace="downloads" aria-controls="page-downloads" aria-selected="false" onclick="switchWorkspace('downloads')">Slides</button>
+    </nav>
+    <div class="header-actions">
+      <button class="header-signout" onclick="signOut()">Sign Out</button>
+    </div>
   </div>
 </header>
 
-<nav class="nav-tabs">
-  <div class="nav-tab active" onclick="switchTab('tracker', this)">Hymn Tracker</div>
-  <div class="nav-tab"        onclick="switchTab('downloads', this)">Hymn Downloads</div>
-</nav>
+<!-- Home introduction -->
+<div class="lookup-bar" id="home-hero">
+  <div class="greeting-block">
+    <div class="greeting-eyebrow">Next service · <span id="next-service-date">This Sunday</span></div>
+    <h1 class="greeting-h1">What are you preparing<span id="greeting-name"></span>?</h1>
+    <div class="greeting-sub" id="greeting-sub">Review history, collect slides, then assemble the service deck.</div>
+  </div>
+  <div class="home-deadline" aria-label="Service deck deadline">
+    <span class="home-deadline-label">Next handoff</span>
+    <strong>Saturday · 11:50 PM</strong>
+    <span>Builder runs on the presentation PC</span>
+  </div>
+</div>
 
-<!-- HYMN TRACKER PAGE -->
-<div id="page-tracker" class="page active">
+<!-- Focused workspace -->
+<div class="dashboard">
+
+<!-- OVERVIEW -->
+<div id="page-overview" class="tracker-panel overview-panel workspace-active" aria-hidden="false">
+  <div class="panel-header">
+    <h2>Sunday preparation</h2>
+    <p>Follow the service flow or jump to any task</p>
+  </div>
+  <div class="panel-scroll">
+  <div class="home-actions">
+    <button type="button" class="home-action" onclick="openWorkspace('history', 'search')">
+      <span class="home-action-marker"><span class="flow-step" aria-hidden="true">01</span><span class="home-action-kicker">Review</span></span>
+      <strong>Check a hymn</strong>
+      <span>See when it was last sung, who led it and how often it appears.</span>
+      <span class="home-action-link">Search history <span aria-hidden="true">→</span></span>
+    </button>
+    <button type="button" class="home-action" onclick="openWorkspace('downloads', 'dl-search')">
+      <span class="home-action-marker"><span class="flow-step" aria-hidden="true">02</span><span class="home-action-kicker">Gather</span></span>
+      <strong>Find presentation slides</strong>
+      <span>Search prepared PowerPoint and print files across all hymn libraries.</span>
+      <span class="home-action-link">Find slides <span aria-hidden="true">→</span></span>
+    </button>
+    <a class="home-action home-action-primary" href="http://127.0.0.1:5000" target="_blank">
+      <span class="home-action-marker"><span class="flow-step" aria-hidden="true">03</span><span class="home-action-kicker">Assemble · Presentation PC</span></span>
+      <strong>Build the service deck</strong>
+      <span>Paste the lineup, review the order and create Sunday&rsquo;s complete deck.</span>
+      <span class="home-action-link">Open local builder <span aria-hidden="true">→</span></span>
+    </a>
+  </div>
+  <div class="home-section-label">
+    <div><strong>Recent activity</strong><span>What the congregation has been singing</span></div>
+    <span class="panel-header-updated" id="tracker-last-updated"></span>
+  </div>
+  <button type="button" class="home-activity-toggle" aria-expanded="false" aria-controls="home-activity" onclick="toggleHomeActivity(this)">
+    <span>View recent activity</span><span aria-hidden="true">↓</span>
+  </button>
+  <div class="home-activity activity-collapsed" id="home-activity">
   <div class="stats-bar">
     <div class="stat"><div class="stat-number" id="stat-hymns">—</div><div class="stat-label">Unique Hymns</div></div>
     <div class="stat"><div class="stat-number" id="stat-services">—</div><div class="stat-label">Services Tracked</div></div>
@@ -437,49 +1834,133 @@
     <div class="stat"><div class="stat-number" id="stat-since">—</div><div class="stat-label">Tracking Since</div></div>
   </div>
 
-  <div class="controls">
+  <!-- Recent services -->
+  <div class="recent-services" id="recent-services"></div>
+
+  <!-- Period filter -->
+  <div class="period-bar">
+    <span class="period-label">Period</span>
+    <button class="period-btn" data-period="30d" onclick="setPeriod('30d',this)">30 Days</button>
+    <button class="period-btn" data-period="3mo" onclick="setPeriod('3mo',this)">3 Months</button>
+    <button class="period-btn" data-period="6mo" onclick="setPeriod('6mo',this)">6 Months</button>
+    <button class="period-btn" data-period="1yr" onclick="setPeriod('1yr',this)">1 Year</button>
+    <button class="period-btn active" data-period="all" onclick="setPeriod('all',this)">All Time</button>
+  </div>
+
+  <!-- Top songs chart -->
+  <div class="chart-section">
+    <div class="chart-card">
+      <div class="chart-title">Top Songs</div>
+      <div class="chart-wrap"><canvas id="top-chart"></canvas></div>
+    </div>
+  </div>
+  </div><!-- end home-activity -->
+
+  </div><!-- end panel-scroll -->
+</div><!-- end overview-panel -->
+
+<!-- SONG HISTORY -->
+<div id="page-history" class="tracker-panel history-panel" aria-hidden="true">
+  <div class="panel-header">
+    <h2>Song history</h2>
+    <p>Search every hymn, service date and song leader</p>
+  </div>
+  <div class="panel-scroll">
+
+  <div class="controls history-controls">
     <div class="search-wrap">
       <span class="search-icon">🔍</span>
-      <input type="text" id="search" placeholder="Search hymn title…" oninput="render()">
+      <input type="text" id="search" aria-label="Search hymn titles" placeholder="Search hymn title…" oninput="render();lookupSong(this.value)">
     </div>
     <div class="search-wrap leader-wrap">
       <span class="search-icon">🎤</span>
-      <input type="text" id="leader-search" placeholder="Filter by song leader…" oninput="render()">
+      <input type="text" id="leader-search" aria-label="Filter by song leader" placeholder="Filter by song leader…" oninput="render()">
     </div>
-    <select id="sort" onchange="render()">
+    <select id="sort" aria-label="Sort hymns" onchange="render()">
       <option value="most-sung">Most Sung</option>
       <option value="az">A → Z</option>
       <option value="za">Z → A</option>
-      <option value="recent">Most Recent</option>
+      <option value="recent">Last Sung</option>
     </select>
-    <select id="year-filter" onchange="render()">
-      <option value="">All Time</option>
+    <select id="history-period" aria-label="Filter song history by period" onchange="setPeriod(this.value)">
+      <option value="all">All time</option>
+      <option value="30d">Last 30 days</option>
+      <option value="3mo">Last 3 months</option>
+      <option value="6mo">Last 6 months</option>
+      <option value="1yr">Last year</option>
     </select>
   </div>
+  <div class="history-answer" id="lookup-result" aria-live="polite">Search by title to see the latest service immediately.</div>
 
+  <!-- Topic chips for Tracker — populated once hymn_topics.json loads -->
+  <div class="topic-rail-shell">
+    <div class="topic-bar" id="tracker-topic-bar" style="display:none" aria-label="Hymn topics; scroll horizontally for more topics">
+      <span class="topic-label">Topic</span>
+    </div>
+    <span class="topic-rail-hint" aria-hidden="true">Swipe for more →</span>
+  </div>
   <div class="results-meta" id="results-meta"></div>
   <div class="hymn-list" id="hymn-list"><div class="state-msg">Loading hymns…</div></div>
-  <footer id="footer">Updated automatically every Sunday night</footer>
-</div>
+  <footer id="footer">Updated every Sunday night</footer>
+  <div class="scripture-footer">
+    <svg width="18" height="17" viewBox="0 0 100 96" aria-hidden="true">
+      <path d="M50 92 C 30 74, 6 58, 6 34 C 6 18, 18 8, 32 8 C 41 8, 47 13, 50 19 C 53 11, 61 4, 72 4 C 88 4, 96 16, 96 31 C 96 56, 70 74, 50 92 Z" fill="#C31832"/>
+    </svg>
+    <span>&ldquo;Sing unto the Lord a new song.&rdquo; <span class="ref">Psalm 96:1</span></span>
+  </div>
+  </div><!-- end panel-scroll -->
+</div><!-- end history-panel -->
 
-<!-- HYMN DOWNLOADS PAGE -->
-<div id="page-downloads" class="page">
+<!-- RIGHT: HYMN DOWNLOADS PANEL -->
+<div id="page-downloads" class="dl-panel" aria-hidden="true">
+  <div class="panel-header">
+    <h2>Slide library</h2>
+    <p><span id="library-count">892</span> prepared decks across HFWR, HFWS and eChoice</p>
+  </div>
+  <div class="panel-scroll">
   <div class="dl-controls">
     <div class="search-wrap">
       <span class="search-icon">🔍</span>
-      <input type="text" id="dl-search" placeholder="Search hymn slide decks…" oninput="renderDownloads()">
+      <input type="text" id="dl-search" aria-label="Search slide library by hymn title" placeholder="Search hymn title…" oninput="resetDownloadWindow();dlShowAll=false;document.getElementById('show-all-btn').classList.remove('active');renderDownloads()">
     </div>
-    <select id="dl-source" onchange="renderDownloads()">
+    <div class="search-wrap">
+      <span class="search-icon">🏷</span>
+      <input type="text" id="dl-topic-search" aria-label="Search slide library by topic" placeholder="Search by topic (Grace, Easter…)" oninput="resetDownloadWindow();activeDlTopic='';document.querySelectorAll('#dl-topic-bar .topic-chip').forEach(b=>b.classList.remove('active'));renderDownloads()">
+    </div>
+    <select id="dl-source" aria-label="Filter by hymnal library" onchange="resetDownloadWindow();renderDownloads()">
       <option value="">All Libraries</option>
       <option value="HFWR">HFWR</option>
       <option value="HFWS">HFWS</option>
       <option value="eChoice">eChoice</option>
-      <option value="Service">Service Lineup</option>
     </select>
+    <button class="period-btn" id="show-all-btn" onclick="showAllDecks()">Show All</button>
+    <button class="sermon-toggle" id="sermon-toggle-btn" onclick="toggleSermonMatcher()">Match sermon</button>
+  </div>
+
+  <!-- Sermon matcher -->
+  <div class="sermon-section" id="sermon-section">
+    <div>
+      <label class="sermon-label" for="sermon-input">Paste sermon text or outline</label>
+      <div class="sermon-hint">Hymns will be suggested based on the sermon's themes and topics.</div>
+    </div>
+    <textarea class="sermon-textarea" id="sermon-input" placeholder="Paste your sermon text, outline, or scripture references here…" oninput="debounceSermon()"></textarea>
+    <div class="sermon-meta" id="sermon-meta"></div>
+  </div>
+
+  <!-- Topic chips — populated by JS once hymn_topics.json loads -->
+  <div class="topic-rail-shell">
+    <div class="topic-bar" id="dl-topic-bar" style="display:none" aria-label="Slide topics; scroll horizontally for more topics">
+      <span class="topic-label">Quick topics</span>
+    </div>
+    <span class="topic-rail-hint" aria-hidden="true">Swipe for more →</span>
   </div>
   <div class="dl-meta" id="dl-meta"></div>
-  <div class="dl-grid" id="dl-grid"><div class="dl-empty">Loading…</div></div>
+  <div class="dl-grid" id="dl-grid"><div class="dl-empty">Search for a hymn above, pick a topic, or click <strong>Show All</strong>.</div></div>
 </div>
+
+  </div><!-- end panel-scroll -->
+</div><!-- end dl-panel -->
+</div><!-- end dashboard -->
 
 <!-- ── Bulk download bar (fixed bottom) ── -->
 <div class="bulk-bar" id="bulk-bar">
@@ -494,6 +1975,8 @@
   </div>
 </div>
 
+<div class="download-notice" id="download-notice" role="status" aria-live="polite"></div>
+
 </div><!-- end #view-app -->
 
 <script>
@@ -501,7 +1984,8 @@
   const { createClient } = supabase
   const sb = createClient(
     'https://nnutbmnmrjhoteqvcvgr.supabase.co',
-    'sb_publishable_xUNHW4SrOGZOowS3fFC7QA_jJBq3D5T'
+    'sb_publishable_xUNHW4SrOGZOowS3fFC7QA_jJBq3D5T',
+    { auth: { flowType: 'implicit' } }
   )
 
   /* ── View management ── */
@@ -511,7 +1995,68 @@
       el.style.display = 'none'
     })
     const target = document.getElementById('view-' + view)
-    target.style.display = (view === 'auth' || view === 'pending') ? 'flex' : 'block'
+    // Auth view uses the two-column grid; pending/app use flex.
+    target.style.display = view === 'auth' ? 'grid' : 'flex'
+    if (view === 'app') {
+      const saved = localStorage.getItem('castleberry-workspace')
+      const savedWorkspace = saved === 'tracker' ? 'overview' : (saved || 'overview')
+      switchWorkspace(savedWorkspace)
+    }
+  }
+
+  function switchWorkspace(workspace) {
+    const workspaces = ['overview', 'history', 'downloads']
+    const validWorkspace = workspaces.includes(workspace) ? workspace : 'overview'
+    document.querySelectorAll('.workspace-tab').forEach(btn => {
+      const isActive = btn.dataset.workspace === validWorkspace
+      btn.classList.toggle('active', isActive)
+      btn.setAttribute('aria-selected', String(isActive))
+    })
+    workspaces.forEach(name => {
+      const panel = document.getElementById('page-' + name)
+      const isActive = name === validWorkspace
+      panel.classList.toggle('workspace-active', isActive)
+      panel.setAttribute('aria-hidden', String(!isActive))
+    })
+    const homeHero = document.getElementById('home-hero')
+    if (homeHero) homeHero.hidden = validWorkspace !== 'overview'
+    const appView = document.getElementById('view-app')
+    const isHome = validWorkspace === 'overview'
+    appView.classList.toggle('home-flow', isHome)
+    if (!isHome && window.scrollY) window.scrollTo(0, 0)
+    if (typeof updateBulkBar === 'function') updateBulkBar()
+    if (validWorkspace !== 'downloads') {
+      const notice = document.getElementById('download-notice')
+      if (notice) {
+        notice.className = 'download-notice'
+        notice.textContent = ''
+      }
+    }
+    localStorage.setItem('castleberry-workspace', validWorkspace)
+    requestAnimationFrame(() => {
+      if (validWorkspace === 'overview' && typeof topChart !== 'undefined' && topChart) topChart.resize()
+    })
+  }
+
+  function openWorkspace(workspace, focusId) {
+    switchWorkspace(workspace)
+    requestAnimationFrame(() => {
+      const target = document.getElementById(focusId)
+      if (target) target.focus()
+    })
+  }
+
+  function toggleHomeActivity(button) {
+    const activity = document.getElementById('home-activity')
+    if (!activity || !button) return
+    const willExpand = activity.classList.contains('activity-collapsed')
+    activity.classList.toggle('activity-collapsed', !willExpand)
+    button.setAttribute('aria-expanded', String(willExpand))
+    const label = button.querySelector('span:first-child')
+    const arrow = button.querySelector('span:last-child')
+    if (label) label.textContent = willExpand ? 'Hide recent activity' : 'View recent activity'
+    if (arrow) arrow.textContent = willExpand ? '↑' : '↓'
+    if (willExpand && typeof topChart !== 'undefined' && topChart) requestAnimationFrame(() => topChart.resize())
   }
 
   /* ── Auth state check ── */
@@ -552,12 +2097,47 @@
 
   /* ── Auth tab switching ── */
   function switchAuthTab(tab, el) {
-    document.querySelectorAll('.auth-tab').forEach(t => t.classList.remove('active'))
+    document.querySelectorAll('.auth-tab').forEach(t => {
+      t.classList.remove('active')
+      t.setAttribute('aria-selected', 'false')
+    })
     el.classList.add('active')
+    el.setAttribute('aria-selected', 'true')
     document.getElementById('auth-signin').style.display   = tab === 'signin'   ? 'block' : 'none'
     document.getElementById('auth-register').style.display = tab === 'register' ? 'block' : 'none'
+    document.getElementById('auth-forgot').style.display   = 'none'
     document.getElementById('signin-error').textContent = ''
     document.getElementById('reg-error').textContent = ''
+  }
+
+  /* ── Forgot password ── */
+  function showForgotPassword() {
+    document.getElementById('auth-signin').style.display  = 'none'
+    document.getElementById('auth-forgot').style.display  = 'block'
+    document.getElementById('forgot-error').textContent   = ''
+    document.getElementById('forgot-email').value         = ''
+  }
+
+  function hideForgotPassword() {
+    document.getElementById('auth-forgot').style.display  = 'none'
+    document.getElementById('auth-signin').style.display  = 'block'
+  }
+
+  function sendResetEmail() {
+    const email = document.getElementById('forgot-email').value.trim()
+    const errEl = document.getElementById('forgot-error')
+    errEl.textContent = ''
+
+    if (!email) { errEl.textContent = 'Please enter your email.'; return }
+
+    // Show success immediately — fire the request in the background
+    document.getElementById('auth-forgot').innerHTML =
+      '<p style="text-align:center;color:#C31832;font-weight:bold;padding:1rem 0;">Check your email for a reset link!</p>' +
+      '<p style="text-align:center;"><a href="#" onclick="hideForgotPassword();return false;" style="color:#888;font-size:0.9rem;">Back to sign in</a></p>'
+
+    sb.auth.resetPasswordForEmail(email, {
+      redirectTo: 'https://noahrdunsmore-rgb.github.io/castleberry-hymns/reset-password.html'
+    }).catch(e => console.warn('Reset email failed:', e))
   }
 
   /* ── Sign in ── */
@@ -596,6 +2176,19 @@
     btn.disabled = false; btn.textContent = 'Request Access'
 
     if (error) { errEl.textContent = error.message; return }
+
+    // Notify admin via Edge Function
+    if (data.user) {
+      fetch('https://nnutbmnmrjhoteqvcvgr.supabase.co/functions/v1/notify-admin', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer sb_publishable_xUNHW4SrOGZOowS3fFC7QA_jJBq3D5T'
+        },
+        body: JSON.stringify({ email, userId: data.user.id })
+      }).catch(e => console.warn('Admin notification failed:', e))
+    }
+
     document.getElementById('pending-name').textContent = name
     showView('pending')
   }
@@ -611,50 +2204,184 @@
     if (event === 'SIGNED_OUT') showView('auth')
   })
 
-  /* ── App tab switching ── */
-  function switchTab(tab, el) {
-    document.querySelectorAll('.page').forEach(p => p.classList.remove('active'))
-    document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'))
-    document.getElementById('page-' + tab).classList.add('active')
-    el.classList.add('active')
-    if (tab === 'downloads') loadCatalogue().then(renderDownloads)
-  }
-
   /* ── Hymn data ── */
   let allHymns = []
 
   async function loadData() {
     try {
-      const res = await fetch('castleberry_songs.json?v=' + Date.now())
-      if (!res.ok) throw new Error(res.status)
-      allHymns = await res.json()
-      initYearFilter(); updateStats(); render()
+      const [songsRes] = await Promise.all([
+        fetch('castleberry_songs.json?v=' + Date.now()),
+        loadCatalogue()
+      ])
+      if (!songsRes.ok) throw new Error(songsRes.status)
+      allHymns = await songsRes.json()
+      initYearFilter(); updateStats(); updateLastUpdated(); renderRecentServices(); render(); renderDownloads()
     } catch (e) {
       document.getElementById('hymn-list').innerHTML =
         '<div class="state-msg">Could not load hymn data. Please try again later.</div>'
     }
   }
 
-  function initYearFilter() {
-    const years = new Set()
-    allHymns.forEach(h => h.occurrences.forEach(o => years.add(o.date.slice(0, 4))))
-    const sel = document.getElementById('year-filter')
-    sel.innerHTML = '<option value="">All Time</option>'
-    ;[...years].sort().reverse().forEach(y => {
-      const opt = document.createElement('option')
-      opt.value = y; opt.textContent = y; sel.appendChild(opt)
+  /* ── Recent services ── */
+  function renderRecentServices() {
+    const el = document.getElementById('recent-services')
+    if (!el) return
+    // Group occurrences into services keyed by date + service label
+    const map = new Map()
+    allHymns.forEach(h => h.occurrences.forEach(o => {
+      const key = o.date + '|' + (o.service || '')
+      if (!map.has(key)) map.set(key, { date: o.date, service: o.service || '', leader: o.leader || '', songs: [] })
+      const svc = map.get(key)
+      svc.songs.push(h.name)
+      if (!svc.leader && o.leader) svc.leader = o.leader
+    }))
+    const services = [...map.values()]
+      .sort((a, b) => b.date.localeCompare(a.date))
+      .slice(0, 3)
+    if (!services.length) { el.innerHTML = ''; return }
+
+    const cards = services.map(s => {
+      const ldr = s.leader
+        ? `<span class="leader-chip">🎤 ${esc(s.leader)}</span>`
+        : `<span class="leader-chip unknown">Unknown leader</span>`
+      const svcChip = s.service ? `<span class="svc-chip">${esc(s.service)}</span>` : ''
+      const songs = s.songs.map(n => `<li>${esc(n)}</li>`).join('')
+      return `
+        <div class="svc-card">
+          <div class="svc-card-head">
+            <span class="svc-date">${fmtRecent(s.date)}</span>
+            ${svcChip}
+            ${ldr}
+          </div>
+          <ul class="svc-card-songs">${songs}</ul>
+        </div>`
+    }).join('')
+    el.innerHTML = `<div class="recent-title">Recent Services</div>${cards}`
+  }
+
+  /* ── Last-sung lookup ── */
+  function lookupSong(q) {
+    const el = document.getElementById('lookup-result')
+    const trimmed = q.trim().toLowerCase()
+    if (!trimmed || !allHymns.length) {
+      el.className = 'history-answer lookup-result'
+      el.textContent = 'Search by title to see the latest service immediately.'
+      return
+    }
+
+    // Score: exact prefix wins, then contains
+    const scored = allHymns.map(h => {
+      const n = h.name.toLowerCase()
+      const score = n === trimmed ? 3 : n.startsWith(trimmed) ? 2 : n.includes(trimmed) ? 1 : 0
+      return { h, score }
+    }).filter(x => x.score > 0).sort((a, b) => b.score - a.score || b.h.occurrences.length - a.h.occurrences.length)
+
+    if (!scored.length) {
+      el.className = 'history-answer lookup-result empty'
+      el.textContent = `No hymns found matching "${q.trim()}"`
+      return
+    }
+
+    const best  = scored[0].h
+    const allOccs = [...best.occurrences].sort((a, b) => b.date.localeCompare(a.date))
+    const last  = allOccs[0]
+    const total = allOccs.length
+
+    el.className = 'history-answer lookup-result found'
+    if (!last) { el.innerHTML = `<span class="lr-name">${esc(best.name)}</span> &mdash; <span class="lr-meta">no occurrences recorded</span>`; return }
+    const svcPart = last.service ? ` &middot; <span class="svc-chip">${esc(last.service)}</span>` : ''
+    el.innerHTML = `<span class="lr-name">${esc(best.name)}</span> &mdash; last sung <span class="lr-date">${fmtFull(last.date)}</span>${last.leader ? ` by <strong>${esc(last.leader)}</strong>` : ''}${svcPart} <span class="lr-meta">(${total}&#215; total)</span>`
+  }
+
+  let activePeriod = 'all'
+  let topChart     = null
+
+  function setPeriod(p, btn) {
+    activePeriod = p
+    document.querySelectorAll('[data-period]').forEach(b => {
+      b.classList.toggle('active', b.dataset.period === p)
+    })
+    const historyPeriod = document.getElementById('history-period')
+    if (historyPeriod) historyPeriod.value = p
+    updateStats(); render()
+  }
+
+  function periodCutoff() {
+    if (activePeriod === 'all') return null
+    const d = new Date()
+    if (activePeriod === '30d') d.setDate(d.getDate() - 30)
+    if (activePeriod === '3mo') d.setMonth(d.getMonth() - 3)
+    if (activePeriod === '6mo') d.setMonth(d.getMonth() - 6)
+    if (activePeriod === '1yr') d.setFullYear(d.getFullYear() - 1)
+    return d.toISOString().slice(0, 10)
+  }
+
+  function filterByPeriod(occs) {
+    const cut = periodCutoff()
+    return cut ? occs.filter(o => o.date >= cut) : occs
+  }
+
+  function updateChart(hymns) {
+    const top = [...hymns]
+      .sort((a, b) => b.filteredOccs.length - a.filteredOccs.length)
+      .slice(0, 10)
+      .reverse()
+    const labels = top.map(h => h.name.length > 32 ? h.name.slice(0, 30) + '…' : h.name)
+    const data   = top.map(h => h.filteredOccs.length)
+    if (topChart) {
+      topChart.data.labels        = labels
+      topChart.data.datasets[0].data = data
+      topChart.update()
+      return
+    }
+    topChart = new Chart(document.getElementById('top-chart'), {
+      type: 'bar',
+      data: {
+        labels,
+        datasets: [{
+          data,
+          backgroundColor: 'rgba(195,24,50,0.82)',
+          borderRadius: 4,
+          barThickness: 16,
+        }]
+      },
+      options: {
+        indexAxis: 'y',
+        responsive: true,
+        maintainAspectRatio: false,
+        plugins: { legend: { display: false } },
+        scales: {
+          x: { grid: { color: '#f0f0f0' }, ticks: { precision: 0, font: { size: 11 } } },
+          y: { grid: { display: false }, ticks: { font: { size: 11 } } }
+        }
+      }
     })
   }
 
+  function initYearFilter() {
+    // year filter removed — replaced by period tabs
+    // period tabs used instead of year dropdown
+  }
+
   function updateStats() {
+    // Always compute totals from full dataset for the fixed cards
     const allDates = new Set(), allLeaders = new Set()
     allHymns.forEach(h => h.occurrences.forEach(o => {
       allDates.add(o.date)
       if (o.leader) allLeaders.add(o.leader.toLowerCase())
     }))
     const sorted = [...allDates].sort()
-    document.getElementById('stat-hymns').textContent    = allHymns.length
-    document.getElementById('stat-services').textContent = allDates.size
+
+    // Period-aware: unique hymns and services within period
+    const periodDates = new Set()
+    let   periodHymns = 0
+    allHymns.forEach(h => {
+      const occs = filterByPeriod(h.occurrences)
+      if (occs.length) { periodHymns++; occs.forEach(o => periodDates.add(o.date)) }
+    })
+
+    document.getElementById('stat-hymns').textContent    = periodHymns
+    document.getElementById('stat-services').textContent = periodDates.size
     document.getElementById('stat-leaders').textContent  = allLeaders.size || '—'
     document.getElementById('stat-since').textContent    = sorted.length ? fmtMonYear(sorted[0]) : '—'
     if (sorted.length) {
@@ -663,18 +2390,25 @@
     }
   }
 
+  function toggleHymnCard(button) {
+    const card = button.closest('.hymn-card')
+    const isOpen = card.classList.toggle('open')
+    button.setAttribute('aria-expanded', String(isOpen))
+  }
+
   function render() {
     const query  = document.getElementById('search').value.trim().toLowerCase()
     const leader = document.getElementById('leader-search').value.trim().toLowerCase()
     const sort   = document.getElementById('sort').value
-    const year   = document.getElementById('year-filter').value
-
     let hymns = allHymns.map(h => {
-      let occs = h.occurrences
-      if (year)   occs = occs.filter(o => o.date.startsWith(year))
+      let occs = filterByPeriod(h.occurrences)
       if (leader) occs = occs.filter(o => o.leader.toLowerCase().includes(leader))
       return { ...h, filteredOccs: occs }
-    }).filter(h => h.filteredOccs.length > 0 && (!query || h.name.toLowerCase().includes(query)))
+    }).filter(h =>
+      h.filteredOccs.length > 0 &&
+      (!query || h.name.toLowerCase().includes(query)) &&
+      hymnMatchesTopic(h.name, activeTrackerTopic)
+    )
 
     hymns.sort((a, b) => {
       if (sort === 'most-sung') return b.filteredOccs.length - a.filteredOccs.length
@@ -692,8 +2426,8 @@
     let meta = `Showing ${hymns.length} hymn${hymns.length!==1?'s':''} · ${total} total occurrence${total!==1?'s':''}`
     if (query)  meta += ` matching "${query}"`
     if (leader) meta += ` led by "${leader}"`
-    if (year)   meta += ` in ${year}`
     document.getElementById('results-meta').textContent = meta
+    updateChart(hymns)
 
     const list = document.getElementById('hymn-list')
     if (!hymns.length) { list.innerHTML = '<div class="state-msg">No hymns match your search.</div>'; return }
@@ -701,22 +2435,29 @@
     list.innerHTML = hymns.map(h => {
       const count    = h.filteredOccs.length
       const badgeCls = count >= 5 ? 'badge badge-count hot' : 'badge badge-count'
-      const rows = h.filteredOccs.map(o => {
+      const sortedOccs = [...h.filteredOccs].sort((a,b) => b.date.localeCompare(a.date))
+      const lastDate   = sortedOccs[0]?.date
+      const lastSungStr = lastDate ? `Last sung ${fmtFull(lastDate)}` : ''
+      const rows = sortedOccs.map(o => {
         const ldr = o.leader
-          ? `<span class="leader-chip">🎤 ${esc(o.leader)}</span>`
+          ? `<span class="leader-chip">${esc(o.leader)}</span>`
           : `<span class="leader-chip unknown">Unknown</span>`
-        return `<tr><td>${fmtFull(o.date)}</td><td>${ldr}</td></tr>`
+        const svc = o.service
+          ? `<span class="svc-chip">${esc(o.service)}</span>`
+          : ''
+        return `<tr><td>${fmtFull(o.date)}</td><td>${svc}</td><td>${ldr}</td></tr>`
       }).join('')
       return `
-        <div class="hymn-card" onclick="this.classList.toggle('open')">
-          <div class="hymn-header">
+        <div class="hymn-card">
+          <button type="button" class="hymn-header" aria-expanded="false" onclick="toggleHymnCard(this)">
             <span class="hymn-name">${highlight(esc(h.name), query)}</span>
             <span class="${badgeCls}">${count}x</span>
-            <span class="chevron">▼</span>
-          </div>
+            ${lastSungStr ? `<span class="last-sung">${lastSungStr}</span>` : ''}
+            <span class="chevron" aria-hidden="true">▼</span>
+          </button>
           <div class="occurrences">
             <table class="occ-table">
-              <thead><tr><th>Date</th><th>Song Leader</th></tr></thead>
+              <thead><tr><th>Date</th><th>Service</th><th>Song Leader</th></tr></thead>
               <tbody>${rows}</tbody>
             </table>
           </div>
@@ -727,6 +2468,43 @@
   /* ── Downloads ── */
   let HYMN_DECKS    = []   // loaded from hymn_catalogue.json
   let selectedHymns = new Set()  // indices of selected hymns
+  let dlVisibleCount = window.innerWidth <= 720 ? 18 : 36
+  let downloadNoticeTimer
+
+  function resetDownloadWindow() {
+    dlVisibleCount = window.innerWidth <= 720 ? 18 : 36
+  }
+
+  function assetUrl(path) {
+    return String(path || '').split('/').map(segment => encodeURIComponent(segment)).join('/')
+  }
+
+  function safeDownloadName(name, extension) {
+    const base = String(name || 'Castleberry hymn').replace(/[\u0000-\u001f/\\?%*:|"<>]/g, '-').trim()
+    return `${base || 'Castleberry hymn'}.${extension}`
+  }
+
+  function showDownloadNotice(message, type = '') {
+    const notice = document.getElementById('download-notice')
+    if (!notice) return
+    clearTimeout(downloadNoticeTimer)
+    notice.textContent = message
+    notice.className = `download-notice visible${type ? ` ${type}` : ''}`
+    downloadNoticeTimer = setTimeout(() => { notice.className = 'download-notice' }, 4200)
+  }
+
+  function announceDownload(link, format) {
+    const filename = link.getAttribute('download') || `hymn.${format.toLowerCase()}`
+    showDownloadNotice(`${filename} is downloading. Check your Downloads folder.`)
+  }
+
+  function deckDownloadLinks(h) {
+    const pptxName = safeDownloadName(h.name, 'pptx')
+    const pdfName = safeDownloadName(h.name, 'pdf')
+    return `
+      <a class="dl-btn dl-btn-primary" href="${escAttr(assetUrl(h.pptx))}" download="${escAttr(pptxName)}" onclick="announceDownload(this, 'PowerPoint')" aria-label="Download ${escAttr(h.name)} PowerPoint slides">&#11015; Download PowerPoint</a>
+      ${h.pdf ? `<a class="dl-btn dl-btn-outline" href="${escAttr(assetUrl(h.pdf))}" download="${escAttr(pdfName)}" onclick="announceDownload(this, 'PDF')" aria-label="Download ${escAttr(h.name)} print sheet">&#11015; Print sheet (PDF)</a>` : ''}`
+  }
 
   function toggleSelect(e, idx) {
     // Don't toggle if clicking a download button
@@ -742,7 +2520,9 @@
     const bar = document.getElementById('bulk-bar')
     document.getElementById('bulk-count').textContent  = n
     document.getElementById('bulk-plural').textContent = n === 1 ? '' : 's'
-    bar.classList.toggle('visible', n > 0)
+    const downloadsActive = document.getElementById('page-downloads')?.classList.contains('workspace-active')
+    bar.classList.toggle('visible', n > 0 && downloadsActive)
+    document.getElementById('view-app').classList.toggle('bulk-active', n > 0 && downloadsActive)
   }
 
   function clearSelection() {
@@ -757,28 +2537,64 @@
     btn.disabled = true
     btn.textContent = 'Building ZIP...'
 
+    if (typeof JSZip === 'undefined') {
+      showDownloadNotice('ZIP downloads are unavailable. Download each PowerPoint separately.', 'error')
+      btn.disabled = false
+      btn.innerHTML = '&#11015; Download ZIP'
+      return
+    }
+
     const zip      = new JSZip()
     const selected = [...selectedHymns].map(i => HYMN_DECKS[i]).filter(Boolean)
+    const failures = []
+    let added = 0
 
     await Promise.all(selected.map(async h => {
       try {
-        const res  = await fetch(h.pptx)
+        const res = await fetch(assetUrl(h.pptx))
+        if (!res.ok) throw new Error(`HTTP ${res.status}`)
         const blob = await res.blob()
-        const fname = h.name.replace(/[/\\?%*:|"<>]/g, '-') + '.pptx'
+        const signature = new Uint8Array(await blob.slice(0, 2).arrayBuffer())
+        if (signature[0] !== 0x50 || signature[1] !== 0x4B) throw new Error('Not a PowerPoint file')
+        const fname = safeDownloadName(h.name, 'pptx')
         zip.file(fname, blob)
-      } catch(e) { console.warn('Could not fetch', h.pptx, e) }
+        added += 1
+      } catch(e) {
+        failures.push(h.name)
+        console.warn('Could not fetch', h.pptx, e)
+      }
     }))
 
-    const zipBlob = await zip.generateAsync({ type: 'blob' })
-    const url  = URL.createObjectURL(zipBlob)
-    const a    = document.createElement('a')
-    a.href     = url
-    a.download = `Castleberry Hymns (${selected.length} songs).zip`
-    a.click()
-    URL.revokeObjectURL(url)
+    if (added) {
+      const zipBlob = await zip.generateAsync({ type: 'blob' })
+      const url  = URL.createObjectURL(zipBlob)
+      const a    = document.createElement('a')
+      a.href     = url
+      a.download = `Castleberry Hymns (${added} song${added === 1 ? '' : 's'}).zip`
+      document.body.appendChild(a)
+      a.click()
+      a.remove()
+      // Keep the object URL alive long enough for slower mobile browsers to claim it.
+      setTimeout(() => URL.revokeObjectURL(url), 60000)
+    }
 
     btn.disabled = false
     btn.innerHTML = '&#11015; Download ZIP'
+    if (!added) showDownloadNotice('No PowerPoint files could be added. Try downloading one song at a time.', 'error')
+    else if (failures.length) showDownloadNotice(`Downloaded ${added}; ${failures.length} could not be added.`, 'error')
+    else showDownloadNotice(`ZIP with ${added} PowerPoint file${added === 1 ? '' : 's'} is downloading.`)
+  }
+
+  let HYMN_TOPICS    = {}
+  let activeDlTopic  = ''
+  let activeTrackerTopic = ''
+  let dlShowAll      = false   // true once user clicks Show All
+
+  function showAllDecks() {
+    resetDownloadWindow()
+    dlShowAll = true
+    document.getElementById('show-all-btn').classList.add('active')
+    renderDownloads()
   }
 
   async function loadCatalogue() {
@@ -790,50 +2606,358 @@
       document.getElementById('dl-grid').innerHTML =
         '<div class="dl-empty">Could not load hymn catalogue.</div>'
     }
+    // Load topic tags (optional — silently skip if not generated yet)
+    try {
+      const res = await fetch('hymn_topics.json?v=' + Date.now())
+      if (res.ok) {
+        HYMN_TOPICS = await res.json()
+        buildTopicChips()
+      }
+    } catch(e) { /* topics not available yet */ }
+  }
+
+  function buildTopicChips() {
+    // Gather all unique topics from the loaded data
+    const topicCounts = {}
+    Object.values(HYMN_TOPICS).forEach(tags => {
+      tags.forEach(t => { topicCounts[t] = (topicCounts[t] || 0) + 1 })
+    })
+    // Sort by frequency, take top 20
+    const topics = Object.entries(topicCounts)
+      .sort((a, b) => b[1] - a[1])
+      .slice(0, 20)
+      .map(([t]) => t)
+
+    // Downloads topic bar
+    const dlBar = document.getElementById('dl-topic-bar')
+    if (dlBar && topics.length) {
+      dlBar.style.display = 'flex'
+      const chips = topics.map(t =>
+        `<button class="topic-chip" onclick="setDlTopic('${t.replace(/'/g,"\\'")}',this)">${t}</button>`
+      ).join('')
+      dlBar.innerHTML = `<span class="topic-label">Topic</span>${chips}`
+    }
+
+    // Tracker topic bar
+    const trBar = document.getElementById('tracker-topic-bar')
+    if (trBar && topics.length) {
+      trBar.style.display = 'flex'
+      const chips = topics.map(t =>
+        `<button class="topic-chip" onclick="setTrackerTopic('${t.replace(/'/g,"\\'")}',this)">${t}</button>`
+      ).join('')
+      trBar.innerHTML = `<span class="topic-label">Topic</span>${chips}`
+    }
+  }
+
+  function setDlTopic(topic, btn) {
+    resetDownloadWindow()
+    if (activeDlTopic === topic) {
+      activeDlTopic = ''
+      document.querySelectorAll('#dl-topic-bar .topic-chip').forEach(b => b.classList.remove('active'))
+    } else {
+      activeDlTopic = topic
+      document.querySelectorAll('#dl-topic-bar .topic-chip').forEach(b => b.classList.remove('active'))
+      btn.classList.add('active')
+      const ti = document.getElementById('dl-topic-search')
+      if (ti) ti.value = ''   // clear free-text when a chip is picked
+    }
+    renderDownloads()
+  }
+
+  function setTrackerTopic(topic, btn) {
+    if (activeTrackerTopic === topic) {
+      activeTrackerTopic = ''
+      document.querySelectorAll('#tracker-topic-bar .topic-chip').forEach(b => b.classList.remove('active'))
+    } else {
+      activeTrackerTopic = topic
+      document.querySelectorAll('#tracker-topic-bar .topic-chip').forEach(b => b.classList.remove('active'))
+      btn.classList.add('active')
+    }
+    render()
+  }
+
+  function hymnMatchesTopic(name, topic) {
+    if (!topic || !HYMN_TOPICS[name]) return true
+    return HYMN_TOPICS[name].includes(topic)
   }
 
   function renderDownloads() {
     const q      = document.getElementById('dl-search').value.trim().toLowerCase()
     const source = document.getElementById('dl-source').value
-    const filtered = HYMN_DECKS.filter(h =>
-      (!q      || h.name.toLowerCase().includes(q)) &&
-      (!source || h.source === source)
-    )
+    const topicQ  = (document.getElementById('dl-topic-search')?.value || '').trim().toLowerCase()
+    const hasFilter = q || source || activeDlTopic || topicQ || dlShowAll
+    if (!hasFilter) return   // stay on the empty prompt until user asks
+    const filtered = HYMN_DECKS.filter(h => {
+      if (q      && !h.name.toLowerCase().includes(q)) return false
+      if (source && h.source !== source)                 return false
+      if (activeDlTopic && !hymnMatchesTopic(h.name, activeDlTopic)) return false
+      if (topicQ) {
+        const tags = (HYMN_TOPICS[h.name] || []).map(t => t.toLowerCase())
+        if (!tags.some(t => t.includes(topicQ))) return false
+      }
+      return true
+    }).sort((a, b) => {
+      if (source && a.number && b.number) {
+        // Numeric sort within a library — strip trailing letters (008A → 8)
+        const na = parseFloat(a.number.replace(/[A-Za-z]+$/, '')) || 0
+        const nb = parseFloat(b.number.replace(/[A-Za-z]+$/, '')) || 0
+        return na - nb
+      }
+      return a.name.localeCompare(b.name)
+    })
+    const visible = filtered.slice(0, dlVisibleCount)
     document.getElementById('dl-meta').textContent =
-      `${filtered.length} slide deck${filtered.length!==1?'s':''} available` + (q ? ` matching "${q}"` : '')
+      `Showing ${visible.length} of ${filtered.length} slide deck${filtered.length!==1?'s':''}` + (q ? ` matching "${q}"` : '')
     const grid = document.getElementById('dl-grid')
     if (!filtered.length) { grid.innerHTML = '<div class="dl-empty">No slide decks match your search.</div>'; return }
-    grid.innerHTML = filtered.map((h, i) => {
+    grid.innerHTML = visible.map(h => {
       const idx = HYMN_DECKS.indexOf(h)
       const sel = selectedHymns.has(idx)
       return `
-      <div class="dl-card${sel ? ' selected' : ''}" onclick="toggleSelect(event, ${idx})">
-        <div class="dl-card-check">${sel ? '&#10003;' : ''}</div>
+      <article class="dl-card${sel ? ' selected' : ''}">
+        <button type="button" class="dl-card-check" aria-label="${sel ? 'Remove' : 'Select'} ${esc(h.name)}" aria-pressed="${sel}" onclick="toggleSelect(event, ${idx})">${sel ? '&#10003;' : ''}</button>
         <div class="dl-card-icon">🎵</div>
         <div class="dl-card-name">${highlight(esc(h.name), q)}</div>
         <div class="dl-card-meta">
-          #${h.number} &nbsp;·&nbsp; ${h.source ? `<em>${esc(h.source)}</em>` : ''}
+          ${h.number ? `#${h.number} &nbsp;·&nbsp; ` : ''}${h.source ? `<em>${esc(h.source)}</em>` : ''}
+          ${h.verses ? `&nbsp;·&nbsp; ${h.verses} verse${h.verses!==1?'s':''}` : ''}
           ${h.author ? `<br>${esc(h.author)}` : ''}
         </div>
         <div class="dl-btns" onclick="event.stopPropagation()">
-          <a class="dl-btn dl-btn-primary" href="${h.pptx}" download>&#11015; Slide Deck (.pptx)</a>
-          ${h.pdf ? `<a class="dl-btn dl-btn-outline" href="${h.pdf}" download>&#11015; Print Sheet (.pdf)</a>` : ''}
+          ${deckDownloadLinks(h)}
         </div>
-      </div>`
-    }).join('')
+      </article>`
+    }).join('') + (visible.length < filtered.length
+      ? `<button type="button" class="dl-load-more" onclick="loadMoreDecks()">Show ${Math.min(window.innerWidth <= 720 ? 18 : 36, filtered.length - visible.length)} more</button>`
+      : '')
+  }
+
+  function loadMoreDecks() {
+    dlVisibleCount += window.innerWidth <= 720 ? 18 : 36
+    renderDownloads()
   }
 
   /* ── Helpers ── */
   function fmtFull(d)    { return new Date(d+'T12:00:00').toLocaleDateString('en-US',{year:'numeric',month:'long',day:'numeric'}) }
+  function fmtRecent(d)  { return new Date(d+'T12:00:00').toLocaleDateString('en-US',{weekday:'short',month:'long',day:'numeric'}) }
   function fmtMonYear(d) { return new Date(d+'T12:00:00').toLocaleDateString('en-US',{year:'numeric',month:'short'}) }
   function esc(s)        { return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;') }
+  function escAttr(s)    { return esc(String(s)).replace(/"/g,'&quot;').replace(/'/g,'&#39;') }
   function highlight(escaped, q) {
     if (!q) return escaped
     return escaped.replace(new RegExp(`(${q.replace(/[.*+?^${}()|[\]\\]/g,'\\$&')})`, 'gi'), '<mark>$1</mark>')
   }
 
+  /* ── Last updated (tracker panel header) ── */
+  function updateLastUpdated() {
+    const el = document.getElementById('tracker-last-updated')
+    if (!el || !allHymns.length) return
+    const dates = []
+    allHymns.forEach(h => h.occurrences.forEach(o => { if (o.date) dates.push(o.date) }))
+    if (!dates.length) return
+    const latest = dates.sort().pop()
+    el.textContent = 'Updated ' + fmtFull(latest)
+  }
+
+  /* ── Sermon matcher ── */
+  let sermonTimer = null
+  const SERMON_STOPWORDS = new Set([
+    'the','a','an','and','or','but','in','on','at','to','for','of','with','by',
+    'from','is','was','are','were','be','been','being','have','has','had',
+    'do','does','did','will','would','could','should','may','might','shall',
+    'that','this','these','those','it','its','we','our','us','you','your',
+    'he','she','they','them','his','her','their','i','my','me','who','which',
+    'not','no','so','if','as','up','out','can','all','there','when','what',
+    'his','him','god','lord','jesus','christ','holy','spirit','one','know',
+    'come','let','shall','man','men','o','oh','thy','thee','thou','hath'
+  ])
+
+  function toggleSermonMatcher() {
+    const section = document.getElementById('sermon-section')
+    const btn     = document.getElementById('sermon-toggle-btn')
+    const open    = section.classList.toggle('open')
+    btn.classList.toggle('active', open)
+    if (!open) {
+      // Clear sermon results and restore normal downloader state
+      document.getElementById('sermon-input').value = ''
+      document.getElementById('sermon-meta').textContent = ''
+      renderDownloads()
+    } else {
+      document.getElementById('sermon-input').focus()
+    }
+  }
+
+  function debounceSermon() {
+    clearTimeout(sermonTimer)
+    sermonTimer = setTimeout(runSermonMatcher, 350)
+  }
+
+  function runSermonMatcher() {
+    const text = document.getElementById('sermon-input').value.trim()
+    const meta = document.getElementById('sermon-meta')
+
+    if (text.length < 30) {
+      meta.textContent = ''
+      document.getElementById('dl-meta').textContent = ''
+      document.getElementById('dl-grid').innerHTML = '<div class="dl-empty">Keep typing — suggestions will appear once there\'s enough text.</div>'
+      return
+    }
+
+    // Tokenize sermon
+    const words = text.toLowerCase().replace(/[^a-z\s]/g, ' ').split(/\s+/)
+      .filter(w => w.length > 3 && !SERMON_STOPWORDS.has(w))
+    const wordSet = new Set(words)
+
+    // Score each hymn in the catalogue
+    const scored = HYMN_DECKS.map((h, idx) => {
+      const tags   = (HYMN_TOPICS[h.name] || []).map(t => t.toLowerCase())
+      const hwords = h.name.toLowerCase().replace(/[^a-z\s]/g, ' ').split(/\s+/)
+        .filter(w => w.length > 3 && !SERMON_STOPWORDS.has(w))
+
+      let score = 0
+      // Each topic tag that appears in the sermon text
+      tags.forEach(tag => {
+        const tagWords = tag.toLowerCase().split(/\s+/)
+        const hits = tagWords.filter(tw => wordSet.has(tw) || text.toLowerCase().includes(tag)).length
+        score += hits * 2
+        if (text.toLowerCase().includes(tag)) score += 3
+      })
+      // Hymn title words that appear in sermon
+      hwords.forEach(w => { if (wordSet.has(w)) score += 1 })
+
+      return { h, idx, score, tags }
+    }).filter(x => x.score > 0)
+      .sort((a, b) => b.score - a.score)
+      .slice(0, 20)
+
+    if (!scored.length) {
+      meta.innerHTML = ''
+      document.getElementById('dl-meta').textContent = 'No strong matches found — try adding more sermon text.'
+      document.getElementById('dl-grid').innerHTML = '<div class="dl-empty">No hymns matched the sermon themes. Try adding more text or scripture references.</div>'
+      return
+    }
+
+    // Display matched topics for transparency
+    const topTopics = [...new Set(scored.flatMap(x => x.tags))].slice(0, 8)
+    meta.innerHTML = `Matched themes: ${topTopics.map(t => `<span class="svc-chip">${esc(t)}</span>`).join(' ')}`
+
+    document.getElementById('dl-meta').textContent =
+      `${scored.length} suggested hymn${scored.length !== 1 ? 's' : ''} for this sermon`
+
+    const grid = document.getElementById('dl-grid')
+    grid.innerHTML = scored.map(({ h, idx }) => {
+      const sel = selectedHymns.has(idx)
+      return `
+      <article class="dl-card${sel ? ' selected' : ''}">
+        <button type="button" class="dl-card-check" aria-label="${sel ? 'Remove' : 'Select'} ${esc(h.name)}" aria-pressed="${sel}" onclick="toggleSelect(event, ${idx})">${sel ? '&#10003;' : ''}</button>
+        <div class="dl-card-icon">🎵</div>
+        <div class="dl-card-name">${esc(h.name)}</div>
+        <div class="dl-card-meta">
+          ${h.number ? `#${h.number} &nbsp;·&nbsp; ` : ''}${h.source ? `<em>${esc(h.source)}</em>` : ''}
+          ${h.verses ? `&nbsp;·&nbsp; ${h.verses} verse${h.verses !== 1 ? 's' : ''}` : ''}
+          ${h.author ? `<br>${esc(h.author)}` : ''}
+        </div>
+        <div class="dl-btns" onclick="event.stopPropagation()">
+          ${deckDownloadLinks(h)}
+        </div>
+      </article>`
+    }).join('')
+  }
+
+  async function loadWelcomeStats() {
+    try {
+      const [songsResponse, catalogueResponse] = await Promise.all([
+        fetch('castleberry_songs.json?v=' + Date.now()),
+        fetch('hymn_catalogue.json?v=' + Date.now())
+      ])
+      if (!songsResponse.ok || !catalogueResponse.ok) return
+      const songs = await songsResponse.json()
+      const catalogue = await catalogueResponse.json()
+      const occurrences = songs.reduce((total, song) => total + (song.occurrences?.length || 0), 0)
+      document.getElementById('welcome-hymns').textContent = songs.length
+      document.getElementById('welcome-library').textContent = catalogue.length
+      document.getElementById('welcome-occurrences').textContent = occurrences
+      document.getElementById('library-count').textContent = catalogue.length
+    } catch (_) {
+      // Keep the embedded fallback counts when the public data is unavailable.
+    }
+  }
+
+  function stabilizeHomeWorkspace() {
+    const overview = document.getElementById('page-overview')
+    const hero = document.getElementById('home-hero')
+    if (overview && hero && hero.parentElement !== overview) overview.prepend(hero)
+  }
+
+  function setNextServiceDate() {
+    const serviceDate = document.getElementById('next-service-date')
+    if (!serviceDate) return
+    const nextSunday = new Date()
+    const daysUntilSunday = (7 - nextSunday.getDay()) % 7
+    nextSunday.setDate(nextSunday.getDate() + daysUntilSunday)
+    serviceDate.textContent = nextSunday.toLocaleDateString('en-US', { month: 'long', day: 'numeric' })
+  }
+
   /* ── Boot ── */
+  stabilizeHomeWorkspace()
+  setNextServiceDate()
+  loadWelcomeStats()
   checkAuth()
+</script>
+
+<!-- Heritage redesign: dynamic greeting + auth-mode heading (additive, non-invasive) -->
+<script>
+  /* Update the sign-in card heading/subhead when toggling Sign In / Request Access */
+  function cbSetAuthMode(mode) {
+    var h = document.querySelector('.auth-heading')
+    var s = document.querySelector('.auth-subhead')
+    if (!h || !s) return
+    if (mode === 'register') {
+      h.textContent = 'Join the team'
+      s.textContent = 'New leaders are approved by an elder before access is granted.'
+    } else {
+      h.textContent = 'Welcome back'
+      s.textContent = 'Sign in to plan worship and review what we’ve sung together.'
+    }
+  }
+  document.querySelectorAll('.auth-tab').forEach(function (tab) {
+    tab.addEventListener('click', function () {
+      cbSetAuthMode(/Request|Register/i.test(tab.textContent) ? 'register' : 'signin')
+    })
+  })
+
+  /* Personalise the dashboard greeting once the app view is shown */
+  ;(function () {
+    var done = false
+    function tick() {
+      var app = document.getElementById('view-app')
+      if (app && getComputedStyle(app).display !== 'none') {
+        if (!done) {
+          done = true
+          try {
+            sb.auth.getSession().then(function (r) {
+              var ses = r && r.data && r.data.session
+              if (!ses) return
+              var fn = (ses.user.user_metadata && ses.user.user_metadata.full_name) || ''
+              var first = fn.trim().split(/\s+/)[0] || ''
+              var el = document.getElementById('greeting-name')
+              if (el && first) el.textContent = ', ' + first
+            })
+          } catch (e) {}
+        }
+        var tu = document.getElementById('tracker-last-updated')
+        var gs = document.getElementById('greeting-sub')
+        if (tu && gs && tu.textContent.trim()) {
+          gs.textContent = 'Review history, collect slides, then assemble the deck · data ' +
+            tu.textContent.replace(/^Updated\s+/i, 'updated ') + '.'
+          clearInterval(iv)
+        }
+      }
+    }
+    var iv = setInterval(tick, 500)
+    tick()
+    setTimeout(function () { clearInterval(iv) }, 15000)
+  })()
 </script>
 </body>
 </html>

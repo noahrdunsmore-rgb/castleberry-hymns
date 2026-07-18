@@ -1,0 +1,36 @@
+{
+  "_comment": "Example lineup spec. Mirrors Parker's typical 11:00 service order. Item types: 'frame' (a template slide), 'song' (pulled from a built deck), 'scripture' (rendered reading). For songs, 'verses' may be 'all', a number, a list like [1,3], or a range string like '1-2'. 'source'/'number' are optional and only used to disambiguate when a title exists in more than one hymnal.",
+
+  "service": "CB 11 Service line-up",
+  "date": "6.7.26",
+  "worship_leader": "Parker Jennings",
+
+  "items": [
+    { "type": "frame", "frame": "countdown" },
+    { "type": "frame", "frame": "call_to_worship" },
+    { "type": "frame", "frame": "opening_prayer" },
+
+    { "type": "song", "title": "The Gloryland Way", "source": "HFWR", "number": "574", "verses": "all" },
+    { "type": "song", "title": "The Lily Of The Valley", "source": "HFWR", "number": "594", "verses": [1] },
+
+    { "type": "scripture",
+      "title": "Hosea's Amazing Act of Love",
+      "reference": "Hosea 3:1-5",
+      "text": [
+        "1 And the LORD said to me, “Go again, love a woman who is loved by another man and is an adulteress, even as the LORD loves the children of Israel, though they turn to other gods and love cakes of raisins.”",
+        "2 So I bought her for fifteen shekels of silver and a homer and a lethech of barley.",
+        "3 And I said to her, “You must dwell as mine for many days. You shall not play the whore, or belong to another man; so will I also be to you.”",
+        "4 For the children of Israel shall dwell many days without king or prince, without sacrifice or pillar, without ephod or household gods.",
+        "5 Afterward the children of Israel shall return and seek the LORD their God, and David their king, and they shall come in fear to the LORD and to his goodness in the latter days."
+      ]
+    },
+
+    { "type": "frame", "frame": "communion" },
+    { "type": "frame", "frame": "giving" },
+
+    { "type": "song", "title": "In Christ Alone", "verses": "all" },
+
+    { "type": "frame", "frame": "closing_prayer" },
+    { "type": "frame", "frame": "dismissal" }
+  ]
+}

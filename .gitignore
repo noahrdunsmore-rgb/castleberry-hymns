@@ -7,3 +7,27 @@ hymn-slides/eChoice/
 hymn-slides/Templates/
 hymn-slides/Application Folder/
 hymn-slides/Sample Songs_ppt/
+
+# Raw per-song slide source (PNGs/PDFs); the builder reads these locally for
+# verse selection, but only the built .pptx decks belong in git
+hymn-slides/HFWR/
+hymn-slides/HFWS/
+
+# Assembled weekly service decks (regenerated from a lineup; not source)
+service-decks/
+# Pasted worship-order text used only as parser input
+order*.txt
+
+__pycache__/
+
+# Local-only secrets / runtime artifacts for the deck builder
+email_config.json
+saturday_build.log
+app.log
+
+# Local extraction launcher — contains a hardcoded ANTHROPIC_API_KEY, must stay local
+run_extraction.bat
+extraction_log.txt
+
+# Manual backup snapshots of the song tracker (git history already preserves these)
+*.bak*.json
